@@ -2,9 +2,10 @@ class TopicsController < ApplicationController
   before_action :set_survey, :set_station
 
   def show
-    @topic = @station.topics.find_by(id: params[:id])
+    @topic = @station.topics.find_by(id: params[:id]).to_json
 
     respond_to do |format|
+      format.html
       format.json { render json: @topic.to_json, status: 200 }
     end
   end

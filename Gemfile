@@ -14,7 +14,8 @@ gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker'
 
-
+# haml template DSL
+gem 'haml'
 
 group :development, :test do
 	#e gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -36,7 +37,7 @@ group :test do
 	gem 'guard'
 	# auto runs brackman over new code
 	gem 'guard-brakeman', require: false
-	# guard for rspec 
+	# guard for rspec
 	gem 'guard-rspec'
 	gem 'poltergeist' # headless javascript testing
 	# test suite for ...

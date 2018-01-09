@@ -19,7 +19,7 @@ RSpec.describe Survey, type: :model do
         id: @survey.id,
         name: @survey.name,
         stations: @survey.stations.map(&:to_json)
-      }.to_json
+      }
 
       expect(@survey.to_json).to eq expectation
     end
@@ -36,7 +36,7 @@ RSpec.describe Survey, type: :model do
       expect { survey.destroy }.to change(Station, :count).by(-1)
     end
 
-    it "should respond to description" do 
+    it "should respond to description" do
       expect(Survey.new).to respond_to(:description)
     end
   end

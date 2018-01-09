@@ -1,5 +1,5 @@
 class Statement < ApplicationRecord
-  STYLES = %w(multiple_choice single_choice)
+  STYLES = %w(multiple_choice single_choice).freeze
 
   belongs_to(:statement_set)
   has_many(:answers, dependent: :destroy)
@@ -17,6 +17,6 @@ class Statement < ApplicationRecord
       style: style,
       text: text,
       choices: choices.map(&:to_json)
-    }.to_json
+    }
   end
 end
