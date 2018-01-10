@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20180109174010) do
   end
 
   create_table "statements", force: :cascade do |t|
-    t.text "type"
+    t.text "style"
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

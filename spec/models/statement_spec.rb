@@ -4,8 +4,8 @@ RSpec.describe Statement, type: :model do
       expect(Statement.new).to(respond_to(:text))
     end
 
-    it "should respond to type" do 
-      expect(Statement.new).to(respond_to(:type))
+    it "should respond to style" do 
+      expect(Statement.new).to(respond_to(:style))
     end
   end
   context "Associations" do

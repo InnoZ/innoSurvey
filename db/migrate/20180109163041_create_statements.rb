@@ -1,7 +1,7 @@
 class CreateStatements < ActiveRecord::Migration[5.1]
   def change
     create_table :statements do |t|
-      t.text :type
+      t.text :style
       t.text :text
 
       t.timestamps
