@@ -4,6 +4,7 @@ RSpec.describe Choice, type: :model do
       expect(Choice.new).to respond_to(:text)
     end
   end
+
   context "Associations" do
     it { is_expected.to(belong_to(:statement)) }
   end
