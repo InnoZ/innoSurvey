@@ -72,3 +72,5 @@ config/initializers/secret_token.rb
 
 # VSCode
 .vscode
+
+*.sqlite3
