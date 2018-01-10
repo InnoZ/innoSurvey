@@ -1,4 +1,5 @@
 RSpec.describe Survey, type: :model do
+<<<<<<< HEAD
   context "Attributes" do
     it "should respond to description" do 
       expect(Survey.new).to respond_to(:description)
@@ -17,5 +18,7 @@ RSpec.describe Survey, type: :model do
     # Execution
     
     # Assertion
+  it "should respond to description" do 
+    expect(Survey.new).to respond_to(:description)
   end
 end

@@ -15,6 +15,7 @@ require 'pry'
 require 'support/factory_bot'
 require 'spec_helper'
 
+# Prevent database truncation if the environment is production
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|

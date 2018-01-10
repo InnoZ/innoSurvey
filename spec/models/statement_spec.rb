@@ -8,6 +8,7 @@ RSpec.describe Statement, type: :model do
       expect(Statement.new).to(respond_to(:style))
     end
   end
+
   context "Associations" do
     it { is_expected.to(belong_to(:topic)) }
   end
