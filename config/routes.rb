@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'stations/show/:id', to: 'stations#show'
+
   root 'topics#show'
 
   # TOPICS
