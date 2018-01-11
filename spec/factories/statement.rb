@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :statement do
-    style "Choice"
+    style "single_choice"
     text "I am a sample statement"
     topic { create(:topic) }
   end

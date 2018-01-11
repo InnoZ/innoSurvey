@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20180111111601) do
 
   create_table "answers", force: :cascade do |t|
-    t.text "result"
+    t.text "result", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "statement_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20180111111601) do
   end
 
   create_table "choices", force: :cascade do |t|
-    t.text "text"
+    t.text "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "statement_id"
@@ -29,14 +29,14 @@ ActiveRecord::Schema.define(version: 20180111111601) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.text "name"
+    t.text "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "statements", force: :cascade do |t|
-    t.text "style"
-    t.text "text"
+    t.text "style", null: false
+    t.text "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "topic_id"
@@ -51,28 +51,19 @@ ActiveRecord::Schema.define(version: 20180111111601) do
   end
 
   create_table "surveys", force: :cascade do |t|
-    t.text "description"
+    t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.index ["user_id"], name: "index_surveys_on_user_id"
   end
 
   create_table "topics", force: :cascade do |t|
-    t.text "description"
+    t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role_id"
     t.integer "station_id"
     t.index ["role_id"], name: "index_topics_on_role_id"
     t.index ["station_id"], name: "index_topics_on_station_id"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "email", null: false
-    t.string "password_digest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end
