@@ -11,5 +11,12 @@ RSpec.describe Statement, type: :model do
 
   context "Associations" do
     it { is_expected.to(belong_to(:topic)) }
+
+    it 'destroys associated choice and answer on destroy' do
+      test_statement = create :statement
+      create :answer, statement: test_statement
+      create :choice, statement: test_statement
+      expect { test_statement.destroy }.to change( Answer, :count).by(-1).and change( Choice, :count).by(-1)
+    end
   end
 end

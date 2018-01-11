@@ -10,9 +10,9 @@ RSpec.describe Survey, type: :model do
 
     it "should delete associated records when deleting a survey" do
       survey = create :survey
-      station = create :station, survey: survey
+      create :station, survey: survey
 
-      expect { survey.destroy }.to change(Survey, :count).by(-1)
+      expect { survey.destroy }.to change(Station, :count).by(-1)
     end
 
     it "should respond to description" do 
