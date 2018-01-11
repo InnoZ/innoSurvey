@@ -6,22 +6,13 @@ RSpec.describe Survey, type: :model do
   end
 
   context "Associations" do
-    it { is_expected.to(have_many(:topics)) }
+    it { is_expected.to(have_many(:stations)) }
 
     it "should delete associated records when deleting a survey" do
-      # Setup
-      egSurvey = Survey.create(description: "TestDescription")
-      egRole = Role.create(name: "std_user")
-      egTopic = Topic.create(description: "topicDescription", survey: egSurvey, role: egRole)
-      egStatement = Statement.create(style: "QA",text: "question?", topic: egTopic)
-      egAnswer = Answer.create(result: "bla", statement: egStatement)
+      survey = create :survey
+      station = create :station, survey: survey
 
-
-      # Execution + Assertion
-      egSurvey.destroy
-      expect(Topic.find_by(survey_id: egSurvey.id)).to be_nil
-
-      # expect { egSurvey.destroy }.to change(Topic, :count).by(.1)
+      expect { survey.destroy }.to change(Survey, :count).by(-1)
     end
 
     it "should respond to description" do 

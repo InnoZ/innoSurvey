@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :topic do
     description "I am a sample topic"
-    survey { create(:survey) }
+    station { create(:station) }
     role { create(:role) }
   end
 end

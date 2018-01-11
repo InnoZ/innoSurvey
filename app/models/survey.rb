@@ -1,3 +1,3 @@
 class Survey < ApplicationRecord
-  has_many(:topics, dependent: :destroy)
+  has_many(:stations, dependent: :destroy)
 end

@@ -6,7 +6,7 @@ RSpec.describe Topic, type: :model do
   end
 
   context "Associations" do
-    it { is_expected.to(belong_to(:survey)) }
+    it { is_expected.to(belong_to(:station)) }
     it { is_expected.to(belong_to(:role)) }
     it { is_expected.to(have_many(:statements)) }
 
@@ -14,7 +14,8 @@ RSpec.describe Topic, type: :model do
       before(:each) do
         # FactoryBot land...
         @survey = create :survey
-        @topic = create :topic, survey: @survey
+        @station = create :station, survey: @survey
+        @topic = create :topic, station: @station
         @statement = create :statement, topic: @topic
         @choice = create :choice, statement: @statement
       end

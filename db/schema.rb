@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109174010) do
+ActiveRecord::Schema.define(version: 20180111111601) do
 
   create_table "answers", force: :cascade do |t|
     t.text "result"
@@ -43,20 +43,36 @@ ActiveRecord::Schema.define(version: 20180109174010) do
     t.index ["topic_id"], name: "index_statements_on_topic_id"
   end
 
+  create_table "stations", force: :cascade do |t|
+    t.integer "survey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_stations_on_survey_id"
+  end
+
   create_table "surveys", force: :cascade do |t|
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_surveys_on_user_id"
   end
 
   create_table "topics", force: :cascade do |t|
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "survey_id"
     t.integer "role_id"
+    t.integer "station_id"
     t.index ["role_id"], name: "index_topics_on_role_id"
-    t.index ["survey_id"], name: "index_topics_on_survey_id"
+    t.index ["station_id"], name: "index_topics_on_station_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
