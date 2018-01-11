@@ -7,6 +7,7 @@ RSpec.describe Survey, type: :model do
 
   context "Associations" do
     it { is_expected.to(have_many(:stations)) }
+    it { is_expected.to(belong_to(:user)) }
 
     it "should delete associated records when deleting a survey" do
       survey = create :survey

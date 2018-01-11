@@ -29,5 +29,9 @@ describe User do
       expect(user).not_to be_valid
     end
   end
+
+  context 'Associations' do
+    it { is_expected.to have_many(:surveys) }
+  end
 end
 
