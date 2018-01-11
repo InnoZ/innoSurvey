@@ -66,4 +66,12 @@ ActiveRecord::Schema.define(version: 20180111111601) do
     t.index ["station_id"], name: "index_topics_on_station_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.boolean "enabled", default: false, null: false
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end
