@@ -54,6 +54,8 @@ ActiveRecord::Schema.define(version: 20180111111601) do
     t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_surveys_on_user_id"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -68,7 +70,6 @@ ActiveRecord::Schema.define(version: 20180111111601) do
 
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
-    t.boolean "enabled", default: false, null: false
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
