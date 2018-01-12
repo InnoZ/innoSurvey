@@ -2,13 +2,12 @@ RSpec.describe Topic, type: :model do
   context "Attributes" do
     it "should respond to description" do
       expect(Topic.new).to(respond_to(:description))
+      expect(Topic.new).to(respond_to(:name))
     end
   end
 
   context "Associations" do
     it { is_expected.to(belong_to(:station)) }
-    it { is_expected.to(belong_to(:role)) }
-    it { is_expected.to(have_many(:statements)) }
 
     context 'DELETIONS' do
       before(:each) do
@@ -21,6 +20,7 @@ RSpec.describe Topic, type: :model do
       end
 
       it 'destroys associated statements on destroy' do
+        skip "Switch to statement sets"
         expect { @topic.destroy }.to change(Statement, :count).by(-1)
       end
     end
