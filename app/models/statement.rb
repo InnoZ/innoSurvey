@@ -1,7 +1,7 @@
 class Statement < ApplicationRecord
   STYLES = %w(multiple_choice single_choice)
 
-  belongs_to(:topic)
+  belongs_to(:statement_set)
   has_many(:answers, dependent: :destroy)
   has_many(:choices, dependent: :destroy)
 

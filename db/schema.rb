@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112133607) do
+ActiveRecord::Schema.define(version: 20180112141954) do
 
   create_table "answers", force: :cascade do |t|
     t.text "result", null: false
@@ -36,13 +36,22 @@ ActiveRecord::Schema.define(version: 20180112133607) do
     t.index ["survey_id"], name: "index_roles_on_survey_id"
   end
 
+  create_table "statement_sets", force: :cascade do |t|
+    t.integer "topic_id"
+    t.integer "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_statement_sets_on_role_id"
+    t.index ["topic_id"], name: "index_statement_sets_on_topic_id"
+  end
+
   create_table "statements", force: :cascade do |t|
     t.text "style", null: false
     t.text "text", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "topic_id"
-    t.index ["topic_id"], name: "index_statements_on_topic_id"
+    t.integer "statement_set_id"
+    t.index ["statement_set_id"], name: "index_statements_on_statement_set_id"
   end
 
   create_table "stations", force: :cascade do |t|
@@ -64,10 +73,8 @@ ActiveRecord::Schema.define(version: 20180112133607) do
     t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role_id"
     t.integer "station_id"
     t.string "name", null: false
-    t.index ["role_id"], name: "index_topics_on_role_id"
     t.index ["station_id"], name: "index_topics_on_station_id"
   end
 
