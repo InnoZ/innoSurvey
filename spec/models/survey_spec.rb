@@ -2,6 +2,7 @@ RSpec.describe Survey, type: :model do
   context "Attributes" do
     it "should respond to description" do 
       expect(Survey.new).to respond_to(:description)
+      expect(Survey.new).to respond_to(:name)
     end
   end
 
