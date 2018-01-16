@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180112141954) do
+ActiveRecord::Schema.define(version: 20180116161514) do
 
   create_table "answers", force: :cascade do |t|
     t.text "result", null: false
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20180112141954) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.string "name", null: false
+    t.string "name_url_safe", null: false
     t.index ["user_id"], name: "index_surveys_on_user_id"
   end
 

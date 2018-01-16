@@ -1,23 +1,27 @@
 RSpec.describe Survey, type: :model do
   context "Attributes" do
-    it "should respond to description" do 
-      expect(Survey.new).to respond_to(:description)
-      expect(Survey.new).to respond_to(:name)
-    end
+    it { is_expected.to respond_to(:description) }
+    it { is_expected.to respond_to(:name) }
+    it { is_expected.to respond_to(:name_url_safe) }
   end
 
   context 'Instance methods' do
+    it 'creates url_safe name before validation' do
+      expect(create(:survey, name: 'Peter Pan').name_url_safe).to eq 'peter_pan'
+      expect(create(:survey, name: "Peter's Pan").name_url_safe).to eq 'peters_pan'
+      expect(create(:survey, name: "Peter's 123 Pan").name_url_safe).to eq 'peters_123_pan'
+    end
+
     it 'is expected to serialize JSON properly' do
-      choice = create :choice
-      survey = choice.survey
+      create_choice_stack # Instanciate @survey
 
       expectation = {
-        id: survey.id,
-        name: survey.name,
-        stations: survey.stations.map(&:to_json)
+        id: @survey.id,
+        name: @survey.name,
+        stations: @survey.stations.map(&:to_json)
       }.to_json
 
-      expect(survey.to_json).to eq expectation
+      expect(@survey.to_json).to eq expectation
     end
   end
 
@@ -34,6 +38,22 @@ RSpec.describe Survey, type: :model do
 
     it "should respond to description" do 
       expect(Survey.new).to respond_to(:description)
+    end
+  end
+
+  context 'Validations' do
+    it 'should have unique name' do
+      create :survey, name: 'Peter Pan'
+      another_survey = build :survey, name: 'Peter Pan'
+
+      expect(another_survey).not_to be_valid
+    end
+
+    it 'should have unique name_url_safe' do
+      create :survey, name: 'peter_pan'
+      another_survey = build :survey, name: 'Peter Pan'
+
+      expect(another_survey).not_to be_valid
     end
   end
 end

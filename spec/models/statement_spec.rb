@@ -26,10 +26,10 @@ RSpec.describe Statement, type: :model do
     it { is_expected.to(belong_to(:statement_set)) }
 
     it 'destroys associated choice and answer on destroy' do
-      test_statement = create :statement
-      create :answer, statement: test_statement
-      create :choice, statement: test_statement
-      expect { test_statement.destroy }.to change( Answer, :count).by(-1).and change( Choice, :count).by(-1)
+      create_choice_stack
+      statement = Statement.first
+
+      expect { statement.destroy }.to change( Answer, :count).by(-2).and change( Choice, :count).by(-3)
     end
   end
 end
