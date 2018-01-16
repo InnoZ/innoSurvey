@@ -10,6 +10,6 @@ class Survey < ApplicationRecord
       id: id,
       name: name,
       stations: stations.map(&:to_json)
-    }
+    }.to_json
   end
 end

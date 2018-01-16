@@ -11,6 +11,6 @@ class Station < ApplicationRecord
       survey_name: survey.name,
       name: name,
       topics: topics.map(&:to_json)
-    }
+    }.to_json
   end
 end

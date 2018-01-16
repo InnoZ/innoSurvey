@@ -18,7 +18,7 @@ RSpec.describe Topic, type: :model do
         name: topic.name,
         description: topic.description,
         statement_sets: topic.statement_sets.map(&:to_json)
-      }
+      }.to_json
     end
   end
 

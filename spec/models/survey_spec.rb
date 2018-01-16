@@ -15,7 +15,7 @@ RSpec.describe Survey, type: :model do
         id: survey.id,
         name: survey.name,
         stations: survey.stations.map(&:to_json)
-      }
+      }.to_json
 
       expect(survey.to_json).to eq expectation
     end

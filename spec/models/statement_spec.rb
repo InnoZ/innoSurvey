@@ -16,7 +16,7 @@ RSpec.describe Statement, type: :model do
         text: statement.text,
         statement_set_id: statement.statement_set.id,
         choices: statement.choices.map(&:to_json)
-      }
+      }.to_json
 
       expect(statement.to_json).to eq expectation
     end

@@ -13,6 +13,6 @@ class Topic < ApplicationRecord
       name: name,
       description: description,
       statement_sets: statement_sets.map(&:to_json)
-    }
+    }.to_json
   end
 end

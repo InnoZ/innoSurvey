@@ -49,7 +49,7 @@ Topic.all.each do |t|
 end
 
 # CREATE STATEMENTS
-STYLES = %w[multiple single].freeze
+STYLES = %w[multiple_choice single_choice].freeze
 
 StatementSet.all.each do |s|
   s.statements.create(style: STYLES.sample, text: Faker::WorldOfWarcraft.quote + '?')
