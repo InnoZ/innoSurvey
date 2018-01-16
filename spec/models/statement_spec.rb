@@ -1,11 +1,24 @@
 RSpec.describe Statement, type: :model do
   context "Attributes" do
-    it "should respond to text" do 
-      expect(Statement.new).to(respond_to(:text))
-    end
+    it { is_expected.to respond_to(:text) }
+    it { is_expected.to respond_to(:style) }
+    it { is_expected.to respond_to(:to_json) }
+  end
 
-    it "should respond to style" do 
-      expect(Statement.new).to(respond_to(:style))
+  context 'Instance methods' do
+    it 'is expected to serialize do JSON properly' do
+      statement = create :statement
+      choices = create_list :choice, 2, statement: statement
+
+      expectation = {
+        id: statement.id,
+        style: statement.style,
+        text: statement.text,
+        statement_set_id: statement.statement_set.id,
+        choices: statement.choices.map(&:to_json)
+      }
+
+      expect(statement.to_json).to eq expectation
     end
   end
 

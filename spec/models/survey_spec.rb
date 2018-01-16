@@ -6,6 +6,21 @@ RSpec.describe Survey, type: :model do
     end
   end
 
+  context 'Instance methods' do
+    it 'is expected to serialize JSON properly' do
+      choice = create :choice
+      survey = choice.survey
+
+      expectation = {
+        id: survey.id,
+        name: survey.name,
+        stations: survey.stations.map(&:to_json)
+      }
+
+      expect(survey.to_json).to eq expectation
+    end
+  end
+
   context "Associations" do
     it { is_expected.to(have_many(:stations)) }
     it { is_expected.to(belong_to(:user)) }

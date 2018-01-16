@@ -6,6 +6,22 @@ RSpec.describe Topic, type: :model do
     end
   end
 
+  context 'Instance methods' do
+    it { is_expected.to respond_to(:to_json) }
+
+    it 'Returns nested JSON properly' do
+      topic = create :topic
+
+      expectation = {
+        id: topic.id,
+        station_id: topic.station.name,
+        name: topic.name,
+        description: topic.description,
+        statement_sets: topic.statement_sets.map(&:to_json)
+      }
+    end
+  end
+
   context "Associations" do
     it { is_expected.to(belong_to(:station)) }
     it { is_expected.to(have_many(:statement_sets)) }

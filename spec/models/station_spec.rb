@@ -14,4 +14,20 @@ RSpec.describe Station, type: :model do
       expect { station.destroy }.to change( Topic, :count).by(-1)
     end
   end
+
+  context 'Instance methods' do
+    it 'is expected to serialize do JSON properly' do
+      station = create :station
+
+      expectation = {
+        id: station.id,
+        survey_id: station.survey.id,
+        survey_name: station.survey.name,
+        name: station.name,
+        topics: station.topics.map(&:to_json)
+      }
+
+      expect(station.to_json).to eq expectation
+    end
+  end
 end
