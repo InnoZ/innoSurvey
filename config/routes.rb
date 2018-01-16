@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  get 'stations/show/:id', to: 'stations#show'
-
   root 'topics#show'
 
   # TOPICS
   get '/:survey_name/:station_id/:id', to: 'topics#show'
+
+  # STATIONS
+  get 'stations/show/:id', to: 'stations#show'
 
   # USER SESSIONS
   get 'sign_in', to: 'sessions#create', as: :sign_in

@@ -42,6 +42,7 @@ group :test do
 	# test suite for ...
 	gem 'rspec-rails'
 	# testing model assosiations
+  gem 'rails-controller-testing'
 	gem 'shoulda'
   # Helper for generating funny rnd data
   gem 'faker'

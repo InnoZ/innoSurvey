@@ -14,7 +14,6 @@ RSpec.describe Statement, type: :model do
         id: statement.id,
         style: statement.style,
         text: statement.text,
-        statement_set_id: statement.statement_set.id,
         choices: statement.choices.map(&:to_json)
       }.to_json
 

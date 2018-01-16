@@ -14,7 +14,6 @@ RSpec.describe Topic, type: :model do
 
       expectation = {
         id: topic.id,
-        station_id: topic.station.name,
         name: topic.name,
         description: topic.description,
         statement_sets: topic.statement_sets.map(&:to_json)

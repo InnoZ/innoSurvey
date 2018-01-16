@@ -9,7 +9,7 @@ class StatementSet < ApplicationRecord
     {
       id: id,
       role_id: role.id,
-      topic_id: topic.id,
+      role_name: role.name,
       statements: statements.map(&:to_json)
     }.to_json
   end

@@ -16,7 +16,7 @@ RSpec.describe StatementSet, type: :model do
       expectation = {
         id: statement_set.id,
         role_id: statement_set.role.id,
-        topic_id: statement_set.topic.id,
+        role_name: statement_set.role.name,
         statements: statement_set.statements.map(&:to_json)
       }.to_json
 

@@ -10,7 +10,6 @@ class Choice < ApplicationRecord
     {
       id: id,
       text: text,
-      statement_id: statement.id
     }.to_json
   end
 end

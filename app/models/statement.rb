@@ -16,7 +16,6 @@ class Statement < ApplicationRecord
       id: id,
       style: style,
       text: text,
-      statement_set_id: statement_set.id,
       choices: choices.map(&:to_json)
     }.to_json
   end
