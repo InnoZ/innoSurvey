@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'topics#show'
 
   # TOPICS
-  get '/:survey_name/:station_name/:id', to: 'topics#show'
+  get '/:survey_name/:station_id/:id', to: 'topics#show'
 
   # USER SESSIONS
   get 'sign_in', to: 'sessions#create', as: :sign_in
