@@ -8,9 +8,12 @@ StatementSet.destroy_all
 Choice.destroy_all
 Role.destroy_all
 
+# CREATE USERS
+@user = User.create(email: 'user@test.com', password: 'secret', password_confirmation: 'secret')
+
 # CREATE SURVEYS
 2.times do
-  Survey.create(description: Faker::Lorem.sentence(3), name: Faker::Dessert.topping)
+  Survey.create(description: Faker::Lorem.sentence(3), name: Faker::Dessert.topping, user: @user)
 end
 
 # CREATE ROLES AND STATIONS
