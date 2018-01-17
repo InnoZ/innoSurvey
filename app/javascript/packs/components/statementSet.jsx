@@ -8,7 +8,7 @@ export default class StatementSet extends React.Component {
     selections: this.props.statements.map(function(statement) {
       return {
         id: statement.id,
-        selections: [],
+        selected_choices: [],
       }
     })
   }
@@ -43,27 +43,23 @@ export default class StatementSet extends React.Component {
     setTimeout(function() {
       flashMessage.innerHTML = '';
       jsonDiv.innerHTML = '';
-    }, 3000);
+    }, 10000);
   }
 
   sendSelections() {
-    this.previewSelections({
-      role_id: this.props.roleId,
-      topic_id: this.props.topicId,
-      selections: this.state.selections,
-    });
+    this.previewSelections({ selections: this.state.selections });
     this.props.resetStatementSet();
   }
 
-  modifyChoices({statementId, choiceId, increment}) {
+  modifyChoices({statementId, choiceId, check}) {
     const thisComponent = this;
     const updatedChoices = this.state.selections.slice().map(function(statement) {
       const selections = statement.id == statementId ?
-        (increment ? statement.selections.concat(choiceId) : statement.selections.filter((c) => c != choiceId))
-        : statement.selections;
+        (check ? statement.selected_choices.concat(choiceId) : statement.selected_choices.filter((c) => c != choiceId))
+        : statement.selected_choices;
       return {
         id: statement.id,
-        selections: selections,
+        selected_choices: selections,
       };
     });
     this.setState({selections: updatedChoices})
@@ -78,7 +74,7 @@ export default class StatementSet extends React.Component {
   }
 
   selectionsFor(statementId) {
-    return this.state.selections.find((q) => q.id == statementId).selections
+    return this.state.selections.find((q) => q.id == statementId).selected_choices
   }
 
   render() {
