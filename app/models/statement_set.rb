@@ -11,6 +11,6 @@ class StatementSet < ApplicationRecord
       role_id: role.id,
       role_name: role.name,
       statements: statements.map(&:to_json)
-    }.to_json
+    }
   end
 end

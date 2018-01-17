@@ -10,6 +10,6 @@ class Choice < ApplicationRecord
     {
       id: id,
       text: text,
-    }.to_json
+    }
   end
 end

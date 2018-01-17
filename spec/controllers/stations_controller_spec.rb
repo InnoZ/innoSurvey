@@ -12,7 +12,7 @@ RSpec.describe StationsController, type: :controller do
     end
 
     it 'Shall respond to query with proper JSON' do
-      expect(response.body).to eq @station.to_json
+      expect(response.body).to eq @station.to_json.to_json
     end
   end
 end

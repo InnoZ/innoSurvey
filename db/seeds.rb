@@ -18,30 +18,26 @@ end
 
 # CREATE ROLES AND STATIONS
 Survey.all.each_with_index do |s, i|
-  Role.create(name: "Role #{i}", survey: s)
-  # Create 1 - 3 stations
-  (1..3).to_a.sample.times do
-    Station.create(survey: s, name: Faker::Hacker.noun.capitalize)
+  # Create 2 - 4 roles
+  (2..4).to_a.sample.times do
+    Role.create(name: Faker::Superhero.prefix, survey: s)
   end
-end
-
-# CREATE STATIONS
-Survey.all.each do |s|
-  (1..3).to_a.sample.times do
-    s.stations.create(survey: s, name: Faker::Hacker.noun.capitalize)
+  # Create 1 - 3 stations
+  (2..4).to_a.sample.times do
+    Station.create(survey: s, name: Faker::Hacker.noun.capitalize)
   end
 end
 
 # CREATE TOPICS
 Station.all.each do |s|
-  6.times do
+  (6..10).to_a.sample.times do
     s.topics.create(description: Faker::Hacker.say_something_smart, name: Faker::Hacker.adjective.capitalize)
   end
 end
 
 # StatementSets
 Topic.all.each do |t|
-  n = (1..Role.count).to_a.sample 
+  n = (1..Role.count).to_a.sample
   roles = Role.all.sample(n)
   roles.each do |r|
     StatementSet.create(topic: t, role: r)
@@ -52,7 +48,9 @@ end
 STYLES = %w[multiple_choice single_choice].freeze
 
 StatementSet.all.each do |s|
-  s.statements.create(style: STYLES.sample, text: Faker::WorldOfWarcraft.quote + '?')
+  (1..5).to_a.sample.times do
+    s.statements.create(style: STYLES.sample, text: Faker::WorldOfWarcraft.quote[0...-1] + '?')
+  end
 end
 
 # CREATE CHOICES
@@ -61,4 +59,3 @@ Statement.all.each do |s|
     s.choices.create(text: Faker::WorldOfWarcraft.quote)
   end
 end
-

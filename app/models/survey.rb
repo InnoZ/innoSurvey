@@ -13,7 +13,7 @@ class Survey < ApplicationRecord
       id: id,
       name: name,
       stations: stations.map(&:to_json)
-    }.to_json
+    }
   end
 
   def make_name_url_safe
