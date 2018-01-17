@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def answer_question_set
     respond_to do |format|
       format.json do
@@ -9,11 +11,7 @@ class AnswersController < ApplicationController
 
   private
 
-  def answers_to_hash
-    JSON.parse params["answers"]
-  end
-
   def answers
-    answers_to_hash["answers"]
+    params["answers"]
   end
 end

@@ -7,7 +7,7 @@ export default class StatementSet extends React.Component {
     visitedStatementBoxes: [],
     selections: this.props.statements.map(function(statement) {
       return {
-        id: statement.id,
+        statement_id: statement.id,
         selected_choices: [],
       }
     })
@@ -66,11 +66,11 @@ export default class StatementSet extends React.Component {
   modifyChoices({statementId, choiceId, check}) {
     const thisComponent = this;
     const updatedChoices = this.state.selections.slice().map(function(statement) {
-      const selections = statement.id == statementId ?
+      const selections = statement.statement_id == statementId ?
         (check ? statement.selected_choices.concat(choiceId) : statement.selected_choices.filter((c) => c != choiceId))
         : statement.selected_choices;
       return {
-        id: statement.id,
+        statement_id: statement.statement_id,
         selected_choices: selections,
       };
     });
@@ -86,7 +86,7 @@ export default class StatementSet extends React.Component {
   }
 
   selectionsFor(statementId) {
-    return this.state.selections.find((q) => q.id == statementId).selected_choices
+    return this.state.selections.find((q) => q.statement_id == statementId).selected_choices
   }
 
   render() {
