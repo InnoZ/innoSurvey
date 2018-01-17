@@ -27,6 +27,7 @@ RSpec.describe Statement, type: :model do
     it 'destroys associated choice and answer on destroy' do
       create_choice_stack
       statement = Statement.first
+      create_list :answer, 2, statement: statement
 
       expect { statement.destroy }.to change( Answer, :count).by(-2).and change( Choice, :count).by(-3)
     end
