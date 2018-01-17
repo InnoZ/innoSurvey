@@ -33,7 +33,7 @@ export default class StatementSet extends React.Component {
       this.props.resetStatementSet();
     }.bind(this), 10000);
   }
-  // ^^^^^^^^^^^^ RESET TIMER ^^^^^^^^^^^^ //
+  // ^^^^^^^^^^^^^ RESET TIMER ^^^^^^^^^^^^^ //
 
   previewSelections(json) {
     const jsonDiv = document.getElementById('json-preview');
@@ -46,9 +46,21 @@ export default class StatementSet extends React.Component {
     }, 10000);
   }
 
-  sendSelections() {
-    this.previewSelections({ selections: this.state.selections });
+  submitSelections() {
+    const data = { answers: this.state.selections };
+    this.sendSelections(data);
+    this.previewSelections(data);
     this.props.resetStatementSet();
+  }
+
+  sendSelections(data) {
+    fetch('/answers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }).then(res => res.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', response));
   }
 
   modifyChoices({statementId, choiceId, check}) {
@@ -96,7 +108,7 @@ export default class StatementSet extends React.Component {
       <div className='topic'>
         {statements}
         <button className='button submit-button'
-                onClick={() => this.sendSelections()}>
+                onClick={() => this.submitSelections()}>
           Send
         </button>
       </div>
