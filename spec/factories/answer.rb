@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :answer do
     statement { create(:statement) }
-    result ''
+    selected_choices
   end
 end

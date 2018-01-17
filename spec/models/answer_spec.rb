@@ -1,7 +1,7 @@
 RSpec.describe Answer, type: :model do
   context "Attributes" do
     it "should respond to result" do 
-      expect(Answer.new).to respond_to(:result)
+      expect(Answer.new).to respond_to(:selected_choices)
     end
   end
 
