@@ -10,8 +10,13 @@ RSpec.describe Answer, type: :model do
   end
 
   context 'Instance methods' do
-    it 'can parse and return its results as ruby hash' do
-      require 'pry'; binding.pry
+    it 'can return selected statement choices' do
+      statement = create :statement
+      choices = create_list :choice, 3, statement: statement
+      answer = create :answer, statement: statement, selected_choices: "#{choices.pluck(:id)}"
+
+      expect(answer.selected_choices_inst).to eq choices
+      
     end
   end
 end
