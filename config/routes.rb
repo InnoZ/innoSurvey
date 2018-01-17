@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'answers/create'
+
   root 'topics#show'
 
   # TOPICS
@@ -6,6 +8,9 @@ Rails.application.routes.draw do
 
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'
+
+  # ANSWERS
+  post '/answers', to: 'answers#answer_question_set'
 
   # USER SESSIONS
   get 'sign_in', to: 'sessions#create', as: :sign_in

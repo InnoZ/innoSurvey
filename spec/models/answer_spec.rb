@@ -8,4 +8,10 @@ RSpec.describe Answer, type: :model do
   context "Associations" do
     it { is_expected.to(belong_to(:statement)) }
   end
+
+  context 'Instance methods' do
+    it 'can parse and return its results as ruby hash' do
+      require 'pry'; binding.pry
+    end
+  end
 end
