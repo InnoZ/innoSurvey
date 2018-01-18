@@ -7,7 +7,7 @@ export default class StatementSet extends React.Component {
     visitedStatementBoxes: [],
     selections: this.props.statements.map(function(statement) {
       return {
-        id: statement.id,
+        statement_id: statement.id,
         selected_choices: [],
       }
     })
@@ -47,30 +47,35 @@ export default class StatementSet extends React.Component {
   }
 
   submitSelections() {
-    const data = { answers: this.state.selections };
-    this.sendSelections(data);
-    this.previewSelections(data);
+    this.sendSelections();
     this.props.resetStatementSet();
   }
 
-  sendSelections(data) {
+  sendSelections() {
+    const data = { answers: this.state.selections };
+    const csrfToken = document.querySelector("[name='csrf-token']").content;
     fetch('/answers', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
+      },
       body: JSON.stringify(data),
-    }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      credentials: 'same-origin',
+    }).catch(error => console.error('An error occured: ', error))
+      .then((responseObj) =>
+        responseObj.status == 201 ? this.previewSelections(data)
+                                  : console.error('An error occured on server!') )
   }
 
   modifyChoices({statementId, choiceId, check}) {
     const thisComponent = this;
     const updatedChoices = this.state.selections.slice().map(function(statement) {
-      const selections = statement.id == statementId ?
+      const selections = statement.statement_id == statementId ?
         (check ? statement.selected_choices.concat(choiceId) : statement.selected_choices.filter((c) => c != choiceId))
         : statement.selected_choices;
       return {
-        id: statement.id,
+        statement_id: statement.statement_id,
         selected_choices: selections,
       };
     });
@@ -86,7 +91,7 @@ export default class StatementSet extends React.Component {
   }
 
   selectionsFor(statementId) {
-    return this.state.selections.find((q) => q.id == statementId).selected_choices
+    return this.state.selections.find((q) => q.statement_id == statementId).selected_choices
   }
 
   render() {
