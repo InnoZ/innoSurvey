@@ -28,7 +28,6 @@ multimodel_priv = survey.stations.create(name: 'Multimodel Privacy')
 ai_topic_1 = ai.topics.create(name: ai.name, description: 'This is all about AI!')
 multimodel_priv_topic_1 = multimodel_priv.topics.create(name: multimodel_priv.name, description: 'This is all about Multimodel Privacy!')
 
-
 # STATEMENTSETS + STATEMENTS + CHOICES
 # AI
 Role.all.each do |role|
@@ -42,7 +41,7 @@ end
 
 # Multimodel privacy
 Role.all.each do |role|
-  set = ai_topic_1.statement_sets.create(role: role)
+  set = multimodel_priv_topic_1.statement_sets.create(role: role)
   statement_1 = set.statements.create(style: 'multiple_choice', text: 'Sehen die einzelnen Adressatengruppen an unterschiedlichen Stellen Probleme?')
   statement_1.choices.create(text: 'Abrechnung der einzelnen Services')
   statement_1.choices.create(text: 'Datenschutz')

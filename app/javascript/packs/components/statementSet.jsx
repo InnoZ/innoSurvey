@@ -3,7 +3,7 @@ import QuestionBox from './questionBox.jsx';
 
 export default class StatementSet extends React.Component {
   initialState = {
-    activeStatementBox: null,
+    activeStatementBox: this.props.statements[0].id,
     visitedStatementBoxes: [],
     selections: this.props.statements.map(function(statement) {
       return {
