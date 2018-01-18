@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'topics#show'
+  root 'surveys#index'
 
   # TOPICS
   get '/:survey_name/:station_id/:id', to: 'topics#show', as: :topic
