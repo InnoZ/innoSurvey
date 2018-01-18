@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.json do
         answers.each { |answer| Answer.create(answer) }
+        render(json: nil, status: :created)
       end
     end
   end
@@ -12,6 +13,6 @@ class AnswersController < ApplicationController
   private
 
   def answers
-    params["answers"]
+    params.permit(answers: [ :statement_id, selected_choices: [] ])[:answers]
   end
 end
