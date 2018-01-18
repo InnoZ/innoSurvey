@@ -4,9 +4,9 @@ export default function QuestionBox({selections, select, unselect, id, text, vis
 
   const handleClick = function(questionId, choiceId) {
     if (!selections.includes(choiceId)) {
-      select({statementId: questionId, choiceId: choiceId, increment: true})
+      select({statementId: questionId, choiceId: choiceId, check: true})
     } else {
-      unselect({statementId: questionId, choiceId: choiceId, increment: false})
+      unselect({statementId: questionId, choiceId: choiceId, check: false})
     };
     // start timer reset after each click
     resetTimer();
