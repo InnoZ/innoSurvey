@@ -1,10 +1,11 @@
 class Survey < ApplicationRecord
   has_many(:stations, dependent: :destroy)
+  has_many(:roles, dependent: :destroy)
   belongs_to(:user)
 
   validates :description, presence: true, length: {  minimum: 10 }
-  validates :name, presence: true, length: { in: 5..20 }, uniqueness: true
-  validates :name_url_safe, presence: true, length: { in: 5..20 }, uniqueness: true
+  validates :name, presence: true, length: { in: 5..100 }, uniqueness: true
+  validates :name_url_safe, presence: true, length: { in: 5..100 }, uniqueness: true
 
   before_validation :make_name_url_safe
 
