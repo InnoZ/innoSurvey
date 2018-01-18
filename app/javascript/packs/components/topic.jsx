@@ -44,7 +44,7 @@ export default class Topic extends React.Component {
         </div>
       )
       main = <div>
-        <div className='question'>Als was sehen Sie sie sich am ehesten?
+        <div className='question active'>Als was sehen Sie sie sich am ehesten?
           {statemenSets}
         </div>
       </div>

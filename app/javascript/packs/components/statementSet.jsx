@@ -53,12 +53,12 @@ export default class StatementSet extends React.Component {
 
   sendSelections() {
     const data = { answers: this.state.selections };
-    const csrfToken = document.querySelector("[name='csrf-token']").content;
+    // const csrfToken = document.querySelector("[name='csrf-token']").content;
     fetch('/answers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': csrfToken,
+        // 'X-CSRF-Token': csrfToken,
       },
       body: JSON.stringify(data),
       credentials: 'same-origin',
