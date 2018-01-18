@@ -1,0 +1,12 @@
+version: '2'
+services:
+  innosurvey:
+    build: .
+    #command: java -cp /matsim/innoz_toolbox_jar/innoz-toolbox.jar com.innoz.toolbox.run.Main
+    command: bundle exec rails s
+    volumes: 
+      - .:/innosurvey
+    env_file: .env
+    ports: 
+      - '0.0.0.0:3000:3000'
+
