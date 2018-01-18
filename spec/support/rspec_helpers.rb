@@ -21,6 +21,6 @@ module RSpecHelpers
       { statement_id: @statements[0].id, selected_choices: choices0_ids.slice(0, 1) },
       { statement_id: @statements[1].id, selected_choices: choices1_ids.slice(1, 1) },
       { statement_id: @statements[2].id, selected_choices: choices2_ids.slice(1, 2) }, ]
-    }.to_json
+    }
   end
 end
