@@ -17,13 +17,23 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f  }
 # Prevent database truncation if the environment is production
 ActiveRecord::Migration.maintain_test_schema!
 
+# CAPYBARA configuration
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app,
+                                    phantomjs_options: ['--ignore-ssl-errors=true'],
+                                    inspector: true)
+end
+
+Capybara.configure do |config|
+  config.javascript_driver = :poltergeist
+  config.current_driver = Capybara.javascript_driver
+end
+
 RSpec.configure do |config|
   include RSpecHelpers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
-  config.use_transactional_fixtures = true
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -46,7 +56,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
 	config.include FactoryBot::Syntax::Methods
-	config.use_transactional_fixtures = false
+	config.use_transactional_fixtures = true
 
 	config.before(:suite) do
 		DatabaseCleaner.strategy = :transaction
