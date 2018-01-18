@@ -47,18 +47,25 @@ export default class StatementSet extends React.Component {
   }
 
   submitSelections() {
-    const data = { answers: this.state.selections };
-    this.sendSelections(data);
-    this.previewSelections(data);
+    this.sendSelections();
     this.props.resetStatementSet();
   }
 
-  sendSelections(data) {
+  sendSelections() {
+    const data = { answers: this.state.selections };
+    const csrfToken = document.querySelector("[name='csrf-token']").content;
     fetch('/answers', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken,
+      },
       body: JSON.stringify(data),
-    });
+      credentials: 'same-origin',
+    }).catch(error => console.error('An error occured: ', error))
+      .then((responseObj) =>
+        responseObj.status == 201 ? this.previewSelections(data)
+                                  : console.error('An error occured on server!') )
   }
 
   modifyChoices({statementId, choiceId, check}) {
