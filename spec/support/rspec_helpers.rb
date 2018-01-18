@@ -11,7 +11,7 @@ module RSpecHelpers
     end
   end
 
-  def generate_valid_answer
+  def generate_valid_answer_params
     create_choice_stack
     choices0_ids = @statements[0].choices.pluck(:id)
     choices1_ids = @statements[1].choices.pluck(:id)
