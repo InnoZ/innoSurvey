@@ -1,6 +1,4 @@
 class AnswersController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   def answer_question_set
     respond_to do |format|
       format.json do
