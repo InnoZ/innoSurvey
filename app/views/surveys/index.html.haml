@@ -1,0 +1,12 @@
+#survey-index
+  - @surveys.each do |survey|
+    %h1= 'Survey: ' + survey.name
+    = 'Roles: ' + survey.roles.map(&:name).join(', ')
+    %ul
+      - survey.stations.each do |station|
+        %li
+          %h2= 'Station: ' + station.name
+          = 'Topics: '
+          - station.topics.each do |topic|
+            = link_to topic.name, topic_path(survey_name: survey.name_url_safe, station_id: station.id, id: topic.id)
+            = ' | '

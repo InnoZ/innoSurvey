@@ -30,7 +30,7 @@ end
 
 # CREATE TOPICS
 Station.all.each do |s|
-  (6..10).to_a.sample.times do
+  (1..5).to_a.sample.times do
     s.topics.create(description: Faker::Hacker.say_something_smart, name: Faker::Hacker.adjective.capitalize)
   end
 end
@@ -38,7 +38,7 @@ end
 # StatementSets
 Topic.all.each do |t|
   n = (1..Role.count).to_a.sample
-  roles = Role.all.sample(n)
+  roles = t.survey.roles.sample(n)
   roles.each do |r|
     StatementSet.create(topic: t, role: r)
   end

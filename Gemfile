@@ -20,7 +20,6 @@ gem 'haml'
 group :development, :test do
 	#e gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 	gem 'pry-byebug'
-	gem 'selenium-webdriver'
 end
 
 group :test do
