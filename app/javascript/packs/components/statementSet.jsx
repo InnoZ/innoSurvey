@@ -58,9 +58,7 @@ export default class StatementSet extends React.Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+    });
   }
 
   modifyChoices({statementId, choiceId, check}) {
