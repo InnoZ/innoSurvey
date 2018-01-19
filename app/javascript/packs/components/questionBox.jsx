@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function QuestionBox({selections, select, unselect, id, text, visited, active, choices, resetTimer}) {
+export default function QuestionBox({selections, select, unselect, id, text, answered, active, choices, resetTimer}) {
 
   const handleClick = function(questionId, choiceId) {
     if (!selections.includes(choiceId)) {
@@ -31,7 +31,7 @@ export default function QuestionBox({selections, select, unselect, id, text, vis
     return (
       <div className='question'>
         {text}
-        {visited ? ' ✓' : null}
+        {answered ? ' ✓' : null}
       </div>
     )
   }
