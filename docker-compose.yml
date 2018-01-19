@@ -1,0 +1,11 @@
+version: '2'
+services:
+  innosurvey:
+    build: .
+    command: bundle exec rails s
+    volumes: 
+      - .:/innosurvey
+    env_file: .env
+    ports: 
+      - '0.0.0.0:3000:3000'
+
