@@ -1,5 +1,7 @@
-
+// polyfills to provide es6 functions to tests
+import 'whatwg-fetch';
 import 'babel-polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Topic from './components/topic.jsx';

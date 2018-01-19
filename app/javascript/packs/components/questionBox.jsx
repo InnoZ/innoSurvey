@@ -22,14 +22,14 @@ export default function QuestionBox({selections, select, unselect, id, text, vis
 
   if (active) {
     return(
-      <div className='question'>
+      <div className='question active'>
         {text}
         {choicesList}
       </div>
     )
   } else {
     return (
-      <div className='question inactive'>
+      <div className='question'>
         {text}
         {visited ? ' ✓' : null}
       </div>

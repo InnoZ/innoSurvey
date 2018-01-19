@@ -28,13 +28,14 @@ body {
 .question {
   text-align: center;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 20px;
+  color: grey;
   font-weight: bold;
   margin-top: 30px;
   margin-bottom: 30px;
-  &.inactive {
-    font-size: 20px;
-    color: grey;
+  &.active {
+    font-size: 30px;
+    color: white;
   }
   &.visited {
     color: lightgrey;
