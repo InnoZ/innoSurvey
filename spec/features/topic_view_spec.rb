@@ -19,6 +19,7 @@ feature 'Topic view', :js do
 
   scenario 'includes working react app' do
     select_role_see_related_answers_and_select_first_answer
+    do_not_show_send_button_unless_all_statements_answered
     select_other_question_and_see_related_answers
     select_and_highlight_one_choice
     send_question_set
@@ -29,6 +30,10 @@ feature 'Topic view', :js do
     expect(page).to have_css('.question.active', text: 'First question')
     expect(page).to have_content('Sample answer', count: 2)
     select_answer 'Sample answer 0'
+  end
+
+  def do_not_show_send_button_unless_all_statements_answered
+    expect(page).to_not have_css('.submit-button')
   end
 
   def select_other_question_and_see_related_answers
@@ -49,6 +54,6 @@ feature 'Topic view', :js do
 
   def send_question_set
     find('.submit-button').trigger('click')
-    expect(page).to have_content('saved')
+    expect(page).to have_content('gespeichert')
   end
 end

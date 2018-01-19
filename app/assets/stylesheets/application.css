@@ -19,3 +19,12 @@ body {
   background-color: black;
   padding: 30px;
 }
+
+* {
+  font-family: arial;
+  color: white;
+}
+
+a {
+  color: purple;
+}

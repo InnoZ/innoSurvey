@@ -4,7 +4,6 @@ import QuestionBox from './questionBox.jsx';
 export default class StatementSet extends React.Component {
   initialState = {
     activeStatementBox: this.props.statements[0].id,
-    visitedStatementBoxes: [],
     selections: this.props.statements.map(function(statement) {
       return {
         statement_id: statement.id,
@@ -36,13 +35,10 @@ export default class StatementSet extends React.Component {
   // ^^^^^^^^^^^^^ RESET TIMER ^^^^^^^^^^^^^ //
 
   previewSelections(json) {
-    const jsonDiv = document.getElementById('json-preview');
-    jsonDiv.innerHTML = JSON.stringify(json, null, 4);
     const flashMessage = document.getElementById('flash-message');
-    flashMessage.innerHTML = 'saved';
+    flashMessage.innerHTML = 'Vielen Dank! Ihre Antworten wurden gespeichert...';
     setTimeout(function() {
       flashMessage.innerHTML = '';
-      jsonDiv.innerHTML = '';
     }, 10000);
   }
 
@@ -82,21 +78,21 @@ export default class StatementSet extends React.Component {
     this.setState({selections: updatedChoices})
   }
 
-  activateStatementBox(id) {
-    const visitedStatementBoxes = this.state.visitedStatementBoxes.slice();
-    this.setState({
-      activeStatementBox: id,
-      visitedStatementBoxes: visitedStatementBoxes.concat(id),
-    })
+  selectionsFor(statementId) {
+    return this.state.selections.find((q) => q.statement_id == statementId).selected_choices;
   }
 
-  selectionsFor(statementId) {
-    return this.state.selections.find((q) => q.statement_id == statementId).selected_choices
+  everyStatementAnswered() {
+    return this.state.selections.every(s => s.selected_choices.length > 0);
+  }
+
+  answered(statementId) {
+    return this.selectionsFor(statementId).length > 0;
   }
 
   render() {
     const statements = this.props.statements.map((statement) =>
-      <div key={statement.id} onClick={() => this.activateStatementBox(statement.id)}>
+      <div key={statement.id} onClick={() => this.setState({ activeStatementBox: statement.id })}>
         <QuestionBox id={statement.id}
                      text={statement.text}
                      choices={statement.choices}
@@ -104,18 +100,21 @@ export default class StatementSet extends React.Component {
                      select={this.modifyChoices.bind(this)}
                      unselect={this.modifyChoices.bind(this)}
                      active={statement.id == this.state.activeStatementBox}
-                     visited={this.state.visitedStatementBoxes.includes(statement.id)}
+                     answered={this.answered(statement.id)}
                      resetTimer={this.setTimer.bind(this)}/>
       </div>
     );
+    const submitButton = this.everyStatementAnswered() ?
+        <button className='button submit-button'
+                onClick={() => this.submitSelections()}>
+          Senden
+        </button>
+      : null
 
     return(
       <div className='topic'>
         {statements}
-        <button className='button submit-button'
-                onClick={() => this.submitSelections()}>
-          Send
-        </button>
+        {submitButton}
       </div>
     )
   }
