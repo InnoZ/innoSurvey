@@ -36,10 +36,8 @@ export default class StatementSet extends React.Component {
   // ^^^^^^^^^^^^^ RESET TIMER ^^^^^^^^^^^^^ //
 
   previewSelections(json) {
-    const jsonDiv = document.getElementById('json-preview');
-    jsonDiv.innerHTML = JSON.stringify(json, null, 4);
     const flashMessage = document.getElementById('flash-message');
-    flashMessage.innerHTML = 'saved';
+    flashMessage.innerHTML = 'Vielen Dank! Ihre Antworten wurden gespeichert...';
     setTimeout(function() {
       flashMessage.innerHTML = '';
       jsonDiv.innerHTML = '';

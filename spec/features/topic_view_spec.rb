@@ -49,6 +49,6 @@ feature 'Topic view', :js do
 
   def send_question_set
     find('.submit-button').trigger('click')
-    expect(page).to have_content('saved')
+    expect(page).to have_content('gespeichert')
   end
 end
