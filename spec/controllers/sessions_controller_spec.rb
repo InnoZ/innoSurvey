@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 describe SessionsController do
+  context 'GET #new' do
+    it 'Responde with log_in' do
+      get :new
+
+      expect(response.status).to eq(200)
+    end
+  end
   context 'POST #create' do
     it 'Can login' do
       user = create :user
