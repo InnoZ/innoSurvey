@@ -1,9 +1,20 @@
 require 'rails_helper'
 
-RSpec.describe SessionsController, type: :controller do
+describe SessionsController do
   context 'GET #new' do
     it 'Responde with log_in' do
       get :new
+
+      expect(response.status).to eq(200)
+    end
+  end
+  context 'POST #create' do
+    it 'Can login' do
+      user = create :user
+
+      post :create, params: {
+        sessions: { email: user.email, password: 'secret' }
+      }
 
       expect(response.status).to eq(200)
     end
