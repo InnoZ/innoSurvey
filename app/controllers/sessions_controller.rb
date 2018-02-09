@@ -8,8 +8,8 @@ class SessionsController < ApplicationController
       session[:user_id] = @user.id
       redirect_to root_url
     else
-      flash[:danger] = t('.login_error')
-      render :new
+      redirect_to '/login'
+      flash[:danger] = ('.login_error')
     end
   end
 
