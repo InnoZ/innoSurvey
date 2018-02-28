@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SessionsController do
+RSpec.describe SessionsController, type: :controller do
   context 'GET #new' do
     it 'Responde with log_in' do
       get :new
