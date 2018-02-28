@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
   root 'surveys#index'
 
-  # TOPICS
-  get '/:survey_name/:station_id/:id', to: 'topics#show', as: :topic
-
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'
 
@@ -13,4 +10,10 @@ Rails.application.routes.draw do
   # USER SESSIONS
   get 'sign_in', to: 'sessions#create', as: :sign_in
   get 'sign_out', to: 'sessions#destroy', as: :sign_out
+
+  # TOPICS
+  get '/topics/:id', to: 'topics#show', as: :topic
+
+  # PARTICIPANT
+  get 'ident', to: 'participant#ident', as: :ident
 end

@@ -4,11 +4,12 @@ import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Topic from './components/topic.jsx';
+import MobileScreen from './components/mobileScreen.jsx';
 
 ReactDOM.render(
   <div>
-    <Topic statementSets={window.data.statement_sets}/>
+    <div>mobile Screen</div>
+    <MobileScreen />
     <div id='flash-message'></div>
   </div>,
   document.body.appendChild(document.createElement('div')),

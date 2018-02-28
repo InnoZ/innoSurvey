@@ -8,5 +8,5 @@
           %h2= 'Station: ' + station.name
           = 'Topics: '
           - station.topics.each do |topic|
-            = link_to topic.name, topic_path(survey_name: survey.name_url_safe, station_id: station.id, id: topic.id)
+            = link_to topic.name, topic_path(topic.id)
             = ' | '
