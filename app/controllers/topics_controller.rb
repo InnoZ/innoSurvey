@@ -1,22 +1,10 @@
 class TopicsController < ApplicationController
-  before_action :set_survey, :set_station
-
   def show
-    @topic = @station.topics.find_by(id: params[:id]).to_json
-
+    @topic = Topic.find(params[:id])
+    @topic_json = @topic.to_json
     respond_to do |format|
       format.html
-      format.json { render json: @topic.to_json, status: 200 }
+      format.json { render json: @topic_json.to_json, status: 200 }
     end
-  end
-
-  private
-
-  def set_survey
-    @survey = Survey.find_by(name_url_safe: params[:survey_name])
-  end
-
-  def set_station
-    @station = @survey.stations.find_by(id: params[:station_id])
   end
 end

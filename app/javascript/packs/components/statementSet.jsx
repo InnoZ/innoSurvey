@@ -20,35 +20,31 @@ export default class StatementSet extends React.Component {
   // vvvvvvvvvvvvv RESET TIMER vvvvvvvvvvvv //
   componentDidMount() { this.setTimer(); }
   componentWillUpdate() { this.setTimer(); }
-  // clear any existing timer
   componentWillUnmount() { clearTimeout(this._timer); }
-
   setTimer() {
-    // clear any existing timer
     this._timer != null ? clearTimeout(this._timer) : null;
-
     // hide after 10000 milliseconds
     this._timer = setTimeout(function(){
-      this.props.resetStatementSet();
+      this.props.reset();
     }.bind(this), 10000);
   }
   // ^^^^^^^^^^^^^ RESET TIMER ^^^^^^^^^^^^^ //
 
-  previewSelections(json) {
+  successMessage() {
     const flashMessage = document.getElementById('flash-message');
-    flashMessage.innerHTML = 'Vielen Dank! Ihre Antworten wurden gespeichert...';
+    flashMessage.innerHTML = 'Vielen Dank! Deine Antworten wurden gespeichert...';
     setTimeout(function() {
       flashMessage.innerHTML = '';
-    }, 10000);
+    }, 5000);
   }
 
   submitSelections() {
     this.sendSelections();
-    this.props.resetStatementSet();
+    this.props.reset();
   }
 
   sendSelections() {
-    const data = { answers: this.state.selections };
+    const data = { answers: this.state.selections, uuid: this.props.uuid };
     // const csrfToken = document.querySelector("[name='csrf-token']").content;
     fetch('/answers', {
       method: 'POST',
@@ -60,7 +56,7 @@ export default class StatementSet extends React.Component {
       credentials: 'same-origin',
     }).catch(error => console.error('An error occured: ', error))
       .then((responseObj) =>
-        responseObj.status == 201 ? this.previewSelections(data)
+        responseObj.status == 201 ? this.successMessage()
                                   : console.error('An error occured on server!') )
   }
 

@@ -1,6 +1,6 @@
 RSpec.describe Answer, type: :model do
   context "Attributes" do
-    it "should respond to result" do 
+    it "should respond to result" do
       expect(Answer.new).to respond_to(:selected_choices)
     end
   end
@@ -13,7 +13,7 @@ RSpec.describe Answer, type: :model do
     it 'can return selected statement choices' do
       statement = create :statement
       choices = create_list :choice, 3, statement: statement
-      answer = create :answer, statement: statement, selected_choices: "#{choices.pluck(:id)}"
+      answer = create :answer, statement: statement, selected_choices: "#{choices.pluck(:id)}", uuid: '123xy'
 
       expect(answer.selected_choices_inst).to eq choices
     end
@@ -27,9 +27,9 @@ RSpec.describe Answer, type: :model do
       choices2_ids = @statements[2].choices.pluck(:id)
 
       @answers_hash = { answers: [
-        { statement_id: @statements[0].id, selected_choices: choices0_ids.slice(0, 1) },
-        { statement_id: @statements[1].id, selected_choices: choices1_ids.slice(1, 1) },
-        { statement_id: @statements[2].id, selected_choices: choices2_ids.slice(1, 2) }, ]
+        { statement_id: @statements[0].id, selected_choices: choices0_ids.slice(0, 1), uuid: '123xy' },
+        { statement_id: @statements[1].id, selected_choices: choices1_ids.slice(1, 1), uuid: '123xy' },
+        { statement_id: @statements[2].id, selected_choices: choices2_ids.slice(1, 2), uuid: '123xy' }, ]
       }
       @answer = @answers_hash[:answers].first
     end
