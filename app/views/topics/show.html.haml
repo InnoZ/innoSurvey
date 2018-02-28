@@ -1,5 +1,6 @@
 :javascript
-  window.data = #{raw @topic.to_json}
+  window.data = #{raw @topic_json.to_json}
+  window.topicId = #{@topic.id}
 
-= javascript_pack_tag 'topic'
-= stylesheet_pack_tag 'styles/topic'
+= javascript_pack_tag 'exhibitionScreen'
+= stylesheet_pack_tag 'styles/exhibitionScreen'

@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
     respond_to do |format|
       format.json do
         unless contains_invalid_answer?
-          answers.each { |answer| Answer.create(answer) }
+          answers.each { |answer| Answer.create(answer.merge!(uuid: uuid)) }
           render(json: nil, status: :created)
         else
           render(json: nil, status: :unprocessable_entity)
@@ -32,6 +32,10 @@ class AnswersController < ApplicationController
   end
 
   def answers
-    params.permit(answers: [ :statement_id, selected_choices: [] ])[:answers]
+    params.permit(:uuid, answers: [ :statement_id, selected_choices: [] ])[:answers]
+  end
+
+  def uuid
+    params.permit(:uuid)[:uuid]
   end
 end
