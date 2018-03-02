@@ -117,15 +117,20 @@ task :gen_qr_codes do
 
   # GENERATE N QR_CODES PER ROLE
   i = 0
-  Role.all.each do |role|
-    arguments[:iterations].times do
-      # Create subdirectory for each role
-      role_path = FileUtils::mkdir_p(base_path + "/#{role.name}/").first
-      # Generate gr code per Role
-      gen_qr_pdf(role_id: role.id,
-                 uuid: SecureRandom.urlsafe_base64(7),
-                 id: i += 1,
-                 base_path: role_path)
+  begin
+    Role.all.each do |role|
+      arguments[:iterations].times do
+        # Create subdirectory for each role
+        role_path = FileUtils::mkdir_p(base_path + "/#{role.name}/").first
+        # Generate gr code per Role
+        gen_qr_pdf(role_id: role.id,
+                   uuid: SecureRandom.urlsafe_base64(7),
+                   id: i += 1,
+                   base_path: role_path)
+      end
     end
+    p "#{arguments[:iterations]*Role.count} QR-Codes generated. Find them in #{base_path}"
+  rescue
+    p "Something went wrong!"
   end
 end
