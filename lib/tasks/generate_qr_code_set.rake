@@ -77,44 +77,39 @@ task :gen_qr_codes do
 
   # HTML templating
   def gen_qr_pdf(role_id:, uuid:, id:, base_path:)
-    begin
-      file_path = base_path + id.to_s
-      opts = {
-        role_id: role_id,
-        uuid: uuid,
-        id: id,
-        path_to_qr_svg: file_path + '.svg',
-        path_to_html: file_path + '.html'
-      }
+    file_path = base_path + id.to_s
+    opts = {
+      role_id: role_id,
+      uuid: uuid,
+      id: id,
+      path_to_qr_svg: file_path + '.svg',
+      path_to_html: file_path + '.html'
+    }
 
-      # Generate and write intermediate QR code
-      tmp_svg = gen_qrcode(**opts)
-      tmp_svg_file = File.open(file_path + '.svg', 'w') do |f|
-        f.write(tmp_svg)
-        f.close
-      end
-
-      # Generate HTML template
-      tmp_html = gen_html(**opts)
-      tmp_html_file = File.open(file_path + '.html', 'w') do |f|
-        f.write(tmp_html)
-        f.close
-      end
-
-      # Generate PDF
-      pdf = WickedPdf.new.pdf_from_html_file(file_path + '.html')
-      File.open(file_path + '.pdf', 'w:ASCII-8BIT') do |f|
-        f << pdf
-      end
-
-      # Remove temporary files
-      %w[.html].each do |extension|
-        File.delete(file_path + extension)
-      end
-
-    rescue IOError => e
-      puts "File system error!"
+    # Generate and write intermediate QR code
+    svg = gen_qrcode(**opts)
+    svg_file = File.open(file_path + '.svg', 'w') do |f|
+      f.write(svg)
+      f.close
     end
+
+    # # Generate HTML template
+    # tmp_html = gen_html(**opts)
+    # tmp_html_file = File.open(file_path + '.html', 'w') do |f|
+    #   f.write(tmp_html)
+    #   f.close
+    # end
+
+    # # Generate PDF
+    # pdf = WickedPdf.new.pdf_from_html_file(file_path + '.html')
+    # File.open(file_path + '.pdf', 'w:ASCII-8BIT') do |f|
+    #   f << pdf
+    # end
+
+    # # Remove temporary files
+    # %w[.html].each do |extension|
+    #   File.delete(file_path + extension)
+    # end
   end
 
   # CREATE FOLDER BASED ON UNIX TIMESTAMP
