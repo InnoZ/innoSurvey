@@ -1,7 +1,21 @@
+require 'optparse'
+require "rqrcode"
+require 'fileutils'
+
 desc "Generate set of n QR codes"
 task :gen_qr_codes do
-  # Controller
-  require "rqrcode"
+
+  arguments = {
+    iterations: 10
+  }
+
+  o = OptionParser.new
+
+  o.banner = "Usage: rake gen_qr_codes -- [options]"
+  o.on("-i ARG", "--iterations ARG", Integer) { |iterations| arguments[:iterations] = iterations.to_i }
+
+  args = o.order!(ARGV) {}
+  o.parse!(args)
 
   # GENERATE QR CODE
   def gen_qrcode(**args)
@@ -104,13 +118,12 @@ task :gen_qr_codes do
   end
 
   # CREATE FOLDER BASED ON UNIX TIMESTAMP
-  require 'fileutils'
   base_path = FileUtils::mkdir_p(Rails.root.to_s + "/tmp/cache/qr_codes/#{Time.now.strftime('%d.%m.%Y-%H:%M:%S')}/").first
 
   # GENERATE N QR_CODES PER ROLE
   i = 0
   Role.all.each do |role|
-    4.times do
+    arguments[:iterations].times do
       # Create subdirectory for each role
       role_path = FileUtils::mkdir_p(base_path + "/#{role.name}/").first
       # Generate gr code per Role
