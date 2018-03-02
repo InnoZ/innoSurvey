@@ -1,8 +1,9 @@
 require 'optparse'
-require "rqrcode"
+require 'rqrcode'
 require 'fileutils'
+require 'ruby-progressbar'
 
-desc "Generate set of n QR codes"
+desc 'Generate set of n QR codes'
 task :gen_qr_codes do
 
   arguments = {
@@ -11,8 +12,8 @@ task :gen_qr_codes do
 
   o = OptionParser.new
 
-  o.banner = "Usage: rake gen_qr_codes -- [options]"
-  o.on("-i ARG", "--iterations ARG", Integer) { |iterations| arguments[:iterations] = iterations.to_i }
+  o.banner = 'Usage: rake gen_qr_codes -- [options]'
+  o.on('-i ARG', '--iterations ARG', Integer) { |iterations| arguments[:iterations] = iterations.to_i }
 
   args = o.order!(ARGV) {}
   o.parse!(args)
@@ -51,7 +52,7 @@ task :gen_qr_codes do
           <table>
             <tr>
               <td class="qr-footer-descr-cell"><strong>Deine Rolle</strong></td>
-              <td> #{role.name}</td>
+              <td>#{role.name}</td>
             </tr>
           </table>
         </div>
@@ -63,12 +64,12 @@ task :gen_qr_codes do
   def gen_html(**opts)
     <<-EOF
       <html>
-      <head>
-      #{styling}
-      </head>
-      <body>
-      #{qr_code(opts)}
-      </body>
+        <head>
+        #{styling}
+        </head>
+        <body>
+        #{qr_code(opts)}
+        </body>
       </html>
     EOF
 
@@ -93,6 +94,7 @@ task :gen_qr_codes do
       f.close
     end
 
+    # KEEP THESE FILES IN CASE WORKFLOW DEVS - DESIGNER CHANGES SOMEHOW...
     # # Generate HTML template
     # tmp_html = gen_html(**opts)
     # tmp_html_file = File.open(file_path + '.html', 'w') do |f|
@@ -117,11 +119,22 @@ task :gen_qr_codes do
 
   # GENERATE N QR_CODES PER ROLE
   i = 0
+  n = arguments[:iterations]
+
   begin
+    progressbar = ProgressBar.create(format: "%a %b\u{15E7}%i %p%% %t",
+                                     progress_mark: ' ',
+                                     remainder_mark: "\u{FF65}",
+                                     total: n*Role.count)
+
     Role.all.each do |role|
-      arguments[:iterations].times do
+      n.times do
+        # Increment progressbar
+        progressbar.increment
+
         # Create subdirectory for each role
         role_path = FileUtils::mkdir_p(base_path + "/#{role.name}/").first
+
         # Generate gr code per Role
         gen_qr_pdf(role_id: role.id,
                    uuid: SecureRandom.urlsafe_base64(7),
@@ -129,7 +142,7 @@ task :gen_qr_codes do
                    base_path: role_path)
       end
     end
-    p "#{arguments[:iterations]*Role.count} QR-Codes generated. Find them in #{base_path}"
+    p "#{n*Role.count} QR-Codes generated. Find them in #{base_path}"
   rescue
     p "Something went wrong!"
   end
