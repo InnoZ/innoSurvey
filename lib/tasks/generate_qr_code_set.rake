@@ -12,11 +12,7 @@ task :gen_qr_codes do
 
     qr = RQRCode::QRCode.new(qr_content, level: :h, mode: :byte_8bit)
 
-    qr.as_svg(
-      offset: 0, color: '000', 
-      shape_rendering: 'crispEdges', 
-      module_size: 11
-    )
+    qr.as_svg( offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 5)
   end
 
   def styling
@@ -66,40 +62,40 @@ task :gen_qr_codes do
   end
 
   # HTML templating
-  def gen_qr_pdf(role_id:, uuid:, id:)
+  def gen_qr_pdf(role_id:, uuid:, id:, base_path:)
     begin
-      path = Rails.root.to_s + "/tmp/cache/qr_codes/foo_#{id}"
+      file_path = base_path + id.to_s
       opts = {
         role_id: role_id,
         uuid: uuid,
         id: id,
-        path_to_qr_svg: path + '.svg',
-        path_to_html: path + '.html'
+        path_to_qr_svg: file_path + '.svg',
+        path_to_html: file_path + '.html'
       }
 
       # Generate and write intermediate QR code
       tmp_svg = gen_qrcode(**opts)
-      tmp_svg_file = File.open(path + '.svg', 'w') do |f|
+      tmp_svg_file = File.open(file_path + '.svg', 'w') do |f|
         f.write(tmp_svg)
         f.close
       end
 
       # Generate HTML template
       tmp_html = gen_html(**opts)
-      tmp_html_file = File.open(path + '.html', 'w') do |f|
+      tmp_html_file = File.open(file_path + '.html', 'w') do |f|
         f.write(tmp_html)
         f.close
       end
 
       # Generate PDF
-      pdf = WickedPdf.new.pdf_from_html_file(path + '.html')
-      File.open(path + '.pdf', 'w:ASCII-8BIT') do |f|
+      pdf = WickedPdf.new.pdf_from_html_file(file_path + '.html')
+      File.open(file_path + '.pdf', 'w:ASCII-8BIT') do |f|
         f << pdf
       end
 
       # Remove temporary files
       %w[.html].each do |extension|
-        File.delete path + extension
+        File.delete(file_path + extension)
       end
 
     rescue IOError => e
@@ -107,11 +103,21 @@ task :gen_qr_codes do
     end
   end
 
+  # CREATE FOLDER BASED ON UNIX TIMESTAMP
+  require 'fileutils'
+  base_path = FileUtils::mkdir_p(Rails.root.to_s + "/tmp/cache/qr_codes/#{Time.now.strftime('%d.%m.%Y-%H:%M:%S')}/").first
+
   # GENERATE N QR_CODES PER ROLE
   i = 0
-  Role.pluck(:id).each do |role_id|
+  Role.all.each do |role|
     4.times do
-      gen_qr_pdf(role_id: role_id, uuid: SecureRandom.urlsafe_base64(7), id: i += 1)
+      # Create subdirectory for each role
+      role_path = FileUtils::mkdir_p(base_path + "/#{role.name}/").first
+      # Generate gr code per Role
+      gen_qr_pdf(role_id: role.id,
+                 uuid: SecureRandom.urlsafe_base64(7),
+                 id: i += 1,
+                 base_path: role_path)
     end
   end
 end
