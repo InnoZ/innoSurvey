@@ -8,7 +8,6 @@ import MobileScreen from './components/mobileScreen.jsx';
 
 ReactDOM.render(
   <div>
-    <div>mobile Screen</div>
     <MobileScreen />
     <div id='flash-message'></div>
   </div>,

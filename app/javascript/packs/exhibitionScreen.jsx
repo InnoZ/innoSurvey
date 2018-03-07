@@ -8,7 +8,6 @@ import ExhibitionScreen from './components/exhibitionScreen.jsx';
 
 ReactDOM.render(
   <div>
-    <div>exhibition Screen</div>
     <ExhibitionScreen />
     <div id='flash-message'></div>
   </div>,
