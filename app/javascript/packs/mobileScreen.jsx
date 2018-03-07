@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import MobileScreen from './components/mobileScreen.jsx';
 
 ReactDOM.render(
-  <div>
+  <div className='all-centered'>
     <MobileScreen />
     <div id='flash-message'></div>
   </div>,

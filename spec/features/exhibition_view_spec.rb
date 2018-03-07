@@ -10,11 +10,7 @@ feature 'Exhibition view', :js do
     @statement_2 = create(:statement, statement_set: @statement_set, text: 'Second question')
     3.times { |i| create(:choice, statement: @statement_2, text: "Sample answer #{i}") }
 
-    visit topic_path(
-      survey_name: @topic.survey.name_url_safe,
-      station_id: @topic.station.id,
-      id: @topic.id
-    )
+    visit topic_ident_path(@topic.id)
   end
 
   scenario 'includes working react app' do

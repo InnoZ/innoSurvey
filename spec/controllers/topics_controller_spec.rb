@@ -1,11 +1,11 @@
 RSpec.describe TopicsController, type: :controller do
-  context 'GET #show' do
+  context 'GET #ident' do
     before do
       @topic = create :topic
     end
 
     def request(format)
-      get :show, { params: {
+      get :ident, { params: {
         survey_name: @topic.survey.name_url_safe, station_id: @topic.station.id, id: @topic.id
       }, xhr: true, format: format }
     end

@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  def show
+  def ident
     @topic = Topic.find(params[:id])
     @topic_json = @topic.to_json
     respond_to do |format|

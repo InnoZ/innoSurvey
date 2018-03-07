@@ -41,6 +41,11 @@ export default class StatementSet extends React.Component {
 
   submitSelections() {
     this.sendSelections();
+    // mark as finished in mobile view's topic selection component
+    // not available in exhibition view
+    if (this.props.finishTopic !== undefined) {
+      this.props.finishTopic(this.props.topicId);
+    }
     this.props.reset();
   }
 
