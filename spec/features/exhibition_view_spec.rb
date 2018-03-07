@@ -1,4 +1,4 @@
-feature 'Topic view', :js do
+feature 'Exhibition view', :js do
   before do
     @survey = create(:survey)
     @station = create(:station, survey: @survey)
@@ -6,7 +6,7 @@ feature 'Topic view', :js do
     @role = create(:role, survey: @survey, name: 'Tester')
     @statement_set = create(:statement_set, role: @role, topic: @topic)
     @statement_1 = create(:statement, statement_set: @statement_set, text: 'First question')
-    2.times { |i| create(:choice, statement: @statement_1, text: "Sample answer #{i}") }
+    3.times { |i| create(:choice, statement: @statement_1, text: "Sample answer #{i}") }
     @statement_2 = create(:statement, statement_set: @statement_set, text: 'Second question')
     3.times { |i| create(:choice, statement: @statement_2, text: "Sample answer #{i}") }
 
@@ -18,18 +18,17 @@ feature 'Topic view', :js do
   end
 
   scenario 'includes working react app' do
-    select_role_see_related_answers_and_select_first_answer
+    select_role_via_qr_code_scan
+    select_and_highlight_one_choice
     do_not_show_send_button_unless_all_statements_answered
     select_other_question_and_see_related_answers
     select_and_highlight_one_choice
-    send_question_set
+    send_question_set_and_see_qr_scan_view
+    scan_code_with_invalid_role_id
   end
 
-  def select_role_see_related_answers_and_select_first_answer
-    find('.button', text: 'Tester').trigger('click')
-    expect(page).to have_css('.question.active', text: 'First question')
-    expect(page).to have_content('Sample answer', count: 2)
-    select_answer 'Sample answer 0'
+  def select_role_via_qr_code_scan
+    scan(uuid: '123xy', role_id: '1')
   end
 
   def do_not_show_send_button_unless_all_statements_answered
@@ -52,8 +51,22 @@ feature 'Topic view', :js do
     find('.choice', text: "#{text}").trigger('click')
   end
 
-  def send_question_set
+  def send_question_set_and_see_qr_scan_view
     find('.submit-button').trigger('click')
     expect(page).to have_content('gespeichert')
+    expect(page).to have_content('Scanne deinen QR-Code')
+  end
+
+  def scan_code_with_invalid_role_id
+    scan(uuid: '123xy', role_id: '666')
+    expect(page).to have_content('Mit deinem QR-Code kann ich nichts anfangen')
+  end
+
+  def scan(uuid:, role_id:)
+    # since qr scan cannot be tested, it is faked by hidden form
+    # see related function in scanner react component
+    find('input#uuid-test-input', visible: false).set(uuid)
+    find('input#role-id-test-input', visible: false).set(role_id)
+    find('#send-fake-qr', visible: false).trigger('click')
   end
 end

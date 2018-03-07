@@ -64,3 +64,42 @@ body {
 .nav-link {
   float: left;
 }
+
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 60vh;
+}
+
+.header {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  margin-top: 5vh;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: darkslategrey;
+  margin-bottom: 20px;
+}
+
+#loadingMessage {
+  text-align: center;
+  color: darkslategrey;
+  font-size: 10px;
+}
+
+.qr-code-test-replacement-input {
+  color: black;
+  visibility: hidden;
+}
