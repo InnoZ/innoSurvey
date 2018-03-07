@@ -27,7 +27,14 @@ export default class ExhibitionScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.initCamera();
+    const that = this;
+    that.initCamera();
+    setInterval(function() {
+      // reset camera each 10 seconds
+      // to overcome crashes
+      that.resetCamera();
+      that.initCamera();
+    }, 10000)
   }
 
   initCamera() {
