@@ -20,19 +20,10 @@ export default function QuestionBox({selections, select, unselect, id, text, ans
     </div>
   );
 
-  if (active) {
-    return(
-      <div className='question active'>
-        {text}
-        {choicesList}
-      </div>
-    )
-  } else {
-    return (
-      <div className='question'>
-        {text}
-        {answered ? ' ✓' : null}
-      </div>
-    )
-  }
+  return(
+    <div className='question active'>
+      {text}
+      {choicesList}
+    </div>
+  )
 }

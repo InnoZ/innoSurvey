@@ -36,7 +36,7 @@ feature 'Exhibition view', :js do
   end
 
   def select_other_question_and_see_related_answers
-    find('.question', text: 'Second question').trigger('click')
+    find('.button', text: 'weiter').trigger('click')
     expect(page).to have_css('.question.active', text: 'Second question')
     expect(page).to have_content('Sample answer', count: 3)
   end
@@ -52,7 +52,7 @@ feature 'Exhibition view', :js do
   end
 
   def send_question_set_and_see_qr_scan_view
-    find('.submit-button').trigger('click')
+    find('.button', text: 'Absenden').trigger('click')
     expect(page).to have_content('gespeichert')
     expect(page).to have_content('Scanne deinen QR-Code')
   end
