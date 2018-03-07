@@ -15,6 +15,7 @@ export default class StatementSet extends React.Component {
   constructor(props){
     super(props);
     this.state = this.initialState;
+    this.statementIds = this.props.statements.map((s) => s.id);
   }
 
   // vvvvvvvvvvvvv RESET TIMER vvvvvvvvvvvv //
@@ -86,30 +87,42 @@ export default class StatementSet extends React.Component {
     return this.selectionsFor(statementId).length > 0;
   }
 
+  browseStatement(operator) {
+    const indexOfSelected = this.statementIds.indexOf(this.state.activeStatementBox);
+    const nextId = this.statementIds[indexOfSelected + operator];
+    if (nextId) {
+      this.setState({ activeStatementBox: nextId })
+    }
+  }
+
   render() {
-    const statements = this.props.statements.map((statement) =>
-      <div key={statement.id} onClick={() => this.setState({ activeStatementBox: statement.id })}>
-        <QuestionBox id={statement.id}
-                     text={statement.text}
-                     choices={statement.choices}
-                     selections={this.selectionsFor(statement.id)}
-                     select={this.modifyChoices.bind(this)}
-                     unselect={this.modifyChoices.bind(this)}
-                     active={statement.id == this.state.activeStatementBox}
-                     answered={this.answered(statement.id)}
-                     resetTimer={this.setTimer.bind(this)}/>
-      </div>
-    );
+    const statement = this.props.statements.find((statement) => statement.id == this.state.activeStatementBox)
+    const question = <QuestionBox id={statement.id}
+                                   text={statement.text}
+                                   choices={statement.choices}
+                                   selections={this.selectionsFor(statement.id)}
+                                   select={this.modifyChoices.bind(this)}
+                                   unselect={this.modifyChoices.bind(this)}
+                                   answered={this.answered(statement.id)}
+                                   resetTimer={this.setTimer.bind(this)}/>
+
+    const previousButton =
+      (this.state.activeStatementBox !== this.statementIds[0]) ?
+        <button className='button previous-button' onClick={() => this.browseStatement(-1) }>zurück</button> : null
+
+    const nextButton =
+      (this.state.activeStatementBox !== this.statementIds[this.statementIds.length - 1]
+        && this.answered(this.state.activeStatementBox)) ?
+        <button className='button next-button' onClick={() => this.browseStatement(+1) }>weiter</button> : null
+
     const submitButton = this.everyStatementAnswered() ?
-        <button className='button submit-button'
-                onClick={() => this.submitSelections()}>
-          Senden
-        </button>
-      : null
+      <button className='button submit-button' onClick={() => this.submitSelections()}>Absenden</button> : null
 
     return(
       <div className='topic'>
-        {statements}
+        {question}
+        {previousButton}
+        {nextButton}
         {submitButton}
       </div>
     )
