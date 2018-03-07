@@ -8,7 +8,8 @@ Rails.application.routes.draw do
   post '/answers', to: 'answers#answer_question_set'
 
   # USER SESSIONS
-  get 'sign_in', to: 'sessions#create', as: :sign_in
+  get 'login', to: 'sessions#new'
+  post 'sign_in', to: 'sessions#create', as: :sign_in
   get 'sign_out', to: 'sessions#destroy', as: :sign_out
 
   # TOPICS

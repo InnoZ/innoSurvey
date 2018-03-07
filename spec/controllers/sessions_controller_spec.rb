@@ -1,15 +1,19 @@
 require 'rails_helper'
 
-describe SessionsController do
+RSpec.describe SessionsController, type: :controller do
+  context 'GET #new' do
+    it 'Responde with log_in' do
+      get :new
+
+      expect(response.status).to eq(200)
+    end
+  end
   context 'POST #create' do
-    it 'Can login' do
-      user = create :user
+    let(:user) { create :user }
+    subject { post :create, params: { sessions: { email: user.email, password: 'secret' }}}
 
-      post :create, params: {
-        sessions: { email: user.email, password: 'secret' }
-      }
-
-
+    it 'Can login with correct creds' do
+      expect(subject).to redirect_to(root_path)
       expect(session[:user_id]).to eq(user.id)
     end
   end
@@ -20,7 +24,7 @@ describe SessionsController do
       session[:user_id] = user.id
 
       get :destroy
-
+      expect(response).to redirect_to(root_path)
       expect(session[:user_id]).to be_nil
     end
   end
