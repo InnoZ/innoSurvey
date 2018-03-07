@@ -38,6 +38,8 @@ export default class ExhibitionScreen extends React.Component {
   }
 
   initCamera() {
+    // this together with tick() are based on
+    // the jsQR demo example (https://cozmo.github.io/jsQR)
     if (navigator.mediaDevices) {
       const that = this;
       window.video = document.createElement("video");

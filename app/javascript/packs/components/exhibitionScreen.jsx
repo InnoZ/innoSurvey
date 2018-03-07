@@ -47,7 +47,7 @@ export default class ExhibitionScreen extends React.Component {
       const set = this.statementSetFromRole(this.state.roleId);
       if (set) {
         main = <StatementSet
-          uuid={getCookie('uuid')}
+          uuid={this.state.uuid}
           roleId={set.role_id}
           uuid={this.state.uuid}
           roleName={set.role_name}
