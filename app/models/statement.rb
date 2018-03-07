@@ -8,7 +8,7 @@ class Statement < ApplicationRecord
   delegate :survey, to: :statement_set, allow_nil: false
   delegate :topic, to: :statement_set, allow_nil: false
 
-  validates :text, presence: true, length: {  minimum: 10, maximum: 100 }
+  validates :text, presence: true, length: {  minimum: 10 }
   validates :style, presence: true, inclusion: { in: STYLES }
 
   def to_json
