@@ -1,5 +1,6 @@
 body {
   background-color: black;
+  text-align: center;
 }
 
 .button {
@@ -9,7 +10,6 @@ body {
   border-radius: 10px;
   color: white;
   font-size: 20px;
-  text-align: center;
   cursor: pointer;
   &::-moz-focus-inner {
     border: none;
@@ -21,7 +21,6 @@ body {
 }
 
 .question {
-  text-align: center;
   cursor: pointer;
   font-size: 30px;
   color: darkslategrey;
@@ -49,10 +48,17 @@ body {
   background-color: lightgreen;
 }
 
+.previous-button {
+  background-color: hotpink;
+}
+
+.next-button {
+  background-color: indianred;
+}
+
 #flash-message {
   color: lightgreen;
-  margin-left: 30px;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 #json-preview {
@@ -79,7 +85,6 @@ canvas {
 }
 
 .header {
-  text-align: center;
   font-size: 30px;
   color: white;
   font-weight: bold;
@@ -88,15 +93,8 @@ canvas {
 }
 
 .subtitle {
-  text-align: center;
   color: darkslategrey;
   margin-bottom: 20px;
-}
-
-#loadingMessage {
-  text-align: center;
-  color: darkslategrey;
-  font-size: 10px;
 }
 
 .qr-code-test-replacement-input {
