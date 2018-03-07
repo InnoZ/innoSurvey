@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 import ExhibitionScreen from './components/exhibitionScreen.jsx';
 
 ReactDOM.render(
-  <div>
+  <div className='all-centered'>
     <ExhibitionScreen />
     <div id='flash-message'></div>
   </div>,
