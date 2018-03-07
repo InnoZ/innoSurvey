@@ -58,6 +58,15 @@ export default class ExhibitionScreen extends React.Component {
     }
   }
 
+  drawLine(begin, end, color) {
+    canvas.beginPath();
+    canvas.moveTo(begin.x, begin.y);
+    canvas.lineTo(end.x, end.y);
+    canvas.lineWidth = 2;
+    canvas.strokeStyle = color;
+    canvas.stroke();
+  }
+
   tick() {
     const that = this;
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
@@ -66,6 +75,27 @@ export default class ExhibitionScreen extends React.Component {
       canvas.translate(canvasElement.width, 0);
       canvas.scale(-1, 1);
       canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+      // draw square in the middel of the canvas
+      that.drawLine(
+        {x: video.videoWidth * 1/4, y: video.videoHeight * 1/4},
+        {x: video.videoWidth * 3/4, y: video.videoHeight * 1/4},
+        "#FF3B58"
+      );
+      that.drawLine(
+        {x: video.videoWidth * 1/4, y: video.videoHeight * 3/4},
+        {x: video.videoWidth * 1/4, y: video.videoHeight * 1/4},
+        "#FF3B58"
+      );
+      that.drawLine(
+        {x: video.videoWidth * 1/4, y: video.videoHeight * 3/4},
+        {x: video.videoWidth * 3/4, y: video.videoHeight * 3/4},
+        "#FF3B58"
+      );
+      that.drawLine(
+        {x: video.videoWidth * 3/4, y: video.videoHeight * 1/4},
+        {x: video.videoWidth * 3/4, y: video.videoHeight * 3/4},
+        "#FF3B58"
+      );
       var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
       var code = jsQR(imageData.data, imageData.width, imageData.height);
       if (code) {
