@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   get 'sign_out', to: 'sessions#destroy', as: :sign_out
 
   # TOPICS
-  get '/topics/:id', to: 'topics#show', as: :topic
+  get '/topics/:id', to: 'topics#ident', as: :topic_ident
 
-  # PARTICIPANT
-  get 'ident', to: 'participant#ident', as: :ident
+  # SURVEY
+  get '/surveys/:id', to: 'surveys#ident', as: :survey_ident
 end

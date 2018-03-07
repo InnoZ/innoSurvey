@@ -1,6 +1,6 @@
 import React from 'react';
 import Scanner from './scanner.jsx';
-import StatementSet from './statementSet.jsx';
+import TopicSelection from './topicSelection.jsx';
 
 import jsQR from "jsqr";
 
@@ -30,10 +30,7 @@ export default class ExhibitionScreen extends React.Component {
     if (this.state.scan) {
       main = <Scanner ident={this.ident.bind(this)} />
     } else {
-      main = <div>
-        <div>roleId: {this.state.roleId}</div>
-        <div>uuid: {this.state.uuid}</div>
-      </div>
+      main = <TopicSelection roleId={this.state.roleId} uuid={this.state.uuid} />
     };
 
     return (

@@ -1,12 +1,13 @@
-#survey-index
+#survey-index.all-centered
   - @surveys.each do |survey|
-    %h1= 'Survey: ' + survey.name
+    %h1
+      = 'Survey: '
+      = link_to survey.name, survey_ident_path(survey.id)
     = 'Roles: ' + survey.roles.map(&:name).join(', ')
-    %ul
-      - survey.stations.each do |station|
-        %li
-          %h2= 'Station: ' + station.name
-          = 'Topics: '
-          - station.topics.each do |topic|
-            = link_to topic.name, topic_path(topic.id)
-            = ' | '
+    - survey.stations.each do |station|
+      %h2= 'Station: ' + station.name
+      = 'Topics: '
+      - station.topics.each do |topic|
+        = link_to topic.name, topic_ident_path(topic.id)
+        = ' | '
+    %hr
