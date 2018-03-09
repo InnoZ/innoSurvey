@@ -10,7 +10,7 @@ export default class StatementSet extends React.Component {
         selected_choices: [],
       }
     }),
-    secondsLeft: 9
+    secondsLeft: 100
   }
 
   constructor(props){
@@ -75,13 +75,21 @@ export default class StatementSet extends React.Component {
                                   : console.error('An error occured on server!') )
   }
 
-  modifyChoices({statementId, choiceId, check}) {
+  modifyChoices({statementId, choiceId, singleChoice}) {
     this.setTimer();
-    const thisComponent = this;
     const updatedChoices = this.state.selections.slice().map(function(statement) {
-      const selections = statement.statement_id == statementId ?
-        (check ? statement.selected_choices.concat(choiceId) : statement.selected_choices.filter((c) => c != choiceId))
-        : statement.selected_choices;
+      let selections;
+      if (statement.statement_id !== statementId) {
+        selections = statement.selected_choices
+      } else {
+        if (singleChoice) {
+          selections = [choiceId]
+        } else {
+          selections = (statement.selected_choices.includes(choiceId))
+            ? statement.selected_choices.filter((c) => c !== choiceId)
+            : statement.selected_choices.concat(choiceId)
+        }
+      };
       return {
         statement_id: statement.statement_id,
         selected_choices: selections,
@@ -114,12 +122,11 @@ export default class StatementSet extends React.Component {
     const statement = this.props.statements.find((statement) => statement.id == this.state.activeStatementBox)
     const question = <QuestionBox id={statement.id}
                                    text={statement.text}
+                                   style={statement.style}
                                    choices={statement.choices}
                                    selections={this.selectionsFor(statement.id)}
-                                   select={this.modifyChoices.bind(this)}
-                                   unselect={this.modifyChoices.bind(this)}
-                                   answered={this.answered(statement.id)}
-                                   resetTimer={this.setTimer.bind(this)}/>
+                                   modifyChoice={this.modifyChoices.bind(this)}
+                                   answered={this.answered(statement.id)} />
 
     const previousButton =
       (this.state.activeStatementBox !== this.statementIds[0]) ?
