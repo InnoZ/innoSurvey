@@ -14,11 +14,13 @@ export default class ExhibitionScreen extends React.Component {
       video.src = '';
       video.load();
       cancelAnimationFrame(animationFrame);
+      video.srcObject.getTracks()[0].stop();
     }
   }
 
   componentWillUnmount() {
     this.resetCamera();
+    clearInterval(this.cameraResetInterval);
   }
 
   componentWillUpdate() {
@@ -29,7 +31,7 @@ export default class ExhibitionScreen extends React.Component {
   componentDidMount() {
     const that = this;
     that.initCamera();
-    setInterval(function() {
+    this.cameraResetInterval = setInterval(function() {
       // reset camera each 10 seconds
       // to overcome crashes
       that.resetCamera();
