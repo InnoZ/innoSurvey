@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   get '/topics/:id', to: 'topics#ident', as: :topic_ident
 
   # SURVEY
+  get '/surveys', to: 'surveys#index', as: :surveys
   get '/surveys/:id', to: 'surveys#ident', as: :survey_ident
 end
