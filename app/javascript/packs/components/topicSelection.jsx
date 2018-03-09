@@ -5,13 +5,15 @@ export default class topicSelection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      activeStation: null,
       activeTopic: null,
       finishedTopics: [],
     }
   }
 
   topic() {
-    return window.topics.find((topic) => topic.id == this.state.activeTopic)
+    const station = window.stations.find((station) => station.id == this.state.activeStation)
+    return station.topics.find((topic) => topic.id == this.state.activeTopic)
   }
 
   statementSet() {
@@ -28,12 +30,20 @@ export default class topicSelection extends React.Component {
     }));
   }
 
-  topicClassNames(topic) {
-    if (this.state.finishedTopics.includes(topic.id)) {
-      return 'button choice topic-selection disabled';
-    } else {
-      return 'button choice topic-selection';
-    }
+  topicButtons(station) {
+    return station.topics.map((topic) => {
+      let classNames, clickHandler;
+      if (this.state.finishedTopics.includes(topic.id)) {
+        classNames = 'button choice topic-selection disabled';
+        clickHandler = null;
+      } else {
+        classNames = 'button choice topic-selection';
+        clickHandler = () => this.setState({ activeStation: station.id, activeTopic: topic.id });
+      }
+      return <h3 key={topic.id} className={classNames} onClick={clickHandler}>
+        {topic.name}
+      </h3>
+    })
   }
 
   render() {
@@ -53,18 +63,11 @@ export default class topicSelection extends React.Component {
             <button className='button previous-button' onClick={this.reset.bind(this)}>zurück</button>
           </div>
     } else {
-      main = window.topics.map((topic) => {
-        let classNames, clickHandler;
-        if (this.state.finishedTopics.includes(topic.id)) {
-          classNames = 'button choice topic-selection disabled';
-          clickHandler = null;
-        } else {
-          classNames = 'button choice topic-selection';
-          clickHandler = () => this.setState({ activeTopic: topic.id });
-        }
-        return <h3 key={topic.id} className={classNames} onClick={clickHandler}>
-          {topic.name}
-        </h3>
+      main = window.stations.map((station) => {
+        return <div key={station.id}>
+          <h2>{station.name}</h2>
+          {this.topicButtons(station)}
+        </div>
       })
     }
 
