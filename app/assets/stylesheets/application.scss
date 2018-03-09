@@ -10,7 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require bootstrap/dist/css/bootstrap.min.css
+ *= require bootstrap3/dist/css/bootstrap.min.css
  *= require_tree .
  *= require_self
  */
@@ -29,3 +29,119 @@ body {
 a {
   color: purple;
 }
+
+.all-centered {
+  background-color: black;
+  text-align: center;
+}
+
+.button {
+  padding: 20px 30px;
+  margin: 7px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  &::-moz-focus-inner {
+    border: none;
+  }
+}
+
+.question {
+  cursor: pointer;
+  font-size: 30px;
+  color: darkslategrey;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  &.active {
+    color: white;
+  }
+  &.visited {
+    color: lightgrey;
+    font-size: 15px;
+  }
+}
+
+.choice {
+  background-color: hotpink;
+  margin-top: 6px;
+  &.active {
+    background-color: indianred;
+  }
+}
+
+.topic-selection {
+  background-color: purple;
+  &.disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.submit-button {
+  background-color: lightgreen;
+}
+
+.previous-button {
+  background-color: hotpink;
+}
+
+.next-button {
+  background-color: indianred;
+}
+
+#flash-message {
+  color: lightgreen;
+  margin-top: 20px;
+}
+
+#json-preview {
+  color: grey;
+  margin-left: 30px;
+  white-space: pre;
+}
+
+.nav-link {
+  float: left;
+}
+
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 60vh;
+}
+
+.header {
+  font-size: 30px;
+  color: white;
+  font-weight: bold;
+  margin-top: 5vh;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: darkslategrey;
+  margin-bottom: 20px;
+}
+
+.qr-code-test-replacement-input {
+  color: black;
+  visibility: hidden;
+}
+
+.countdown {
+  color: darkslategrey;
+  font-size: 32px;
+  padding: 10px;
+  float: right;
+}
+

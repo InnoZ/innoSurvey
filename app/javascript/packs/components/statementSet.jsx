@@ -9,7 +9,8 @@ export default class StatementSet extends React.Component {
         statement_id: statement.id,
         selected_choices: [],
       }
-    })
+    }),
+    secondsLeft: 9
   }
 
   constructor(props){
@@ -20,14 +21,22 @@ export default class StatementSet extends React.Component {
 
   // vvvvvvvvvvvvv RESET TIMER vvvvvvvvvvvv //
   componentDidMount() { this.setTimer(); }
-  componentWillUpdate() { this.setTimer(); }
-  componentWillUnmount() { clearTimeout(this._timer); }
-  setTimer() {
-    this._timer != null ? clearTimeout(this._timer) : null;
-    // hide after 10000 milliseconds
-    this._timer = setTimeout(function(){
+  componentWillUnmount() { clearInterval(this._interval); }
+
+  componentDidUpdate() {
+    if (this.state.secondsLeft == 0) {
       this.props.reset();
-    }.bind(this), 10000);
+    };
+  }
+
+  setTimer() {
+    this.setState({ secondsLeft: this.initialState['secondsLeft'] })
+    this._interval != null ? clearInterval(this._interval) : null;
+    // jump back after 10000 milliseconds
+    const that = this;
+    this._interval = setInterval(function(){
+      that.setState({ secondsLeft: that.state.secondsLeft - 1 })
+    }, 1000);
   }
   // ^^^^^^^^^^^^^ RESET TIMER ^^^^^^^^^^^^^ //
 
@@ -41,6 +50,11 @@ export default class StatementSet extends React.Component {
 
   submitSelections() {
     this.sendSelections();
+    // mark as finished in mobile view's topic selection component
+    // not available in exhibition view
+    if (this.props.finishTopic !== undefined) {
+      this.props.finishTopic(this.props.topicId);
+    }
     this.props.reset();
   }
 
@@ -62,6 +76,7 @@ export default class StatementSet extends React.Component {
   }
 
   modifyChoices({statementId, choiceId, check}) {
+    this.setTimer();
     const thisComponent = this;
     const updatedChoices = this.state.selections.slice().map(function(statement) {
       const selections = statement.statement_id == statementId ?
@@ -118,12 +133,15 @@ export default class StatementSet extends React.Component {
     const submitButton = this.everyStatementAnswered() ?
       <button className='button submit-button' onClick={() => this.submitSelections()}>Absenden</button> : null
 
+    const countdown = <div className='countdown'>{this.state.secondsLeft}</div>
+
     return(
       <div className='topic'>
         {question}
         {previousButton}
         {nextButton}
         {submitButton}
+        {countdown}
       </div>
     )
   }
