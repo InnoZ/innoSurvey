@@ -59,3 +59,15 @@ Statement.all.each do |s|
     s.choices.create(text: Faker::WorldOfWarcraft.quote)
   end
 end
+
+# CREATE ANSWER
+@visitor_id = "4242424242"
+@visitor_role_id = Role.first.id
+statement_sets = StatementSet.where(role_id: @visitor_role_id)
+(statement_sets.count-rand(1..statement_sets.count-1)).times do |i|
+  Statement.where(statement_set_id: statement_sets[i].id).to_a.each do |s|
+    choices = Choice.where(statement_id: s.id)
+    Answer.create(statement_id: s.id, uuid: @visitor_id,selected_choices: choices[rand(0..choices.length-1)].id)
+  end
+end
+
