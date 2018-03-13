@@ -58,12 +58,28 @@ RSpec.describe Answer, type: :model do
 
       it 'will not save answer with no selected choices' do
         another_statement = create :statement, statement_set: @statement_set
-        choice_for_another_statement = create :choice, statement: another_statement
+        create :choice, statement: another_statement
 
         @answer[:selected_choices] = []
         new_answer = Answer.new(@answer)
 
         expect(new_answer).not_to be_valid
+      end
+      it 'will not save answer invalid choice ids array' do
+        statement = create :statement, statement_set: @statement_set
+        choice = create :choice, statement: statement
+        @answer[:selected_choices] = choice.id.to_s.split(',').insert(1,'a12b').join(',')
+        new_answer = Answer.new(@answer)
+        expect(new_answer).not_to be_valid 
+        expect(new_answer.errors.messages[:selected_choices].first).to eq('Selected Choices String nicht in Array format')
+      end
+      it 'will not save answer containing chars as selected choice ids' do
+        statement = create :statement, statement_set: @statement_set
+        choice = create :choice, statement: statement
+        @answer[:selected_choices] = '['+ choice.id.to_s.split(',').insert(1,'a12b').join(',') +']'
+        new_answer = Answer.new(@answer)
+        expect(new_answer).not_to be_valid 
+        expect(new_answer.errors.messages[:selected_choices].first).to eq('Choice Ids enthalten Characters!')
       end
     end
   end
