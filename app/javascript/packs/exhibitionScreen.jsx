@@ -20,11 +20,13 @@ class ExhibitionScreen extends React.Component {
   ident(identString) {
     if (identString.includes('uuid') && identString.includes('role_id')) {
       let identJson = JSON.parse(identString);
-      this.setState({
+      const newState = {
         scan: false,
         roleId: identJson['role_id'],
         uuid: identJson['uuid'],
-      })
+      };
+      console.log(newState);
+      this.setState(newState)
     };
   };
 
