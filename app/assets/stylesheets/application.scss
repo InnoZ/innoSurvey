@@ -156,7 +156,7 @@ canvas {
 
 .qr-code-test-replacement-input {
   color: black;
-  visibility: hidden;
+  // visibility: hidden;
 }
 
 .countdown {
@@ -166,6 +166,8 @@ canvas {
   color: white;
   font-size: 16px;
   padding: 10px;
-  text-align: center;
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
 }
 
