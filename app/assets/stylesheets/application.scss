@@ -135,13 +135,15 @@ canvas {
 
 .qr-code-test-replacement-input {
   color: black;
-  visibility: hidden;
+  // visibility: hidden;
 }
 
 .countdown {
   color: darkslategrey;
   font-size: 32px;
   padding: 10px;
-  float: right;
+  position: absolute;
+  bottom: 0px;
+  right: 10px;
 }
 

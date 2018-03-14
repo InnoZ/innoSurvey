@@ -128,10 +128,6 @@ export default class StatementSet extends React.Component {
                                    modifyChoice={this.modifyChoices.bind(this)}
                                    answered={this.answered(statement.id)} />
 
-    const previousButton =
-      (this.state.activeStatementBox !== this.statementIds[0]) ?
-        <button className='button previous-button' onClick={() => this.browseStatement(-1) }>zurück</button> : null
-
     const nextButton =
       (this.state.activeStatementBox !== this.statementIds[this.statementIds.length - 1]
         && this.answered(this.state.activeStatementBox)) ?
@@ -145,7 +141,6 @@ export default class StatementSet extends React.Component {
     return(
       <div className='topic'>
         {question}
-        {previousButton}
         {nextButton}
         {submitButton}
         {countdown}
