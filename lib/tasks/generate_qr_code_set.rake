@@ -4,12 +4,11 @@ require 'fileutils'
 require 'ruby-progressbar'
 
 desc 'Generate set of n QR codes'
-task :gen_qr_codes do
+task gen_qr_codes: :environment do
 
   arguments = {
     iterations: 10
   }
-
   o = OptionParser.new
 
   o.banner = 'Usage: rake gen_qr_codes -- [options]'
