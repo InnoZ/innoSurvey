@@ -1,21 +1,14 @@
 import React from 'react';
 
-export default function QuestionBox({selections, select, unselect, id, text, answered, active, choices, resetTimer}) {
-
-  const handleClick = function(questionId, choiceId) {
-    if (!selections.includes(choiceId)) {
-      select({statementId: questionId, choiceId: choiceId, check: true})
-    } else {
-      unselect({statementId: questionId, choiceId: choiceId, check: false})
-    };
-    // start timer reset after each click
-    resetTimer();
+export default function QuestionBox({selections, modifyChoice, id, style, text, active, choices}) {
+  const handleClick = function(choiceId) {
+    modifyChoice({statementId: id, choiceId: choiceId, singleChoice: (style == 'single_choice')});
   }
 
   const choicesList = choices.map((choice) =>
     <div className={selections.includes(choice.id) ? 'button choice active' : 'button choice'}
          key={choice.id}
-         onClick={() => handleClick(id, choice.id)}>
+         onClick={() => handleClick(choice.id)}>
       {choice.text}
     </div>
   );
