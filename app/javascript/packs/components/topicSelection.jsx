@@ -7,8 +7,14 @@ export default class topicSelection extends React.Component {
     this.state = {
       activeStation: null,
       activeTopic: null,
-      finishedTopics: [],
+      answeredTopics: [],
     }
+  }
+
+  componentWillMount() {
+    this.setState({
+      answeredTopics: [1]
+    })
   }
 
   topic() {
@@ -21,19 +27,16 @@ export default class topicSelection extends React.Component {
   }
 
   reset() {
-    this.setState({ activeTopic: null })
-  }
-
-  finishTopic(id) {
-    this.setState((prevState, props) => ({
-      finishedTopics: prevState.finishedTopics.concat([id])
-    }));
+    this.setState({
+      activeTopic: null,
+      answeredTopics: [1, 2]
+    })
   }
 
   topicButtons(station) {
     return station.topics.map((topic) => {
       let classNames, clickHandler;
-      if (this.state.finishedTopics.includes(topic.id)) {
+      if (this.state.answeredTopics.includes(topic.id)) {
         classNames = 'button choice topic-selection disabled';
         clickHandler = null;
       } else {
@@ -56,8 +59,7 @@ export default class topicSelection extends React.Component {
                         uuid={this.props.uuid}
                         roleName={statementSet.role_name}
                         statements={statementSet.statements}
-                        reset={() => this.reset()}
-                        finishTopic={this.finishTopic.bind(this)} />
+                        reset={() => this.reset()} />
         : <div>
             <h3>Hier gibt es keine Fragen für deine Rolle!</h3>
             <button className='button previous-button' onClick={this.reset.bind(this)}>zurück</button>
