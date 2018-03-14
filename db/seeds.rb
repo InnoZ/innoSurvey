@@ -67,7 +67,8 @@ statement_sets = StatementSet.where(role_id: @visitor_role_id)
 (statement_sets.count-rand(1..statement_sets.count-1)).times do |i|
   Statement.where(statement_set_id: statement_sets[i].id).to_a.each do |s|
     choices = Choice.where(statement_id: s.id)
-    Answer.create(statement_id: s.id, uuid: @visitor_id,selected_choices: choices[rand(0..choices.length-1)].id)
+    selected_choices_array = "[#{choices[rand(0..choices.length-1)].id.to_s} , #{choices[rand(0..choices.length-1)].id.to_s} ]" 
+    Answer.create(statement_id: s.id, uuid: @visitor_id,selected_choices: selected_choices_array)
   end
 end
 
