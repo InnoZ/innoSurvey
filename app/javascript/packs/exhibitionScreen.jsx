@@ -14,7 +14,14 @@ class ExhibitionScreen extends React.Component {
       scan: true,
       roleId: null,
       uuid: null,
+      answeredTopics: [],
     }
+  }
+
+  getAnsweredTopics() {
+    this.setState({
+      answeredTopics: [1]
+    })
   }
 
   ident(identString) {
@@ -26,7 +33,7 @@ class ExhibitionScreen extends React.Component {
         uuid: identJson['uuid'],
       };
       console.log(newState);
-      this.setState(newState)
+      this.setState(newState, this.getAnsweredTopics)
     };
   };
 
@@ -39,7 +46,7 @@ class ExhibitionScreen extends React.Component {
   }
 
   statementSetFromRole(roleId) {
-    return window.data.statement_sets.find((set) =>
+    return window.topicData.statement_sets.find((set) =>
       set.role_id == this.state.roleId
     );
   }
@@ -51,13 +58,20 @@ class ExhibitionScreen extends React.Component {
     } else {
       const set = this.statementSetFromRole(this.state.roleId);
       if (set) {
-        main = <StatementSet
-          roleId={set.role_id}
-          uuid={this.state.uuid}
-          roleName={set.role_name}
-          statements={set.statements}
-          reset={() => this.reset()}
-        />
+        if (this.state.answeredTopics.includes(window.topicData.id)) {
+          main = <div>
+            <h3>Hier warst du schon!</h3>
+            <button className='button previous-button' onClick={() => this.reset()}>zurück</button>
+          </div>
+        } else {
+          main = <StatementSet
+            roleId={set.role_id}
+            uuid={this.state.uuid}
+            roleName={set.role_name}
+            statements={set.statements}
+            reset={() => this.reset()}
+          />
+        }
       } else {
         main = <div>
           <h3>Mit deinem QR-Code kann ich nichts anfangen :(</h3>
