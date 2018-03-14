@@ -13,7 +13,9 @@ Rails.application.routes.draw do
 
   # TOPICS
   get '/topics/:id', to: 'topics#show', as: :topic
+  get '/topics/finished/:id', to: 'topics#answered_topics_by_user'
 
   # PARTICIPANT
   get 'ident', to: 'participant#ident', as: :ident
+
 end
