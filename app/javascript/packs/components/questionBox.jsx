@@ -13,9 +13,14 @@ export default function QuestionBox({selections, modifyChoice, id, style, text, 
     </div>
   );
 
+  const styleNote = style == 'multiple_choice'
+    ? <div className='subtitle'> Mehrfachauswahl möglich </div>
+    : <div className='subtitle'> Wähle eine Antwort aus </div>
+
   return(
     <div className='question active'>
       {text}
+      {styleNote}
       {choicesList}
     </div>
   )
