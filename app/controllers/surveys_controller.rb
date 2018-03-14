@@ -5,7 +5,7 @@ class SurveysController < ApplicationController
 
   def ident
     @survey = Survey.find(params[:id])
-    @stations = Survey.first.stations.all.map do |s|
+    @stations = @survey.stations.all.map do |s|
       {
         id: s.id,
         name: s.name,
