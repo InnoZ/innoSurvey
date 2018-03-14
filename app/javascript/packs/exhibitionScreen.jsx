@@ -61,7 +61,7 @@ class ExhibitionScreen extends React.Component {
       } else {
         main = <div>
           <h3>Mit deinem QR-Code kann ich nichts anfangen :(</h3>
-          <div onClick={() => this.reset()}>Klicke hier um zum Scanner zurück zu gelangen</div>
+          <button className='button previous-button' onClick={() => this.reset()}>zurück</button>
         </div>
       }
     }
