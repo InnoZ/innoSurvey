@@ -113,6 +113,12 @@ export default class StatementSet extends React.Component {
     }
   }
 
+  pageIndicator() {
+    const n = this.statementIds.length
+    const current = this.statementIds.indexOf(this.state.activeStatementBox) + 1
+    return `${current} von ${n}`
+  }
+
   render() {
     const statement = this.props.statements.find((statement) => statement.id == this.state.activeStatementBox)
     const question = <QuestionBox id={statement.id}
@@ -134,7 +140,7 @@ export default class StatementSet extends React.Component {
 
     const submitButton = this.everyStatementAnswered() ?
       <button className='btn btn-lg submit-button' onClick={() => this.submitSelections()}>Absenden</button> :
-      <div className='page-indicator'>3 von 5</div>
+      <div className='page-indicator'>{this.pageIndicator()}</div>
 
     const countdown = <div className='countdown'>{this.state.secondsLeft} sec</div>
 
