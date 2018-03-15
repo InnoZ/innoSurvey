@@ -20,7 +20,7 @@ class ExhibitionScreen extends React.Component {
 
   getAnsweredTopics() {
     this.setState({
-      answeredTopics: [1]
+      answeredTopics: []
     })
   }
 
@@ -61,7 +61,7 @@ class ExhibitionScreen extends React.Component {
         if (this.state.answeredTopics.includes(window.topicData.id)) {
           main = <div>
             <h3>Hier warst du schon!</h3>
-            <button className='button previous-button' onClick={() => this.reset()}>zurück</button>
+            <button className='btn btn-lg' onClick={() => this.reset()}>zurück</button>
           </div>
         } else {
           main = <StatementSet
