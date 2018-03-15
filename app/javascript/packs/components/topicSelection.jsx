@@ -37,10 +37,10 @@ export default class topicSelection extends React.Component {
     return station.topics.map((topic) => {
       let classNames, clickHandler;
       if (this.state.answeredTopics.includes(topic.id)) {
-        classNames = 'button choice topic-selection disabled';
+        classNames = 'choice topic-selection disabled';
         clickHandler = null;
       } else {
-        classNames = 'button choice topic-selection';
+        classNames = 'choice topic-selection';
         clickHandler = () => this.setState({ activeStation: station.id, activeTopic: topic.id });
       }
       return <h3 key={topic.id} className={classNames} onClick={clickHandler}>
