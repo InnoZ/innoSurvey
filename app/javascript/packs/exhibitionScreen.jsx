@@ -81,7 +81,11 @@ class ExhibitionScreen extends React.Component {
     }
 
     return (
-      <div>{main}</div>
+      <div className='row'>
+        <div className='col-xs-12'>
+          {main}
+        </div>
+      </div>
     );
   }
 }
