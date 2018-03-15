@@ -39,7 +39,7 @@ class MobileScreen extends React.Component {
     };
 
     return (
-      <div>{main}</div>
+      {main}
     );
   }
 }
