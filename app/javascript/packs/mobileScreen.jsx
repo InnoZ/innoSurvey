@@ -39,15 +39,19 @@ class MobileScreen extends React.Component {
     };
 
     return (
-      <div>{main}</div>
+      {main}
     );
   }
 }
 
 ReactDOM.render(
-  <div className='all-centered'>
-    <MobileScreen />
-    <div id='flash-message'></div>
+  <div className='container all-centered'>
+    <div className='row'>
+      <div className='col-xs-12'>
+        <MobileScreen />
+        <div id='flash-message'></div>
+      </div>
+    </div>
   </div>,
   document.body.appendChild(document.createElement('div')),
 )

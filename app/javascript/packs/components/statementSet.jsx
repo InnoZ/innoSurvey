@@ -10,7 +10,7 @@ export default class StatementSet extends React.Component {
         selected_choices: [],
       }
     }),
-    secondsLeft: 100
+    secondsLeft: 99
   }
 
   constructor(props){
@@ -126,18 +126,26 @@ export default class StatementSet extends React.Component {
     const nextButton =
       (this.state.activeStatementBox !== this.statementIds[this.statementIds.length - 1]
         && this.answered(this.state.activeStatementBox)) ?
-        <button className='button next-button' onClick={() => this.browseStatement(+1) }>weiter</button> : null
+        <div className='next-button' onClick={() => this.browseStatement(+1) }>{'>'}</div> : null
+
+    const previousButton =
+      (this.state.activeStatementBox !== this.statementIds[0]) ?
+        <div className='previous-button' onClick={() => this.browseStatement(-1) }>{'<'}</div> : null
 
     const submitButton = this.everyStatementAnswered() ?
-      <button className='button submit-button' onClick={() => this.submitSelections()}>Absenden</button> : null
+      <button className='btn btn-lg submit-button' onClick={() => this.submitSelections()}>Absenden</button> :
+      <div className='page-indicator'>3 von 5</div>
 
-    const countdown = <div className='countdown'>{this.state.secondsLeft}</div>
+    const countdown = <div className='countdown'>{this.state.secondsLeft} sec</div>
 
     return(
       <div className='topic'>
         {question}
-        {nextButton}
-        {submitButton}
+        <div className='button-row row'>
+          <div className='col-xs-offset-3 col-xs-2'>{previousButton}</div>
+          <div className='col-xs-2'>{submitButton}</div>
+          <div className='col-xs-2'>{nextButton}</div>
+        </div>
         {countdown}
       </div>
     )
