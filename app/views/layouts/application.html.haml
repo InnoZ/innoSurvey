@@ -10,6 +10,12 @@
     = render 'layouts/shared/flash_messages', flash: flash
 
     .main-header
-      Survey
+      = image_tag 'bmvi', style: 'right: 20px;'
+      = image_tag 'mFund', style: 'right: 150px;'
+      = image_tag 'forum', style: 'left: 20px;'
+      - if @survey
+        = 'Survey - ' + @survey.name
+      - elsif @topic
+        = 'Survey - ' + @topic.name
 
     = yield
