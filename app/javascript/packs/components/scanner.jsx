@@ -32,11 +32,15 @@ export default class ExhibitionScreen extends React.Component {
     const that = this;
     that.initCamera();
     this.cameraResetInterval = setInterval(function() {
-      // reset camera each 10 seconds
-      // to overcome crashes
-      that.resetCamera();
-      that.initCamera();
-    }, 10000)
+      // reset camera each 20 seconds to overcome crashes
+      // or reset view (on exhibition)
+      if (that.props.reset) {
+        that.props.reset();
+      } else {
+        that.resetCamera();
+        that.initCamera();
+      }
+    }, 20000)
   }
 
   initCamera() {

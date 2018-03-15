@@ -11,7 +11,7 @@ class ExhibitionScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scan: true,
+      scan: false,
       roleId: null,
       uuid: null,
       answeredTopics: [],
@@ -39,7 +39,7 @@ class ExhibitionScreen extends React.Component {
 
   reset() {
     this.setState({
-      scan: true,
+      scan: false,
       roleId: null,
       uuid: null,
     })
@@ -54,7 +54,7 @@ class ExhibitionScreen extends React.Component {
   render() {
     let main;
     if (this.state.scan == true) {
-      main = <Scanner ident={this.ident.bind(this)} />
+      main = <Scanner ident={this.ident.bind(this)} reset={this.reset.bind(this)} />
     } else {
       const set = this.statementSetFromRole(this.state.roleId);
       if (set) {
@@ -73,19 +73,15 @@ class ExhibitionScreen extends React.Component {
           />
         }
       } else {
-        main = <div>
-          <h3>Mit deinem QR-Code kann ich nichts anfangen :(</h3>
-          <button className='button previous-button' onClick={() => this.reset()}>zurück</button>
+        main =  <div className='question' onClick={() => this.setState({ scan: true })}>
+          Klicke hier, um die Umfrage zu starten
+          <div className='subtitle'>Du brauchst einen QR-Code um teilzunehmen</div>
         </div>
       }
     }
 
     return (
-      <div className='row'>
-        <div className='col-xs-12'>
-          {main}
-        </div>
-      </div>
+      <div>{main}</div>
     );
   }
 }
