@@ -78,11 +78,14 @@ a {
 }
 
 .topic-selection {
-  background-color: purple;
   &.disabled {
     opacity: 0.5;
     cursor: default;
   }
+}
+
+.station {
+  margin: 50px;
 }
 
 .button-row {
