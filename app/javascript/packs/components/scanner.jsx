@@ -117,8 +117,10 @@ export default class ExhibitionScreen extends React.Component {
   render() {
     return (
       <div>
-        <div className='header'>Scanne deinen QR-Code</div>
-        <div className='subtitle'>Du hast keinen? Besorge dir einen am Eingang</div>
+        <div className='question'>
+          Scanne deinen QR-Code
+          <div className='subtitle'>Du hast keinen? Besorge dir einen am Eingang</div>
+        </div>
         <canvas id="canvas"></canvas>
 
         <div className='qr-code-test-replacement-input'>

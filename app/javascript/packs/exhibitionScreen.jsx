@@ -81,15 +81,23 @@ class ExhibitionScreen extends React.Component {
     }
 
     return (
-      <div>{main}</div>
+      <div className='row'>
+        <div className='col-xs-12'>
+          {main}
+        </div>
+      </div>
     );
   }
 }
 
 ReactDOM.render(
-  <div className='all-centered'>
-    <ExhibitionScreen />
-    <div id='flash-message'></div>
+  <div className='container all-centered'>
+    <div className='row'>
+      <div className='col-xs-12'>
+        <ExhibitionScreen />
+        <div id='flash-message'></div>
+      </div>
+    </div>
   </div>,
   document.body.appendChild(document.createElement('div')),
 )

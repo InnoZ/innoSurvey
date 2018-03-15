@@ -6,7 +6,7 @@ export default function QuestionBox({selections, modifyChoice, id, style, text, 
   }
 
   const choicesList = choices.map((choice) =>
-    <div className={selections.includes(choice.id) ? 'button choice active' : 'button choice'}
+    <div className={selections.includes(choice.id) ? 'choice active' : 'choice'}
          key={choice.id}
          onClick={() => handleClick(choice.id)}>
       {choice.text}
@@ -18,9 +18,11 @@ export default function QuestionBox({selections, modifyChoice, id, style, text, 
     : <div className='subtitle'> Wähle eine Antwort aus </div>
 
   return(
-    <div className='question active'>
-      {text}
-      {styleNote}
+    <div className='active'>
+      <div className='question'>
+        {text}
+        {styleNote}
+      </div>
       {choicesList}
     </div>
   )
