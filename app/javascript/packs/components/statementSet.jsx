@@ -139,7 +139,7 @@ export default class StatementSet extends React.Component {
         <div className='previous-button' onClick={() => this.browseStatement(-1) }>{'<'}</div> : null
 
     const submitButton = this.everyStatementAnswered() ?
-      <button className='btn btn-lg submit-button' onClick={() => this.submitSelections()}>Absenden</button> :
+      <button className='btn btn-lg' onClick={() => this.submitSelections()}>Absenden</button> :
       <div className='page-indicator'>{this.pageIndicator()}</div>
 
     const countdown = <div className='countdown'>{this.state.secondsLeft} sec</div>

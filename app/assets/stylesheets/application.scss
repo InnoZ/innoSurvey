@@ -88,15 +88,16 @@ a {
   margin: 50px;
 }
 
+.btn-lg {
+  background-color: #666666;
+  color: white;
+  font-size: 16px;
+}
+
 .button-row {
   height: 15px;
   line-height: 150px;
   vertical-align: middle;
-  .submit-button {
-    background-color: #666666;
-    color: white;
-    font-size: 16px;
-  }
   .page-indicator {
     font-family: "Times New Roman", Times, serif;
     font-size: 30px;
@@ -155,7 +156,7 @@ canvas {
 
 .qr-code-test-replacement-input {
   color: black;
-  // visibility: hidden;
+  visibility: hidden;
 }
 
 .countdown {
