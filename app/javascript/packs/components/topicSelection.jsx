@@ -66,7 +66,7 @@ export default class topicSelection extends React.Component {
           </div>
     } else {
       main = window.stations.map((station) => {
-        return <div key={station.id}>
+        return <div className='station' key={station.id}>
           <h2>{station.name}</h2>
           {this.topicButtons(station)}
         </div>
