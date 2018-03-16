@@ -16,7 +16,7 @@ visualization/
 /log/*.log
 /log/nginx/*
 log/postgresql/*
-pidas/*
+pids/*
 /public/assets
 .sass-cache
 tmp/**/*
@@ -75,3 +75,4 @@ config/initializers/secret_token.rb
 
 *.sqlite3
 *.sqlite3-journal
+yarn-error.log
