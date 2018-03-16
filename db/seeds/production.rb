@@ -53,11 +53,11 @@ Role.all.each do |role|
   statement_2.choices.create(text: 'Sehr hoch')
 
   if role == role_1
-    statement_3 = set.statements.create(style: 'multiple_choice', text: 'Stellen Sie sich vor, Sie befinden sich <b>in einer Stadt</b> und möchten eine Fahrt im autonomen Shuttle buchen./nWelche der folgenden Möglichkeiten würden Sie am ehesten wählen?')
+    statement_3 = set.statements.create(style: 'multiple_choice', text: 'Stellen Sie sich vor, Sie befinden sich in einer Stadt und möchten eine Fahrt im autonomen Shuttle buchen. Welche der folgenden Möglichkeiten würden Sie am ehesten wählen?')
 	statement_3.choices.create(text: 'Wartezeit: 10 Minuten; Preis für die Fahrt: 2 €')
     statement_3.choices.create(text: 'Wartezeit: keine; Preis für die Fahrt: 3 €')
 
-	statement_4 = set.statements.create(style: 'multiple_choice', text: 'Stellen Sie sich vor, Sie befinden sich <b>im ländlichen Raum</b> und möchten eine Fahrt im autonomen Shuttle buchen./nWelche der folgenden Möglichkeiten würden Sie am ehesten wählen?')
+	statement_4 = set.statements.create(style: 'multiple_choice', text: 'Stellen Sie sich vor, Sie befinden sich im ländlichen Raum und möchten eine Fahrt im autonomen Shuttle buchen. Welche der folgenden Möglichkeiten würden Sie am ehesten wählen?')
 	statement_4.choices.create(text: 'Wartezeit: 30 Minuten; Preis für die Fahrt: 3 €')
     statement_4.choices.create(text: 'Wartezeit: keine; Preis für die Fahrt: 9 €')
   end
@@ -133,7 +133,7 @@ Role.all.each do |role|
   end
 
   if [role_3, role_4, role_5].include? role
-    statement_5 = set.statements.create(style: 'multiple_choice', text: 'Bitte geben Sie an, wie wertvvoll Sie die anfallenden Daten (z.B. zurückgelegte Strecken und genutzte Verkehrsmittel, Orte und Wegezwecke, Zeitpunkte der Wege, etc.) für Ihre eigene Arbeit finden')
+    statement_5 = set.statements.create(style: 'multiple_choice', text: 'Bitte geben Sie an, wie wertvvoll Sie die anfallenden Daten (z.B. zurückgelegte Strecken und genutzte Verkehrsmittel, Orte und Wegezwecke, Zeitpunkte der Wege etc.) für Ihre eigene Arbeit finden')
     statement_5.choices.create(text: 'Nicht wertvoll')
 	statement_5.choices.create(text: 'Wenig wertvoll')
 	statement_5.choices.create(text: 'Ziemlich wertvoll')
