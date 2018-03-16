@@ -20,7 +20,14 @@ feature 'Exhibition view', :js do
     select_other_question_and_see_related_answers
     select_and_highlight_one_choice
     send_question_set_and_see_qr_scan_view
+    scan_same_code_again_and_get_error_message
     scan_code_with_invalid_role_id_and_jump_back_to_initial_screen
+  end
+
+  def scan_same_code_again_and_get_error_message
+    select_role_via_qr_code_scan
+    expect(page).to have_content('Hier warst du schon')
+    find('.question').trigger('click')
   end
 
   def select_role_via_qr_code_scan
@@ -55,7 +62,6 @@ feature 'Exhibition view', :js do
   end
 
   def scan_code_with_invalid_role_id_and_jump_back_to_initial_screen
-    find('.question', text: 'Klicke hier, um die Umfrage zu starten').trigger('click')
     scan(uuid: '123xy', role_id: '666')
     expect(page).to have_content('Klicke hier, um die Umfrage zu starten')
   end
