@@ -42,7 +42,7 @@ RSpec.describe TopicsController, type: :controller do
       end
     end
     it 'Shall return all finished topics' do
-      get :answered_topics_by_user, { params: { id: @user_id} }
+      get :answered_topics_by_user, { params: { uuid: @user_id} }
       answered_topics = JSON.parse(response.body)
       expect(answered_topics.count).to eq(6)
       expect(answered_topics).to eq(@answered_topics)

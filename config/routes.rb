@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   # TOPICS
   get '/topics/:id', to: 'topics#ident', as: :topic_ident
-  get '/topics/finished/:id', to: 'topics#answered_topics_by_user'
+  get '/topics/finished/:uuid', to: 'topics#answered_topics_by_user'
 
   # SURVEY
   get '/surveys', to: 'surveys#index', as: :surveys
