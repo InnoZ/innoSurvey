@@ -1,5 +1,4 @@
 import React from 'react';
-
 import jsQR from "jsqr";
 
 export default class ExhibitionScreen extends React.Component {
@@ -53,7 +52,10 @@ export default class ExhibitionScreen extends React.Component {
       window.canvas = canvasElement.getContext("2d");
       navigator.mediaDevices.getUserMedia({
         audio: false,
-        video: true,
+        video: {
+          width: { max: 350 },
+          height: { max: 300 }
+        }
       }).then(function(stream) {
         video.srcObject = stream;
         video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
