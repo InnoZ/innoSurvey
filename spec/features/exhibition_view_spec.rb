@@ -20,10 +20,11 @@ feature 'Exhibition view', :js do
     select_other_question_and_see_related_answers
     select_and_highlight_one_choice
     send_question_set_and_see_qr_scan_view
-    scan_code_with_invalid_role_id
+    scan_code_with_invalid_role_id_and_jump_back_to_initial_screen
   end
 
   def select_role_via_qr_code_scan
+    find('.question', text: 'Klicke hier, um die Umfrage zu starten').trigger('click')
     scan(uuid: '123xy', role_id: '1')
   end
 
@@ -32,8 +33,8 @@ feature 'Exhibition view', :js do
   end
 
   def select_other_question_and_see_related_answers
-    find('.button', text: 'weiter').trigger('click')
-    expect(page).to have_css('.question.active', text: 'Second question')
+    find('.next-button').trigger('click')
+    expect(page).to have_css('.question', text: 'Second question')
     expect(page).to have_content('Sample answer', count: 3)
   end
 
@@ -48,14 +49,15 @@ feature 'Exhibition view', :js do
   end
 
   def send_question_set_and_see_qr_scan_view
-    find('.button', text: 'Absenden').trigger('click')
+    click_on('Absenden')
     expect(page).to have_content('gespeichert')
-    expect(page).to have_content('Scanne deinen QR-Code')
+    expect(page).to have_content('Klicke hier, um die Umfrage zu starten')
   end
 
-  def scan_code_with_invalid_role_id
+  def scan_code_with_invalid_role_id_and_jump_back_to_initial_screen
+    find('.question', text: 'Klicke hier, um die Umfrage zu starten').trigger('click')
     scan(uuid: '123xy', role_id: '666')
-    expect(page).to have_content('Mit deinem QR-Code kann ich nichts anfangen')
+    expect(page).to have_content('Klicke hier, um die Umfrage zu starten')
   end
 
   def scan(uuid:, role_id:)

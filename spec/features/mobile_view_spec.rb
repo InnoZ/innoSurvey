@@ -18,7 +18,7 @@ feature 'Mobile view', :js do
     select_role_via_qr_code_scan
     select_first_topic
     answer_questions
-    see_first_topic_disabled
+    # see_first_topic_disabled
     visit_again_and_scan_invalid_role_qr
     select_first_topic
     see_error_message
@@ -39,12 +39,12 @@ feature 'Mobile view', :js do
   end
 
   def select_first_topic
-    find('.button', text: 'First topic').trigger('click')
+    find('.topic-selection', text: 'First topic').trigger('click')
   end
 
   def answer_questions
     select_answer('Sample answer 0')
-    click_on('weiter')
+    find('.next-button').trigger('click')
     select_answer('Sample answer 1')
     click_on('Absenden')
   end
