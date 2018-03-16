@@ -11,13 +11,16 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x |  bash -
 RUN apt-get update -qq && apt-get install -y \
     build-essential \
     libsqlite3-dev \
+    supervisor \
     yarn \
     nodejs
 
 RUN mkdir /innosurvey
 WORKDIR /innosurvey
-ADD Gemfile /innosurvey/Gemfile
-ADD Gemfile.lock /innosurvey/Gemfile.lock
+
+#ADD Gemfile /innosurvey/Gemfile
+#ADD Gemfile.lock /innosurvey/Gemfile.lock
+ADD ./ /innosurvey/
 RUN bundle install
-ADD package.json /innosurvey/package.json
+#ADD package.json /innosurvey/package.json
 RUN yarn 
