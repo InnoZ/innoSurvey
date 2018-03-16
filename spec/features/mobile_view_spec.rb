@@ -18,7 +18,7 @@ feature 'Mobile view', :js do
     select_role_via_qr_code_scan
     select_first_topic
     answer_questions
-    # see_first_topic_disabled
+    see_first_topic_disabled
     visit_again_and_scan_invalid_role_qr
     select_first_topic
     see_error_message
@@ -26,8 +26,7 @@ feature 'Mobile view', :js do
 
   def visit_again_and_scan_invalid_role_qr
     visit survey_ident_path(@survey.id)
-    scan(uuid: '123xy', role_id: '666')
-    expect(page).to have_content('')
+    scan(uuid: '456yx', role_id: '6654676')
   end
 
   def select_role_via_qr_code_scan
@@ -35,7 +34,7 @@ feature 'Mobile view', :js do
   end
 
   def see_error_message
-    expect(page).to have_content('Hier gibt es keine Fragen für deine Rolle!')
+    expect(page).to have_content('Hier gibt es leider keine Fragen für deine Rolle')
   end
 
   def select_first_topic
@@ -54,8 +53,8 @@ feature 'Mobile view', :js do
   end
 
   def see_first_topic_disabled
-    expect(page).to have_css('.button.disabled', text: 'First topic')
-    expect(page).to have_css('.button', text: 'Second topic')
+    expect(page).to have_css('.topic-selection.disabled', text: 'First topic')
+    expect(page).to have_css('.topic-selection', text: 'Second topic')
   end
 
   def scan(uuid:, role_id:)
