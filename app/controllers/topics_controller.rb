@@ -10,15 +10,8 @@ class TopicsController < ApplicationController
   # Ajax endpoint which returns which topics a given user(with specific role)
   # has allready fully answered
   def answered_topics_by_user
-    # Get all statements
-    statements = Statement.all.index_by(&:id)
-    statement_sets = StatementSet.all.index_by(&:id)
-    # Get all answers for a given user id
     user_answers = Answer.where(uuid: params[:id])
-    # Iterate answers and 
-    topic_ids = user_answers.map do |a| 
-      statement_sets[statements[a.statement_id].statement_set_id].topic_id
-    end
+    topic_ids = user_answers.map{ |a| a.statement.topic.id }
     render json: topic_ids.uniq, status:200
   end
 end
