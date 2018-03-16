@@ -15,8 +15,8 @@ class TopicsController < ApplicationController
     statement_sets = StatementSet.all.index_by(&:id)
     # Get all answers for a given user id
     user_answers = Answer.where(uuid: params[:id])
-    # Iterate answers and 
-    topic_ids = user_answers.map do |a| 
+    # Iterate answers and
+    topic_ids = user_answers.map do |a|
       statement_sets[statements[a.statement_id].statement_set_id].topic_id
     end
     render json: topic_ids.uniq, status:200
