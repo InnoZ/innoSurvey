@@ -17,30 +17,35 @@ RSpec.describe TopicsController, type: :controller do
   end
   context 'GET #by_user_answered_topics' do
     before do
-      @roles = create_list(:role, 3)
-      @topics = create_list(:topic, 3)
+      @role = create(:role)
+      @topics = create_list(:topic, 10)
+      @answered_topics = []
+      @statement_sets = []
+      @statements = []
       @user_id          = 'test42424242'
-      @another_user_id  = 'test12345678'
 
-      @statement_set_0  = create :statement_sets, topic_id: @topics[0].id, role_id: @roles[0].id
-      @statements0      = create_list(:statements, 10, statement_set_0.id)
-      @answers0_user    = @statements0.map { |x| create :answer, statement_id: x.id, uuid: @user_id }
-      binding.pry
-      @statement_set_1  = create :statement_sets, topic_id: @topics[1].id, role_id: @roles[1].id
-      @statements1      = create_list(:statements, 10, statement_set_1.id)
-      @statement_set_2  = create :statement_sets, topic_id: @topics[2].id, role_id: @roles[2].id
-      @statements2      = create_list(:statements, 10, statement_set_2.id)
-      
-    end
-    def generate_answers(statements, user_id)
-      answers = []
+      @topics.each do |t|
+        statement_set = create :statement_set, topic_id: t.id, role_id: @role.id
+        @statement_sets.append statement_set
+        statements = create_list(:statement, 10, statement_set_id: statement_set.id)
+        statements.map{ |s| create_list(:choice, 4, statement_id: s.id) }
+        @statements.push statements
+      end
 
+      (0..5).each do |i|
+        @statements[i].each do |s|
+          choices = Choice.where(statement_id: s.id)
+          selected_choice = "[#{choices[rand(0..choices.count-1)].id}]"
+          create :answer, statement_id: s.id, selected_choices: selected_choice, uuid: @user_id
+        end
+        @answered_topics.append(@topics[i].id)
+      end
     end
-    def request(user)
-      get :by_user_answered_topics, { params: { id: user} }
-    end 
     it 'Shall return all finished topics' do
-      request(@user_id)
+      get :answered_topics_by_user, { params: { id: @user_id} }
+      answered_topics = JSON.parse(response.body)
+      expect(answered_topics.count).to eq(6)
+      expect(answered_topics).to eq(@answered_topics)
     end
   end
 end
