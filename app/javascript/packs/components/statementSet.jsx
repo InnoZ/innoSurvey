@@ -148,8 +148,8 @@ export default class StatementSet extends React.Component {
       <div className='topic'>
         {question}
         <div className='button-row row'>
-          <div className='col-xs-offset-3 col-xs-2'>{previousButton}</div>
-          <div className='col-xs-2'>{submitButton}</div>
+          <div className='col-xs-offset-2 col-xs-2'>{previousButton}</div>
+          <div className='col-xs-4'>{submitButton}</div>
           <div className='col-xs-2'>{nextButton}</div>
         </div>
         {countdown}

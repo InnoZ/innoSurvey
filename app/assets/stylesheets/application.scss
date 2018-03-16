@@ -36,9 +36,9 @@ a {
   text-align: center;
   line-height: 8vh;
   vertical-align: middle;
-  font-size: 40px;
+  font-size: 32px;
   color: #666666;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   img {
     height: 6vh;
     top: 1vh;
@@ -58,7 +58,7 @@ a {
   font-weight: bold;
   border-radius: 20px;
   padding: 20px;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 30px;
 }
 
@@ -134,6 +134,8 @@ video {
 }
 
 canvas {
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
   display: block;
   margin: 0 auto;
   overflow: hidden;
