@@ -32,11 +32,15 @@ export default class ExhibitionScreen extends React.Component {
     const that = this;
     that.initCamera();
     this.cameraResetInterval = setInterval(function() {
-      // reset camera each 10 seconds
-      // to overcome crashes
-      that.resetCamera();
-      that.initCamera();
-    }, 10000)
+      // reset camera each 20 seconds to overcome crashes
+      // or reset view (on exhibition)
+      if (that.props.reset) {
+        that.props.reset();
+      } else {
+        that.resetCamera();
+        that.initCamera();
+      }
+    }, 20000)
   }
 
   initCamera() {
@@ -117,8 +121,10 @@ export default class ExhibitionScreen extends React.Component {
   render() {
     return (
       <div>
-        <div className='header'>Scanne deinen QR-Code</div>
-        <div className='subtitle'>Du hast keinen? Besorge dir einen am Eingang</div>
+        <div className='question'>
+          Scanne deinen QR-Code
+          <div className='subtitle'>Du hast keinen? Besorge dir einen am Eingang</div>
+        </div>
         <canvas id="canvas"></canvas>
 
         <div className='qr-code-test-replacement-input'>

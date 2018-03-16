@@ -20,11 +20,13 @@ class MobileScreen extends React.Component {
   ident(identString) {
     if (identString.includes('uuid') && identString.includes('role_id')) {
       let identJson = JSON.parse(identString);
-      this.setState({
+      const newState = {
         scan: false,
         roleId: identJson['role_id'],
         uuid: identJson['uuid'],
-      })
+      };
+      console.log(newState);
+      this.setState(newState)
     };
   };
 
@@ -43,9 +45,13 @@ class MobileScreen extends React.Component {
 }
 
 ReactDOM.render(
-  <div className='all-centered'>
-    <MobileScreen />
-    <div id='flash-message'></div>
+  <div className='container all-centered'>
+    <div className='row'>
+      <div className='col-xs-12'>
+        <MobileScreen />
+        <div id='flash-message'></div>
+      </div>
+    </div>
   </div>,
   document.body.appendChild(document.createElement('div')),
 )

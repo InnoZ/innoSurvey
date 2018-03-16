@@ -7,8 +7,14 @@ export default class topicSelection extends React.Component {
     this.state = {
       activeStation: null,
       activeTopic: null,
-      finishedTopics: [],
+      answeredTopics: [],
     }
+  }
+
+  componentWillMount() {
+    this.setState({
+      answeredTopics: []
+    })
   }
 
   topic() {
@@ -21,23 +27,20 @@ export default class topicSelection extends React.Component {
   }
 
   reset() {
-    this.setState({ activeTopic: null })
-  }
-
-  finishTopic(id) {
-    this.setState((prevState, props) => ({
-      finishedTopics: prevState.finishedTopics.concat([id])
-    }));
+    this.setState({
+      activeTopic: null,
+      answeredTopics: [1, 2]
+    })
   }
 
   topicButtons(station) {
     return station.topics.map((topic) => {
       let classNames, clickHandler;
-      if (this.state.finishedTopics.includes(topic.id)) {
-        classNames = 'button choice topic-selection disabled';
+      if (this.state.answeredTopics.includes(topic.id)) {
+        classNames = 'choice topic-selection disabled';
         clickHandler = null;
       } else {
-        classNames = 'button choice topic-selection';
+        classNames = 'choice topic-selection';
         clickHandler = () => this.setState({ activeStation: station.id, activeTopic: topic.id });
       }
       return <h3 key={topic.id} className={classNames} onClick={clickHandler}>
@@ -56,15 +59,14 @@ export default class topicSelection extends React.Component {
                         uuid={this.props.uuid}
                         roleName={statementSet.role_name}
                         statements={statementSet.statements}
-                        reset={() => this.reset()}
-                        finishTopic={this.finishTopic.bind(this)} />
+                        reset={() => this.reset()} />
         : <div>
             <h3>Hier gibt es keine Fragen für deine Rolle!</h3>
             <button className='button previous-button' onClick={this.reset.bind(this)}>zurück</button>
           </div>
     } else {
       main = window.stations.map((station) => {
-        return <div key={station.id}>
+        return <div className='station' key={station.id}>
           <h2>{station.name}</h2>
           {this.topicButtons(station)}
         </div>

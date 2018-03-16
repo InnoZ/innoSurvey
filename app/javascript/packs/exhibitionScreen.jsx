@@ -11,33 +11,42 @@ class ExhibitionScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      scan: true,
+      scan: false,
       roleId: null,
       uuid: null,
+      answeredTopics: [],
     }
+  }
+
+  getAnsweredTopics() {
+    this.setState({
+      answeredTopics: []
+    })
   }
 
   ident(identString) {
     if (identString.includes('uuid') && identString.includes('role_id')) {
       let identJson = JSON.parse(identString);
-      this.setState({
+      const newState = {
         scan: false,
         roleId: identJson['role_id'],
         uuid: identJson['uuid'],
-      })
+      };
+      console.log(newState);
+      this.setState(newState, this.getAnsweredTopics)
     };
   };
 
   reset() {
     this.setState({
-      scan: true,
+      scan: false,
       roleId: null,
       uuid: null,
     })
   }
 
   statementSetFromRole(roleId) {
-    return window.data.statement_sets.find((set) =>
+    return window.topicData.statement_sets.find((set) =>
       set.role_id == this.state.roleId
     );
   }
@@ -45,21 +54,28 @@ class ExhibitionScreen extends React.Component {
   render() {
     let main;
     if (this.state.scan == true) {
-      main = <Scanner ident={this.ident.bind(this)} />
+      main = <Scanner ident={this.ident.bind(this)} reset={this.reset.bind(this)} />
     } else {
       const set = this.statementSetFromRole(this.state.roleId);
       if (set) {
-        main = <StatementSet
-          roleId={set.role_id}
-          uuid={this.state.uuid}
-          roleName={set.role_name}
-          statements={set.statements}
-          reset={() => this.reset()}
-        />
+        if (this.state.answeredTopics.includes(window.topicData.id)) {
+          main = <div>
+            <h3>Hier warst du schon!</h3>
+            <button className='btn btn-lg' onClick={() => this.reset()}>zurück</button>
+          </div>
+        } else {
+          main = <StatementSet
+            roleId={set.role_id}
+            uuid={this.state.uuid}
+            roleName={set.role_name}
+            statements={set.statements}
+            reset={() => this.reset()}
+          />
+        }
       } else {
-        main = <div>
-          <h3>Mit deinem QR-Code kann ich nichts anfangen :(</h3>
-          <div onClick={() => this.reset()}>Klicke hier um zum Scanner zurück zu gelangen</div>
+        main =  <div className='question' onClick={() => this.setState({ scan: true })}>
+          Klicke hier, um die Umfrage zu starten
+          <div className='subtitle'>Du brauchst einen QR-Code um teilzunehmen</div>
         </div>
       }
     }
@@ -71,9 +87,13 @@ class ExhibitionScreen extends React.Component {
 }
 
 ReactDOM.render(
-  <div className='all-centered'>
-    <ExhibitionScreen />
-    <div id='flash-message'></div>
+  <div className='container all-centered'>
+    <div className='row'>
+      <div className='col-xs-12'>
+        <ExhibitionScreen />
+        <div id='flash-message'></div>
+      </div>
+    </div>
   </div>,
   document.body.appendChild(document.createElement('div')),
 )

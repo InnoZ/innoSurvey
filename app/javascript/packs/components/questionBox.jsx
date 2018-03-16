@@ -6,16 +6,23 @@ export default function QuestionBox({selections, modifyChoice, id, style, text, 
   }
 
   const choicesList = choices.map((choice) =>
-    <div className={selections.includes(choice.id) ? 'button choice active' : 'button choice'}
+    <div className={selections.includes(choice.id) ? 'choice active' : 'choice'}
          key={choice.id}
          onClick={() => handleClick(choice.id)}>
       {choice.text}
     </div>
   );
 
+  const styleNote = style == 'multiple_choice'
+    ? <div className='subtitle'> Mehrfachauswahl möglich </div>
+    : <div className='subtitle'> Wähle eine Antwort aus </div>
+
   return(
-    <div className='question active'>
-      {text}
+    <div className='active'>
+      <div className='question'>
+        {text}
+        {styleNote}
+      </div>
       {choicesList}
     </div>
   )
