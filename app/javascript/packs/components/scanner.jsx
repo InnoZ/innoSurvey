@@ -52,9 +52,8 @@ export default class ExhibitionScreen extends React.Component {
       window.canvasElement = document.getElementById("canvas");
       window.canvas = canvasElement.getContext("2d");
       navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "environment"
-        }
+        audio: false,
+        video: true,
       }).then(function(stream) {
         video.srcObject = stream;
         video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
