@@ -19,9 +19,22 @@ class ExhibitionScreen extends React.Component {
   }
 
   getAnsweredTopics() {
-    this.setState({
-      answeredTopics: []
-    })
+    const that = this;
+    fetch('/topics/finished/' + this.state.uuid)
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' + response.status);
+            return;
+          }
+          response.json().then(function(data) {
+            that.setState({ answeredTopics: data })
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
   }
 
   ident(identString) {
@@ -59,9 +72,9 @@ class ExhibitionScreen extends React.Component {
       const set = this.statementSetFromRole(this.state.roleId);
       if (set) {
         if (this.state.answeredTopics.includes(window.topicData.id)) {
-          main = <div>
-            <h3>Hier warst du schon!</h3>
-            <button className='btn btn-lg' onClick={() => this.reset()}>zurück</button>
+          main =  <div className='question' onClick={() => this.setState({ scan: true })}>
+            Hier warst du schon!
+            <div className='subtitle'>Klicke hier, um zurück zu gelangen</div>
           </div>
         } else {
           main = <StatementSet
