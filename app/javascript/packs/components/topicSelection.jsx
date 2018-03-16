@@ -12,9 +12,30 @@ export default class topicSelection extends React.Component {
   }
 
   componentWillMount() {
-    this.setState({
-      answeredTopics: []
-    })
+    this.getAnsweredTopics()
+  }
+
+  componentDidUpdate() {
+    this.getAnsweredTopics()
+  }
+
+  getAnsweredTopics() {
+    const that = this;
+    fetch('/topics/finished/' + this.props.uuid)
+      .then(
+        function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' + response.status);
+            return;
+          }
+          response.json().then(function(data) {
+            that.setState({ answeredTopics: data })
+          });
+        }
+      )
+      .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+      });
   }
 
   topic() {
@@ -27,10 +48,7 @@ export default class topicSelection extends React.Component {
   }
 
   reset() {
-    this.setState({
-      activeTopic: null,
-      answeredTopics: [1, 2]
-    })
+    this.setState({ activeTopic: null })
   }
 
   topicButtons(station) {
@@ -60,9 +78,9 @@ export default class topicSelection extends React.Component {
                         roleName={statementSet.role_name}
                         statements={statementSet.statements}
                         reset={() => this.reset()} />
-        : <div>
-            <h3>Hier gibt es keine Fragen für deine Rolle!</h3>
-            <button className='button previous-button' onClick={this.reset.bind(this)}>zurück</button>
+        : <div className='question' onClick={this.reset.bind(this)}>
+            Hier gibt es leider keine Fragen für deine Rolle.
+            <div className='subtitle'>Klicke hier um zurück zu gelangen.</div>
           </div>
     } else {
       main = window.stations.map((station) => {
