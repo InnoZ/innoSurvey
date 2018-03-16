@@ -13,7 +13,7 @@ export default class topicSelection extends React.Component {
 
   componentWillMount() {
     this.setState({
-      answeredTopics: [1]
+      answeredTopics: []
     })
   }
 
