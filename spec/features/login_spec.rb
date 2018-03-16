@@ -1,5 +1,5 @@
-feature 'Login / Logout', :js do
-  scenario '' do
+feature 'Login / Logout view', :js do
+  scenario 'lets user login' do
     create :user, email: 'user@test.com', password: 'secret', password_confirmation: 'secret'
     survey = create :survey
 
