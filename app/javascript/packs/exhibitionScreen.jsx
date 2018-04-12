@@ -45,17 +45,20 @@ class ExhibitionScreen extends React.Component {
         roleId: identJson['role_id'],
         uuid: identJson['uuid'],
       };
-      console.log(newState);
       this.setState(newState, this.getAnsweredTopics)
     };
   };
 
   reset() {
-    this.setState({
-      scan: false,
-      roleId: null,
-      uuid: null,
-    })
+    if (getUrlParam('url')) {
+      window.location.href = getUrlParam('url');
+    } else {
+      this.setState({
+        scan: false,
+        roleId: null,
+        uuid: null,
+      })
+    }
   }
 
   statementSetFromRole(roleId) {
