@@ -9,11 +9,11 @@ feature 'Exhibition view', :js do
     3.times { |i| create(:choice, statement: @statement_1, text: "Sample answer #{i}") }
     @statement_2 = create(:statement, statement_set: @statement_set, text: 'Second question')
     3.times { |i| create(:choice, statement: @statement_2, text: "Sample answer #{i}") }
-
-    visit topic_ident_path(@topic.id)
   end
 
   scenario 'includes working react app' do
+    visit topic_ident_path(@topic.id)
+
     select_role_via_qr_code_scan
     select_and_highlight_one_choice
     do_not_show_send_button_unless_all_statements_answered
@@ -22,6 +22,13 @@ feature 'Exhibition view', :js do
     send_question_set_and_see_qr_scan_view
     scan_same_code_again_and_get_error_message
     scan_code_with_invalid_role_id_and_jump_back_to_initial_screen
+  end
+
+  scenario 'shows Scanner immediately and redirects to url if url is transmitted' do
+    visit "topics/#{@topic.id}?url=#{root_path}"
+    expect(page).to have_content('Scanne deinen QR-Code')
+    sleep 11 # returns to given url after 10 seconds of inactivity
+    expect(page).to have_content('Station: Sample station')
   end
 
   def scan_same_code_again_and_get_error_message

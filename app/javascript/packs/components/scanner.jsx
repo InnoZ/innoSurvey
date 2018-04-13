@@ -4,11 +4,11 @@ import jsQR from "jsqr";
 export default class ExhibitionScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.tick = this.tick.bind(this)
+    this.tick = this.tick.bind(this);
   }
 
   resetCamera() {
-    if (navigator.mediaDevices) {
+    if (animationFrame) { // if webcam available and delivering data
       video.pause();
       video.src = '';
       video.load();
@@ -39,12 +39,13 @@ export default class ExhibitionScreen extends React.Component {
         that.resetCamera();
         that.initCamera();
       }
-    }, 20000)
+    }, 10000)
   }
 
   initCamera() {
     // this together with tick() are based on
     // the jsQR demo example (https://cozmo.github.io/jsQR)
+    window.animationFrame = null;
     if (navigator.mediaDevices) {
       const that = this;
       window.video = document.createElement("video");
@@ -129,8 +130,8 @@ export default class ExhibitionScreen extends React.Component {
         <canvas id="canvas"></canvas>
 
         <div className='qr-code-test-replacement-input'>
-          <input id='uuid-test-input'></input>
-          <input id='role-id-test-input'></input>
+          <input id='uuid-test-input' placeholder='uuid'></input>
+          <input id='role-id-test-input' placeholder='role id'></input>
           <button id='send-fake-qr' onClick={this.fakeQrScan.bind(this)}>submit</button>
         </div>
       </div>
