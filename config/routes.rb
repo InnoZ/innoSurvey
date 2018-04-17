@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  root 'surveys#index'
+  if Survey.find_by(id: 2)
+    root to: 'surveys#ident', id: 2 #mFund
+  else
+    root 'surveys#index'
+  end
 
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'
