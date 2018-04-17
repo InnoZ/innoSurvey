@@ -10,8 +10,9 @@ import StatementSet from './components/statementSet.jsx';
 class ExhibitionScreen extends React.Component {
   constructor(props) {
     super(props);
+    this.backlinkUrl = getUrlParam('url');
     this.state = {
-      scan: false,
+      scan: this.backlinkUrl !== null,
       roleId: null,
       uuid: null,
       answeredTopics: [],
@@ -50,7 +51,7 @@ class ExhibitionScreen extends React.Component {
   };
 
   reset() {
-    if (getUrlParam('url')) {
+    if (this.backlinkUrl) {
       window.location.href = getUrlParam('url');
     } else {
       this.setState({
