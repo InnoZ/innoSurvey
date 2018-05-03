@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  if Survey.find_by(id: 2)
-    root to: 'surveys#ident', id: 2 #mFund
+  if Survey.find_by(name: 'MFund')
+    root to: 'surveys#ident', id: Survey.find_by(name: 'MFund').id
   else
     root 'surveys#index'
   end
