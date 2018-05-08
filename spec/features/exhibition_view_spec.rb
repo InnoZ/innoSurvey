@@ -70,6 +70,7 @@ feature 'Exhibition view', :js do
 
   def scan_code_with_invalid_role_id_and_jump_back_to_initial_screen
     scan(uuid: '123xy', role_id: '666')
+    expect(page).to have_content('Dein QR-Code passt nicht zu dieser Umfrage')
     expect(page).to have_content('Klicke hier, um die Umfrage zu starten')
   end
 
