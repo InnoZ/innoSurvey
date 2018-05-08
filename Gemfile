@@ -17,6 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'webpacker'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'combine_pdf'
 
 # haml template DSL
 gem 'haml'
