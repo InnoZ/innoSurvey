@@ -25,7 +25,6 @@ class MobileScreen extends React.Component {
         roleId: identJson['role_id'],
         uuid: identJson['uuid'],
       };
-      console.log(newState);
       this.setState(newState)
     };
   };
