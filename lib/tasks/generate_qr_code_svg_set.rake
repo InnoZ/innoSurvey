@@ -6,7 +6,7 @@ require 'ruby-progressbar'
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
   arguments = {
-    iterations: 100
+    iterations: 3
   }
   o = OptionParser.new
 
@@ -28,9 +28,27 @@ task gen_qr_codes: :environment do
     qr.as_svg(offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 5)
   end
 
-  def styling
+ include ActionView::Helpers
+  def styling(background_image_path)
     <<-EOF
     <style>
+      body {
+        background-image: url("#{background_image_path}");
+        background-repeat: no-repeat;
+        background-size: 110mm 110mm;
+        width: 110mm;
+        height: 110mm;
+      }
+      .qr-code > img {
+        height: 30mm;
+        width: 30mm;
+        margin-top: 45mm;
+        margin-left: 39mm;
+      }
+      .qr-code > .id {
+        margin-top: 3mm;
+        text-align: center;
+      }
     </style>
     EOF
   end
@@ -41,31 +59,36 @@ task gen_qr_codes: :environment do
     <<-EOF
       <div class="qr-code">
         <div class"heading-url">
-          <h3>https://survey.innoz.space</h3>
         </div>
-        <div class="image">
+        <div class="qr-code">
           <img src="#{opts[:path_to_qr_svg]}"></img>
-        </div>
-        <div class"footer">
-          <table>
-            <tr>
-              <td class="qr-footer-descr-cell"><strong>Deine Rolle</strong></td>
-              <td>#{role.name}</td>
-            </tr>
-          </table>
+          <div class='id'>Deine ID: #{opts[:uuid]}</div>
         </div>
       </div>
     EOF
   end
 
-  def gen_html(**opts)
+  def gen_html_front(**opts)
     <<-EOF
       <html>
         <head>
-        #{styling}
+        #{styling(Rails.root.to_s + "/public/qr_code_layout_front.png")}
         </head>
         <body>
         #{qr_code(opts)}
+        </body>
+      </html>
+    EOF
+  end
+
+
+  def gen_html_back(**opts)
+    <<-EOF
+      <html>
+        <head>
+        #{styling(Rails.root.to_s + "/public/qr_code_layout_back.png")}
+        </head>
+        <body>
         </body>
       </html>
     EOF
@@ -89,24 +112,37 @@ task gen_qr_codes: :environment do
       f.close
     end
 
-    # KEEP THESE FILES IN CASE WORKFLOW DEVS - DESIGNER CHANGES SOMEHOW...
-    # # Generate HTML template
-    # tmp_html = gen_html(**opts)
-    # tmp_html_file = File.open(file_path + '.html', 'w') do |f|
-    #   f.write(tmp_html)
-    #   f.close
-    # end
+    # Generate HTML template
+    File.open(file_path + '_front.html', 'w') do |f|
+      f.write(gen_html_front(**opts))
+      f.close
+    end
 
-    # # Generate PDF
-    # pdf = WickedPdf.new.pdf_from_html_file(file_path + '.html')
-    # File.open(file_path + '.pdf', 'w:ASCII-8BIT') do |f|
-    #   f << pdf
-    # end
+    # Generate PDF
+    pdf = WickedPdf.new.pdf_from_html_file(file_path + '_front.html', {
+      margin:  { top: 3, bottom: 3, left: 3, right: 3 },
+      page_height: 118,
+      page_width: 118,
+    })
+    File.open(file_path + '_front.pdf', 'w:ASCII-8BIT') do |f|
+      f << pdf
+    end
 
-    # # Remove temporary files
-    # %w[.html].each do |extension|
-    #   File.delete(file_path + extension)
-    # end
+    # Generate HTML template
+    File.open(file_path + '_back.html', 'w') do |f|
+      f.write(gen_html_back(**opts))
+      f.close
+    end
+
+    # Generate PDF
+    pdf = WickedPdf.new.pdf_from_html_file(file_path + '_back.html', {
+      margin:  { top: 3, bottom: 3, left: 3, right: 3 },
+      page_height: 118,
+      page_width: 118,
+    })
+    File.open(file_path + '_back.pdf', 'w:ASCII-8BIT') do |f|
+      f << pdf
+    end
   end
 
   # CREATE FOLDER BASED ON UNIX TIMESTAMP
