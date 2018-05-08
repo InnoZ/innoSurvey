@@ -68,11 +68,11 @@ task gen_qr_codes: :environment do
     EOF
   end
 
-  def gen_html_front(**opts)
+  def gen_html_back(**opts)
     <<-EOF
       <html>
         <head>
-        #{styling(Rails.root.to_s + "/public/qr_code_layout_front.png")}
+        #{styling(Rails.root.to_s + "/public/qr_code_layout_back.png")}
         </head>
         <body>
         #{qr_code(opts)}
@@ -82,11 +82,11 @@ task gen_qr_codes: :environment do
   end
 
 
-  def gen_html_back(**opts)
+  def gen_html_front(**opts)
     <<-EOF
       <html>
         <head>
-        #{styling(Rails.root.to_s + "/public/qr_code_layout_back.png")}
+        #{styling(Rails.root.to_s + "/public/qr_code_layout_front.png")}
         </head>
         <body>
         </body>
@@ -102,7 +102,6 @@ task gen_qr_codes: :environment do
       uuid: uuid,
       id: id,
       path_to_qr_svg: file_path + '.svg',
-      path_to_html: file_path + '.html'
     }
 
     # Generate and write intermediate QR code
@@ -112,36 +111,23 @@ task gen_qr_codes: :environment do
       f.close
     end
 
-    # Generate HTML template
-    File.open(file_path + '_front.html', 'w') do |f|
-      f.write(gen_html_front(**opts))
-      f.close
-    end
+    %w[front back].each do |site|
+      # Generate HTML template
+      html = FileUtils.send("gen_html_#{site}", **opts)
+      File.open(file_path + "_#{site}.html", 'w') do |f|
+        f.write(html)
+        f.close
+      end
 
-    # Generate PDF
-    pdf = WickedPdf.new.pdf_from_html_file(file_path + '_front.html', {
-      margin:  { top: 3, bottom: 3, left: 3, right: 3 },
-      page_height: 118,
-      page_width: 118,
-    })
-    File.open(file_path + '_front.pdf', 'w:ASCII-8BIT') do |f|
-      f << pdf
-    end
-
-    # Generate HTML template
-    File.open(file_path + '_back.html', 'w') do |f|
-      f.write(gen_html_back(**opts))
-      f.close
-    end
-
-    # Generate PDF
-    pdf = WickedPdf.new.pdf_from_html_file(file_path + '_back.html', {
-      margin:  { top: 3, bottom: 3, left: 3, right: 3 },
-      page_height: 118,
-      page_width: 118,
-    })
-    File.open(file_path + '_back.pdf', 'w:ASCII-8BIT') do |f|
-      f << pdf
+      # Generate PDF
+      pdf = WickedPdf.new.pdf_from_html_file(file_path + "_#{site}.html", {
+        margin:  { top: 3, bottom: 3, left: 3, right: 3 },
+        page_height: 118,
+        page_width: 118,
+      })
+      File.open(file_path + "_#{site}.pdf", 'w:ASCII-8BIT') do |f|
+        f << pdf
+      end
     end
   end
 
@@ -159,7 +145,10 @@ task gen_qr_codes: :environment do
                                      total: n * Role.count)
 
     Role.all.each do |role|
+
+      merged_pdf = CombinePDF.new
       n.times do
+        i += 1;
         # Increment progressbar
         progressbar.increment
 
@@ -169,12 +158,13 @@ task gen_qr_codes: :environment do
         # Generate gr code per Role
         gen_qr_pdf(role_id: role.id,
                    uuid: SecureRandom.urlsafe_base64(7),
-                   id: i += 1,
+                   id: i,
                    base_path: role_path)
+
+        merged_pdf << CombinePDF.load(role_path + i.to_s + '_front.pdf')
+        merged_pdf << CombinePDF.load(role_path + i.to_s + '_back.pdf')
       end
+      merged_pdf.save base_path + "/#{role.name}.pdf"
     end
-    p "#{n * Role.count} QR-Codes generated. Find them in #{base_path}"
-  rescue
-    p 'Something went wrong!'
   end
 end
