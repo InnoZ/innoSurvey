@@ -68,6 +68,14 @@ class ExhibitionScreen extends React.Component {
     );
   }
 
+  wrongRoleMessage() {
+    const flashMessage = document.getElementById('flash-message');
+    flashMessage.innerHTML = 'Dein QR-Code passt nicht zu dieser Umfrage!';
+    setTimeout(function() {
+      flashMessage.innerHTML = '';
+    }, 5000);
+  }
+
   render() {
     let main;
     if (this.state.scan == true) {
@@ -90,6 +98,7 @@ class ExhibitionScreen extends React.Component {
           />
         }
       } else {
+        if (this.state.roleId) { this.wrongRoleMessage(); }
         main =  <div className='question' onClick={() => this.setState({ scan: true })}>
           Klicke hier, um die Umfrage zu starten
           <div className='subtitle'>Du brauchst einen QR-Code um teilzunehmen</div>

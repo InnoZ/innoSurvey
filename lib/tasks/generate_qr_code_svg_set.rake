@@ -5,9 +5,8 @@ require 'ruby-progressbar'
 
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
-
   arguments = {
-    iterations: 10
+    iterations: 100
   }
   o = OptionParser.new
 
@@ -26,7 +25,7 @@ task gen_qr_codes: :environment do
 
     qr = RQRCode::QRCode.new(qr_content, level: :h, mode: :byte_8bit)
 
-    qr.as_svg( offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 5)
+    qr.as_svg(offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 5)
   end
 
   def styling
@@ -59,7 +58,6 @@ task gen_qr_codes: :environment do
     EOF
   end
 
-
   def gen_html(**opts)
     <<-EOF
       <html>
@@ -71,8 +69,6 @@ task gen_qr_codes: :environment do
         </body>
       </html>
     EOF
-
-
   end
 
   # HTML templating
@@ -124,7 +120,7 @@ task gen_qr_codes: :environment do
     progressbar = ProgressBar.create(format: "%a %b\u{15E7}%i %p%% %t",
                                      progress_mark: ' ',
                                      remainder_mark: "\u{FF65}",
-                                     total: n*Role.count)
+                                     total: n * Role.count)
 
     Role.all.each do |role|
       n.times do
@@ -141,8 +137,8 @@ task gen_qr_codes: :environment do
                    base_path: role_path)
       end
     end
-    p "#{n*Role.count} QR-Codes generated. Find them in #{base_path}"
+    p "#{n * Role.count} QR-Codes generated. Find them in #{base_path}"
   rescue
-    p "Something went wrong!"
+    p 'Something went wrong!'
   end
 end
