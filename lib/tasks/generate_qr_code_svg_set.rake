@@ -35,15 +35,16 @@ task gen_qr_codes: :environment do
       body {
         background-image: url("#{background_image_path}");
         background-repeat: no-repeat;
-        background-size: 110mm 110mm;
-        width: 110mm;
-        height: 110mm;
+        background-size: 118mm 118mm;
+        width: 118mm;
+        height: 118mm;
+        margin: 0;
       }
       .qr-code > img {
         height: 30mm;
         width: 30mm;
-        margin-top: 45mm;
-        margin-left: 39mm;
+        margin-top: 50mm;
+        margin-left: 45mm;
       }
       .qr-code > .id {
         margin-top: 3mm;
@@ -72,7 +73,7 @@ task gen_qr_codes: :environment do
     <<-EOF
       <html>
         <head>
-        #{styling(Rails.root.to_s + "/public/qr_code_layout_back.png")}
+        #{styling(Rails.root.to_s + "/public/qr_code_layout_back.svg")}
         </head>
         <body>
         #{qr_code(opts)}
@@ -86,7 +87,7 @@ task gen_qr_codes: :environment do
     <<-EOF
       <html>
         <head>
-        #{styling(Rails.root.to_s + "/public/qr_code_layout_front.png")}
+        #{styling(Rails.root.to_s + "/public/qr_code_layout_front.svg")}
         </head>
         <body>
         </body>
@@ -121,7 +122,7 @@ task gen_qr_codes: :environment do
 
       # Generate PDF
       pdf = WickedPdf.new.pdf_from_html_file(file_path + "_#{site}.html", {
-        margin:  { top: 3, bottom: 3, left: 3, right: 3 },
+        margin: { top: 0, bottom: 0, left: 0, right: 0 },
         page_height: 118,
         page_width: 118,
       })
@@ -145,10 +146,9 @@ task gen_qr_codes: :environment do
                                      total: n * Role.count)
 
     Role.all.each do |role|
-
       merged_pdf = CombinePDF.new
       n.times do
-        i += 1;
+        i += 1
         # Increment progressbar
         progressbar.increment
 
