@@ -107,6 +107,7 @@ export default class ExhibitionScreen extends React.Component {
       var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
       var code = jsQR(imageData.data, imageData.width, imageData.height);
       if (code) {
+        console.log('QR content: ' + code.data)
         that.props.ident(code.data);
       };
     }
@@ -117,6 +118,7 @@ export default class ExhibitionScreen extends React.Component {
     const uuid = document.getElementById('uuid-test-input').value;
     const roleId = document.getElementById('role-id-test-input').value;
     const fakedScanData = `{"uuid": "${uuid}", "role_id": "${roleId}"}`;
+    console.log('QR content: ' + fakedScanData)
     this.props.ident(fakedScanData);
   }
 
