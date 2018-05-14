@@ -15,7 +15,7 @@ export default function QuestionBox({selections, modifyChoice, id, style, text, 
 
   const styleNote = style == 'multiple_choice'
     ? <div className='subtitle'> Mehrfachauswahl möglich </div>
-    : <div className='subtitle'> Wähle eine Antwort aus </div>
+    : <div className='subtitle'> Nur eine Antwort möglich </div>
 
   return(
     <div className='active'>

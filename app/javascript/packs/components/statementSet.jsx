@@ -42,7 +42,7 @@ export default class StatementSet extends React.Component {
 
   successMessage() {
     const flashMessage = document.getElementById('flash-message');
-    flashMessage.innerHTML = 'Vielen Dank! Deine Antworten wurden gespeichert...';
+    flashMessage.innerHTML = 'Vielen Dank! Die Antworten wurden gespeichert...';
     setTimeout(function() {
       flashMessage.innerHTML = '';
     }, 5000);
