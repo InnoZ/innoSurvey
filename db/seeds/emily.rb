@@ -1,24 +1,24 @@
-survey = Survey.create(description: 'A survey for ELLI, the automated shuttle', name: 'Shuttle ELLI', user: User.first)
+survey = Survey.create(description: 'A survey for EMILY, the automated shuttle', name: 'Shuttle emily', user: User.first)
 
 # CREATE ROLES
-role = survey.roles.create(id: 5554, name: 'ELLI-User')
+role = survey.roles.create(id: 3337, name: 'EMILY-User')
 
 # CREATE STATIONS
-station_1 = survey.stations.create(name: 'Shuttle ELLI')
+station_1 = survey.stations.create(name: 'Shuttle EMILY')
 
 # TOPICS
-topic_1 = station_1.topics.create(name: 'Shuttle ELLI', description: 'Nach der Fahrt mit Shuttle ELLI')
+topic_1 = station_1.topics.create(name: 'Shuttle EMILY', description: 'Nach der Fahrt mit Shuttle EMILY')
 
 # STATEMENTSETS + STATEMENTS + CHOICES
 # AI
 set = topic_1.statement_sets.create(role: role)
 
-statement_1 = set.statements.create(style: 'single_choice', text: 'Wie oft sind Sie vor der heutigen Fahrt bereits mit ELLI gefahren?')
+statement_1 = set.statements.create(style: 'single_choice', text: 'Wie oft sind Sie vor der heutigen Fahrt bereits mit EMILY gefahren?')
 statement_1.choices.create(text: 'Noch nie')
 statement_1.choices.create(text: 'Einmal')
 statement_1.choices.create(text: 'Mehrmals')
 
-statement_2 = set.statements.create(style: 'single_choice', text: 'Wie beurteilen Sie den Komfort der heutigen Fahrt mit ELLI?')
+statement_2 = set.statements.create(style: 'single_choice', text: 'Wie beurteilen Sie den Komfort der heutigen Fahrt mit EMILY?')
 statement_2.choices.create(text: 'Sehr komfortabel')
 statement_2.choices.create(text: 'Komfortabel')
 statement_2.choices.create(text: 'Eher komfortabel')
@@ -26,7 +26,7 @@ statement_2.choices.create(text: 'Eher unkomfortabel')
 statement_2.choices.create(text: 'Unkomfortabel')
 statement_2.choices.create(text: 'Sehr unkomfortabel')
 
-statement_3 = set.statements.create(style: 'single_choice', text: 'Wie sicher haben Sie sich bei der heutigen Fahrt mit ELLI gefühlt?')
+statement_3 = set.statements.create(style: 'single_choice', text: 'Wie sicher haben Sie sich bei der heutigen Fahrt mit EMILY gefühlt?')
 statement_3.choices.create(text: 'Sehr sicher')
 statement_3.choices.create(text: 'Sicher')
 statement_3.choices.create(text: 'Eher sicher')
@@ -34,7 +34,7 @@ statement_3.choices.create(text: 'Eher unsicher')
 statement_3.choices.create(text: 'Unsicher')
 statement_3.choices.create(text: 'Sehr unsicher')
 
-statement_4 = set.statements.create(style: 'multiple_choice', text: 'ELLI soll in Zukunft mit einem fahrerlosen Kleinbus betrieben werden. Welche Art der Überwachung würden Sie erwarten?')
+statement_4 = set.statements.create(style: 'multiple_choice', text: 'EMILY soll in Zukunft mit einem fahrerlosen Kleinbus betrieben werden. Welche Art der Überwachung würden Sie erwarten?')
 statement_4.choices.create(text: 'Fernüberwachung über einen externen Kontrollraum')
 statement_4.choices.create(text: 'Video-Verbindung mit Leitzentrale im Notfall')
 statement_4.choices.create(text: 'Sprach-Verbindung mit Leitzentrale im Notfall')
@@ -104,7 +104,7 @@ statement_12.choices.create(text: 'Trifft eher zu')
 statement_12.choices.create(text: 'Trifft überwiegend zu')
 statement_12.choices.create(text: 'Trifft voll und ganz zu')
 
-statement_13 = set.statements.create(style: 'single_choice', text: 'Bewerten Sie die Aussage "Ich bevorzuge ELLI mit einem Fahrer im Vergleich zu einem autonomen Shuttle ohne Fahrer."')
+statement_13 = set.statements.create(style: 'single_choice', text: 'Bewerten Sie die Aussage "Ich bevorzuge EMILY mit einem Fahrer im Vergleich zu einem autonomen Shuttle ohne Fahrer."')
 statement_13.choices.create(text: 'Trifft überhaupt nicht zu')
 statement_13.choices.create(text: 'Trifft überwiegend nicht zu')
 statement_13.choices.create(text: 'Trifft eher nicht zu')
@@ -112,7 +112,7 @@ statement_13.choices.create(text: 'Trifft eher zu')
 statement_13.choices.create(text: 'Trifft überwiegend zu')
 statement_13.choices.create(text: 'Trifft voll und ganz zu')
 
-statement_14 = set.statements.create(style: 'multiple_choice', text: 'Bewerten Sie die Aussage "Ich bevorzuge ELLI mit einem Fahrer im Vergleich zu einem autonomen Shuttle ohne Fahrer."')
+statement_14 = set.statements.create(style: 'multiple_choice', text: 'Bewerten Sie die Aussage "Ich bevorzuge EMILY mit einem Fahrer im Vergleich zu einem autonomen Shuttle ohne Fahrer."')
 statement_14.choices.create(text: 'Die Fahrt ist mit einer Monatskarte immer kostenlos.')
 statement_14.choices.create(text: 'Für eine Anschlussgarantie mit der Bahn oder dem Bus würde ich auch einen Aufpreis zahlen.')
 statement_14.choices.create(text: 'Für eine exklusive Gruppenbuchung (z.B. nur mit der Familie) würde ich einen Aufpreis zahlen.')
