@@ -5,13 +5,15 @@ require 'ruby-progressbar'
 
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
-  arguments = {
-    iterations: 3
+  ARGUMENTS = {
+    iterations: 3,
+    layout: 'emily',
+    role: 1
   }
   o = OptionParser.new
 
   o.banner = 'Usage: rake gen_qr_codes -- [options]'
-  o.on('-i ARG', '--iterations ARG', Integer) { |iterations| arguments[:iterations] = iterations.to_i }
+  o.on('-i ARG', '--iterations ARG', Integer) { |iterations| ARGUMENTS[:iterations] = iterations.to_i }
 
   args = o.order!(ARGV) {}
   o.parse!(args)
@@ -28,7 +30,7 @@ task gen_qr_codes: :environment do
     qr.as_svg(offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 5)
   end
 
- include ActionView::Helpers
+  include ActionView::Helpers
   def styling(background_image_path)
     <<-EOF
     <style>
@@ -70,10 +72,11 @@ task gen_qr_codes: :environment do
   end
 
   def gen_html_back(**opts)
+    layout_path = "#{Rails.root.to_s}/public/#{ARGUMENTS[:layout]}_back.svg"
     <<-EOF
       <html>
         <head>
-        #{styling(Rails.root.to_s + "/public/qr_code_layout_back.svg")}
+        #{styling(layout_path)}
         </head>
         <body>
         #{qr_code(opts)}
@@ -84,10 +87,11 @@ task gen_qr_codes: :environment do
 
 
   def gen_html_front(**opts)
+    layout_path = "#{Rails.root.to_s}/public/#{ARGUMENTS[:layout]}_front.svg"
     <<-EOF
       <html>
         <head>
-        #{styling(Rails.root.to_s + "/public/qr_code_layout_front.svg")}
+        #{styling(layout_path)}
         </head>
         <body>
         </body>
@@ -137,7 +141,8 @@ task gen_qr_codes: :environment do
 
   # GENERATE N QR_CODES PER ROLE
   i = 0
-  n = arguments[:iterations]
+  n = ARGUMENTS[:iterations]
+  roles = ARGUMENTS[:role] ? Role.where(id: ARGUMENTS[:role]) : Role.all
 
   begin
     progressbar = ProgressBar.create(format: "%a %b\u{15E7}%i %p%% %t",
@@ -145,7 +150,7 @@ task gen_qr_codes: :environment do
                                      remainder_mark: "\u{FF65}",
                                      total: n * Role.count)
 
-    Role.all.each do |role|
+    roles.each do |role|
       merged_pdf = CombinePDF.new
       n.times do
         i += 1

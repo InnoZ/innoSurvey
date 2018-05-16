@@ -1,11 +1,3 @@
-# WIPE EVERYTHING
-Survey.destroy_all
-Topic.destroy_all
-Statement.destroy_all
-StatementSet.destroy_all
-Choice.destroy_all
-Role.destroy_all
-
 # CREATE USERS
 @user = User.create(email: 'user@test.com', password: 'secret', password_confirmation: 'secret')
 
