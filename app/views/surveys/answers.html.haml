@@ -1,0 +1,13 @@
+.container.inner-sm
+  .row
+    .col-xs-12
+      - @answers.sort_by(&:created_at).reverse.group_by { |answer| answer.statement.statement_set.role }.each do |role|
+        %h3= role[0].name
+        - role[1].each do |answer|
+          .row
+            .col-xs-4
+              %h4= answer.created_at
+            .col-xs-4
+              %h4= answer.statement.topic.name
+            .col-xs-4
+              %h4= answer.uuid

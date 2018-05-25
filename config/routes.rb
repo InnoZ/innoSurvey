@@ -23,4 +23,5 @@ Rails.application.routes.draw do
   # SURVEY
   get '/surveys', to: 'surveys#index', as: :surveys
   get '/surveys/:id', to: 'surveys#ident', as: :survey_ident
+  get '/surveys/:id/answers', to: 'surveys#answers', as: :survey_answers
 end

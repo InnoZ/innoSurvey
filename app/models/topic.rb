@@ -1,6 +1,7 @@
 class Topic < ApplicationRecord
   belongs_to(:station)
   has_many(:statement_sets, dependent: :destroy)
+  has_many(:answers, through: :statement_sets)
 
   delegate :survey, to: :station, allow_nil: false
 
