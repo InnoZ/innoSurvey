@@ -11,7 +11,9 @@
             .col-xs-8
               - answers.group_by { |o| o.uuid }.each do |uuid, answers|
                 .row
-                  .col-xs-6
+                  .col-xs-4
+                    = answers[0].statement.statement_set.role.name
+                  .col-xs-4
                     = uuid
-                  .col-xs-6
+                  .col-xs-4
                     = answers[0].created_at
