@@ -3,6 +3,8 @@
     %h1
       = 'Survey: '
       = link_to survey.name, survey_ident_path(survey.id)
+      = ' | '
+      = link_to 'answers', survey_answers_path(survey.id)
     = 'Roles: ' + survey.roles.map(&:name).join(', ')
     - survey.stations.each do |station|
       %h2= 'Station: ' + station.name

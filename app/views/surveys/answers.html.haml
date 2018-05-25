@@ -1,14 +1,17 @@
 .container
   .row
     .col-xs-12
-      - @answers.sort_by(&:created_at).reverse.group_by { |o| o.statement.statement_set }.each do |stamenent_set, answers|
-        .row{style: 'margin-bottom: 20px;'}
-          .col-xs-4
-            %b= stamenent_set.topic.name
-          .col-xs-8
-            - answers.group_by { |o| o.uuid }.each do |uuid, answers|
-              .row
-                .col-xs-6
-                  = uuid
-                .col-xs-6
-                  = answers[0].created_at
+      - if @answers.count == 0
+        No answers yet
+      - else
+        - @answers.sort_by(&:created_at).reverse.group_by { |o| o.statement.statement_set }.each do |stamenent_set, answers|
+          .row{style: 'margin-bottom: 20px;'}
+            .col-xs-4
+              %b= stamenent_set.topic.name
+            .col-xs-8
+              - answers.group_by { |o| o.uuid }.each do |uuid, answers|
+                .row
+                  .col-xs-6
+                    = uuid
+                  .col-xs-6
+                    = answers[0].created_at
