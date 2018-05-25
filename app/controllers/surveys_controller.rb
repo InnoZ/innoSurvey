@@ -13,4 +13,9 @@ class SurveysController < ApplicationController
       }
     end
   end
+
+  def answers
+    @survey = Survey.find(params[:id])
+    @answers = @survey.answers
+  end
 end
