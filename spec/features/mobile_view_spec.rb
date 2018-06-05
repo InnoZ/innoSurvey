@@ -18,6 +18,7 @@ feature 'Mobile view', :js do
     select_role_via_qr_code_scan
     select_first_topic
     answer_questions
+    safe_questions_correctly
     see_first_topic_disabled
     visit_again_and_scan_invalid_role_qr
     select_first_topic
@@ -44,8 +45,16 @@ feature 'Mobile view', :js do
   def answer_questions
     select_answer('Sample answer 0')
     find('.next-button').trigger('click')
-    select_answer('Sample answer 1')
+    # do not select an answer for the second question
     click_on('Absenden')
+    expect(page).to have_content('gespeichert')
+  end
+
+  def safe_questions_correctly
+    answer_for_first_statement = Answer.where(statement_id: @statement_1.id, selected_choices: "[#{@statement_1.choices.find_by(text: 'Sample answer 0').id}]")
+    expect(answer_for_first_statement).to exist
+    answer_for_second_statement = Answer.where(statement_id: @statement_2.id, selected_choices: '[]')
+    expect(answer_for_second_statement).to exist
   end
 
   def select_answer(text)
