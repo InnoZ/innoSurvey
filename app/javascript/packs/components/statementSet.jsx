@@ -48,12 +48,8 @@ export default class StatementSet extends React.Component {
     }, 5000);
   }
 
-  submitSelections() {
-    this.sendSelections();
-    this.props.reset();
-  }
-
   sendSelections() {
+    const that = this;
     const data = { answers: this.state.selections, uuid: this.props.uuid };
     // const csrfToken = document.querySelector("[name='csrf-token']").content;
     fetch('/answers', {
@@ -66,8 +62,8 @@ export default class StatementSet extends React.Component {
       credentials: 'same-origin',
     }).catch(error => console.error('An error occured: ', error))
       .then((responseObj) =>
-        responseObj.status == 201 ? this.successMessage()
-                                  : console.error('An error occured on server!') )
+        responseObj.status == 201 ? this.successMessage() : console.error('An error occured on server!') )
+        setTimeout(function() { that.props.reset() }, 500);
   }
 
   modifyChoices({statementId, choiceId, singleChoice}) {
@@ -95,10 +91,6 @@ export default class StatementSet extends React.Component {
 
   selectionsFor(statementId) {
     return this.state.selections.find((q) => q.statement_id == statementId).selected_choices;
-  }
-
-  everyStatementAnswered() {
-    return this.state.selections.every(s => s.selected_choices.length > 0);
   }
 
   answered(statementId) {
@@ -130,16 +122,15 @@ export default class StatementSet extends React.Component {
                                    answered={this.answered(statement.id)} />
 
     const nextButton =
-      (this.state.activeStatementBox !== this.statementIds[this.statementIds.length - 1]
-        && this.answered(this.state.activeStatementBox)) ?
-        <div className='next-button' onClick={() => this.browseStatement(+1) }>{'>'}</div> : null
+      (this.state.activeStatementBox !== this.statementIds[this.statementIds.length - 1]) ?
+        <div className='next-button' onClick={() => this.browseStatement(+1)}>{'>'}</div> : null
 
     const previousButton =
       (this.state.activeStatementBox !== this.statementIds[0]) ?
-        <div className='previous-button' onClick={() => this.browseStatement(-1) }>{'<'}</div> : null
+        <div className='previous-button' onClick={() => this.browseStatement(-1)}>{'<'}</div> : null
 
-    const submitButton = this.everyStatementAnswered() ?
-      <button className='btn btn-lg' onClick={() => this.submitSelections()}>Absenden</button> :
+    const submitButton = (this.state.activeStatementBox == this.statementIds[this.statementIds.length - 1]) ?
+      <button className='btn btn-lg' onClick={() => this.sendSelections()}>Absenden</button> :
       <div className='page-indicator'>{this.pageIndicator()}</div>
 
     const countdown = <div className='countdown'>{this.state.secondsLeft} sec</div>

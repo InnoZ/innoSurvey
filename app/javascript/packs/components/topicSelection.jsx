@@ -29,7 +29,9 @@ export default class topicSelection extends React.Component {
             return;
           }
           response.json().then(function(data) {
-            that.setState({ answeredTopics: data })
+            if (JSON.stringify(data) !== JSON.stringify(that.state.answeredTopics)) {
+              that.setState({ answeredTopics: data })
+            }
           });
         }
       )
