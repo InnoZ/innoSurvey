@@ -17,16 +17,13 @@ class MobileScreen extends React.Component {
     }
   }
 
-  ident(identString) {
-    if (identString.includes('uuid') && identString.includes('role_id')) {
-      let identJson = JSON.parse(identString);
-      const newState = {
-        scan: false,
-        roleId: identJson['role_id'],
-        uuid: identJson['uuid'],
-      };
-      this.setState(newState)
+  ident(uuid, roleId) {
+    const newState = {
+      scan: false,
+      uuid: uuid,
+      roleId: roleId,
     };
+    this.setState(newState)
   };
 
   render() {
