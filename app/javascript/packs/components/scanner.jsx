@@ -60,6 +60,7 @@ export default class ExhibitionScreen extends React.Component {
       navigator.mediaDevices.getUserMedia({
         audio: false,
         video: {
+          facingMode: "environment",
           width: { max: 350 },
           height: { max: 300 }
         }
