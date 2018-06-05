@@ -17,6 +17,19 @@ class MobileScreen extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if (getUrlParam(window.location.href, 'uuid') && getUrlParam(window.location.href, 'role_id')) {
+      const newState = {
+        scan: false,
+        uuid: getUrlParam(window.location.href, 'uuid'),
+        roleId: getUrlParam(window.location.href, 'role_id'),
+      };
+      console.log('uuid: ' + newState.uuid)
+      console.log('role id: ' + newState.roleId)
+      this.setState(newState);
+    }
+  }
+
   ident(uuid, roleId) {
     const newState = {
       scan: false,

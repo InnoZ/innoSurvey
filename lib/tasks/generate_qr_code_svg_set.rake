@@ -6,9 +6,9 @@ require 'ruby-progressbar'
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
   ARGUMENTS = {
-    iterations: 20,
-    layout: 'emily',
-    role: 1,
+    iterations: 30,
+    layout: 'innoz_feedback_feedback_energie',
+    role: 5,
     survey: 3
   }.freeze
   o = OptionParser.new

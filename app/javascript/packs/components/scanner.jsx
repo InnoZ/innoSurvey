@@ -40,14 +40,11 @@ export default class ExhibitionScreen extends React.Component {
         that.initCamera();
       }
     }, 10000)
-    if (getUrlParam(window.location.href, 'uuid') && getUrlParam(window.location.href, 'role_id')) {
-      this.identWith(getUrlParam(window.location.href, 'uuid'), getUrlParam(window.location.href, 'role_id'))
-    }
   }
 
   identWith(uuid, roleId) {
-    console.log(uuid)
-    console.log(roleId)
+    console.log('uuid: ' + uuid)
+    console.log('role id: ' + roleId)
     this.props.ident(uuid, roleId);
   }
 
