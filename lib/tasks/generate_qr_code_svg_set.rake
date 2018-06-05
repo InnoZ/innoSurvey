@@ -6,10 +6,11 @@ require 'ruby-progressbar'
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
   ARGUMENTS = {
-    iterations: 3,
+    iterations: 20,
     layout: 'emily',
-    role: 1
-  }
+    role: 1,
+    survey: 3
+  }.freeze
   o = OptionParser.new
 
   o.banner = 'Usage: rake gen_qr_codes -- [options]'
@@ -20,7 +21,7 @@ task gen_qr_codes: :environment do
 
   # GENERATE QR CODE
   def gen_qrcode(**args)
-    qr_content = "https://survey.innoz.space/surveys/#{args[:survey_id]}?uuid=#{args[:uuid]}&role_id=#{args[:role_id]}"
+    qr_content = "https://survey.innoz.space/surveys/#{ARGUMENTS[:survey]}?uuid=#{args[:uuid]}&role_id=#{args[:role_id]}"
 
     qr = RQRCode::QRCode.new(qr_content, level: :h, mode: :byte_8bit)
 
@@ -101,7 +102,6 @@ task gen_qr_codes: :environment do
     file_path = base_path + id.to_s
     opts = {
       role_id: role_id,
-      survey_id: Role.find(role_id).survey.id,
       uuid: uuid,
       id: id,
       path_to_qr_svg: file_path + '.svg',
