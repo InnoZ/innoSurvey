@@ -5,7 +5,7 @@
       = link_to survey.name, survey_ident_path(survey.id)
       = ' | '
       = link_to 'answers', survey_answers_path(survey.id)
-    = 'Roles: ' + survey.roles.map(&:name).join(', ')
+    = 'Roles: ' + survey.roles.map{ |r| r.name + "(#{r.id})" }.join(', ')
     - survey.stations.each do |station|
       %h2= 'Station: ' + station.name
       = 'Topics: '
