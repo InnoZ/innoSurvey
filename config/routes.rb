@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  if ActiveRecord::Base.connection.table_exists?('surveys') && Survey.find_by(name: 'MFund')
-    root to: 'surveys#ident', id: Survey.find_by(name: 'MFund').id
+  if ActiveRecord::Base.connection.table_exists?('surveys') && Survey.find_by(name: 'mFUND')
+    root to: 'surveys#ident', id: Survey.find_by(name: 'mFUND').id
   else
     root 'surveys#index'
   end
