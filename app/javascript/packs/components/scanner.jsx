@@ -40,6 +40,15 @@ export default class ExhibitionScreen extends React.Component {
         that.initCamera();
       }
     }, 10000)
+    if (getUrlParam(window.location.href, 'uuid') && getUrlParam(window.location.href, 'role_id')) {
+      this.identWith(getUrlParam(window.location.href, 'uuid'), getUrlParam(window.location.href, 'role_id'))
+    }
+  }
+
+  identWith(uuid, roleId) {
+    console.log(uuid)
+    console.log(roleId)
+    this.props.ident(uuid, roleId);
   }
 
   initCamera() {
@@ -107,8 +116,9 @@ export default class ExhibitionScreen extends React.Component {
       var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
       var code = jsQR(imageData.data, imageData.width, imageData.height);
       if (code) {
-        console.log('QR content: ' + code.data)
-        that.props.ident(code.data);
+        const uuid = getUrlParam(code.data, 'uuid') || JSON.parse(code.data).uuid;
+        const roleId = getUrlParam(code.data, 'role_id') || JSON.parse(code.data).role_id;
+        that.identWith(uuid, roleId);
       };
     }
     window.animationFrame = requestAnimationFrame(that.tick);
@@ -117,9 +127,7 @@ export default class ExhibitionScreen extends React.Component {
   fakeQrScan(event) {
     const uuid = document.getElementById('uuid-test-input').value;
     const roleId = document.getElementById('role-id-test-input').value;
-    const fakedScanData = `{"uuid": "${uuid}", "role_id": "${roleId}"}`;
-    console.log('QR content: ' + fakedScanData)
-    this.props.ident(fakedScanData);
+    this.identWith(uuid, roleId)
   }
 
   render() {

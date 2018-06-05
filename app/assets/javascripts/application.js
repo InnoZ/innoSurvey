@@ -16,8 +16,7 @@
 //= require turbolinks
 //= require_tree .
 
-function getUrlParam(name) {
-  var url = window.location.href;
+function getUrlParam(url, name) {
   name = name.replace(/[\[\]]/g, "\\$&");
   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
     results = regex.exec(url);

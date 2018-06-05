@@ -10,7 +10,7 @@ import StatementSet from './components/statementSet.jsx';
 class ExhibitionScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.backlinkUrl = getUrlParam('url');
+    this.backlinkUrl = getUrlParam(window.location.href, 'url');
     this.state = {
       scan: this.backlinkUrl !== null,
       roleId: null,
@@ -38,21 +38,18 @@ class ExhibitionScreen extends React.Component {
       });
   }
 
-  ident(identString) {
-    if (identString.includes('uuid') && identString.includes('role_id')) {
-      let identJson = JSON.parse(identString);
-      const newState = {
-        scan: false,
-        roleId: identJson['role_id'],
-        uuid: identJson['uuid'],
-      };
-      this.setState(newState, this.getAnsweredTopics)
+ ident(uuid, roleId) {
+    const newState = {
+      scan: false,
+      uuid: uuid,
+      roleId: roleId,
     };
+    this.setState(newState, this.getAnsweredTopics)
   };
 
   reset() {
     if (this.backlinkUrl) {
-      window.location.href = getUrlParam('url');
+      window.location.href = getUrlParam(window.location.href, 'url');
     } else {
       this.setState({
         scan: false,
