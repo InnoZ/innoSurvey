@@ -1,3 +1,5 @@
+require 'encrypt_decrypt'
+
 feature 'Mobile view', :js do
   before do
     @survey = create(:survey)
@@ -27,11 +29,11 @@ feature 'Mobile view', :js do
 
   def visit_again_and_scan_invalid_role_qr
     visit survey_ident_path(@survey.id)
-    scan(uuid: '456yx', role_id: '6654676')
+    scan(uuid: '456yx', role_id: '6654676', token: '456yx'.encrypt)
   end
 
   def select_role_via_qr_code_scan
-    scan(uuid: '123xy', role_id: '1')
+    scan(uuid: '123xy', role_id: '1', token: '123xy'.encrypt)
   end
 
   def see_error_message
@@ -66,11 +68,12 @@ feature 'Mobile view', :js do
     expect(page).to have_css('.topic-selection', text: 'Second topic')
   end
 
-  def scan(uuid:, role_id:)
+  def scan(uuid:, role_id:, token:)
     # since qr scan cannot be tested, it is faked by hidden form
     # see related function in scanner react component
     find('input#uuid-test-input', visible: false).set(uuid)
     find('input#role-id-test-input', visible: false).set(role_id)
+    find('input#token-test-input', visible: false).set(token)
     find('#send-fake-qr', visible: false).trigger('click')
   end
 end
