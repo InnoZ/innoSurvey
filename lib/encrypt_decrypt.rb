@@ -4,7 +4,7 @@
 require 'openssl'
 
 class String
-  def encrypt(key: 'ratzEncryptTheInnoZ')
+  def encrypt
     cipher = OpenSSL::Cipher.new('AES-256-CBC').encrypt
     # has to be 32 bytes:
     cipher.key = "\x9D5\xD8\x85\x9B\xE0\xC2S\x8D\x82D\x99\xDB=\x8C\xAA\x18z\x15LV\xE4Q\xE6\x88\x8D\x16\x89\xA9gf\xAE"
@@ -12,7 +12,7 @@ class String
     s.unpack('H*')[0].upcase
   end
 
-  def decrypt(key: 'ratzEncryptTheInnoZ')
+  def decrypt
     cipher = OpenSSL::Cipher.new('AES-256-CBC').decrypt
     # has to be 32 bytes:
     cipher.key = "\x9D5\xD8\x85\x9B\xE0\xC2S\x8D\x82D\x99\xDB=\x8C\xAA\x18z\x15LV\xE4Q\xE6\x88\x8D\x16\x89\xA9gf\xAE"
