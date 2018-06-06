@@ -77,6 +77,7 @@ export default class topicSelection extends React.Component {
         ? <StatementSet topicId={this.state.activeTopic}
                         roleId={this.props.roleId}
                         uuid={this.props.uuid}
+                        token={this.props.token}
                         roleName={statementSet.role_name}
                         statements={statementSet.statements}
                         reset={() => this.reset()} />

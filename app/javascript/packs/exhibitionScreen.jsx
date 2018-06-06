@@ -15,6 +15,7 @@ class ExhibitionScreen extends React.Component {
       scan: this.backlinkUrl !== null,
       roleId: null,
       uuid: null,
+      token: null,
       answeredTopics: [],
     }
   }
@@ -38,11 +39,12 @@ class ExhibitionScreen extends React.Component {
       });
   }
 
- ident(uuid, roleId) {
+ ident(uuid, roleId, token) {
     const newState = {
       scan: false,
       uuid: uuid,
       roleId: roleId,
+      token: token,
     };
     this.setState(newState, this.getAnsweredTopics)
   };
@@ -55,6 +57,7 @@ class ExhibitionScreen extends React.Component {
         scan: false,
         roleId: null,
         uuid: null,
+        token: null,
       })
     }
   }
@@ -89,6 +92,7 @@ class ExhibitionScreen extends React.Component {
           main = <StatementSet
             roleId={set.role_id}
             uuid={this.state.uuid}
+            token={this.state.token}
             roleName={set.role_name}
             statements={set.statements}
             reset={() => this.reset()}

@@ -42,10 +42,12 @@ export default class ExhibitionScreen extends React.Component {
     }, 10000)
   }
 
-  identWith(uuid, roleId) {
+  identWith(uuid, roleId, token) {
     console.log('uuid: ' + uuid)
     console.log('role id: ' + roleId)
-    this.props.ident(uuid, roleId);
+    console.log('token: ' + token)
+    // this refers to the ident method from either exhibition_screen or mobiel_screen component:
+    this.props.ident(uuid, roleId, token);
   }
 
   initCamera() {
@@ -116,7 +118,8 @@ export default class ExhibitionScreen extends React.Component {
       if (code) {
         const uuid = getUrlParam(code.data, 'uuid') || JSON.parse(code.data).uuid;
         const roleId = getUrlParam(code.data, 'role_id') || JSON.parse(code.data).role_id;
-        that.identWith(uuid, roleId);
+        const token = getUrlParam(code.data, 'token') || '00ED2BE889D70E557C929178B7F72D2A7CD007BB32B84EF0'; // hard-coded token only for old surveys without generated token
+        that.identWith(uuid, roleId, token);
       };
     }
     window.animationFrame = requestAnimationFrame(that.tick);
@@ -125,7 +128,8 @@ export default class ExhibitionScreen extends React.Component {
   fakeQrScan(event) {
     const uuid = document.getElementById('uuid-test-input').value;
     const roleId = document.getElementById('role-id-test-input').value;
-    this.identWith(uuid, roleId)
+    const token = document.getElementById('token-test-input').value;
+    this.identWith(uuid, roleId, token)
   }
 
   render() {
@@ -140,6 +144,7 @@ export default class ExhibitionScreen extends React.Component {
         <div className='qr-code-test-replacement-input'>
           <input id='uuid-test-input' placeholder='uuid'></input>
           <input id='role-id-test-input' placeholder='role id'></input>
+          <input id='token-test-input' placeholder='token'></input>
           <button id='send-fake-qr' onClick={this.fakeQrScan.bind(this)}>submit</button>
         </div>
       </div>

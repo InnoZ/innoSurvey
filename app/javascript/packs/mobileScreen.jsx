@@ -14,27 +14,31 @@ class MobileScreen extends React.Component {
       scan: true,
       roleId: null,
       uuid: null,
+      token: null,
     }
   }
 
   componentWillMount() {
-    if (getUrlParam(window.location.href, 'uuid') && getUrlParam(window.location.href, 'role_id')) {
+    if (getUrlParam(window.location.href, 'uuid') && getUrlParam(window.location.href, 'role_id') && getUrlParam(window.location.href, 'token')) {
       const newState = {
         scan: false,
         uuid: getUrlParam(window.location.href, 'uuid'),
         roleId: getUrlParam(window.location.href, 'role_id'),
+        token: getUrlParam(window.location.href, 'token'),
       };
       console.log('uuid: ' + newState.uuid)
       console.log('role id: ' + newState.roleId)
+      console.log('token: ' + newState.token)
       this.setState(newState);
     }
   }
 
-  ident(uuid, roleId) {
+  ident(uuid, roleId, token) {
     const newState = {
       scan: false,
       uuid: uuid,
       roleId: roleId,
+      token: token,
     };
     this.setState(newState)
   };
@@ -44,7 +48,7 @@ class MobileScreen extends React.Component {
     if (this.state.scan) {
       main = <Scanner ident={this.ident.bind(this)} />
     } else {
-      main = <TopicSelection roleId={this.state.roleId} uuid={this.state.uuid} />
+      main = <TopicSelection roleId={this.state.roleId} uuid={this.state.uuid} token={this.state.token} />
     };
 
     return (

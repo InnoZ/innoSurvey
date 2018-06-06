@@ -2,14 +2,15 @@ require 'optparse'
 require 'rqrcode'
 require 'fileutils'
 require 'ruby-progressbar'
+require 'encrypt_decrypt'
 
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
   ARGUMENTS = {
-    iterations: 30,
+    iterations: 1,
     layout: 'innoz_feedback_feedback_energie',
-    role: 5,
-    survey: 3
+    role: 1,
+    survey: 1
   }.freeze
   o = OptionParser.new
 
@@ -21,7 +22,7 @@ task gen_qr_codes: :environment do
 
   # GENERATE QR CODE
   def gen_qrcode(**args)
-    qr_content = "https://survey.innoz.space/surveys/#{ARGUMENTS[:survey]}?uuid=#{args[:uuid]}&role_id=#{args[:role_id]}"
+    qr_content = "https://survey.innoz.space/surveys/#{ARGUMENTS[:survey]}?uuid=#{args[:uuid]}&role_id=#{args[:role_id]}&token=#{args[:uuid].encrypt}"
 
     qr = RQRCode::QRCode.new(qr_content, level: :h, mode: :byte_8bit)
 
