@@ -9,7 +9,7 @@ task gen_qr_codes: :environment do
   ARGUMENTS = {
     iterations: 1,
     layout: 'innoz_feedback_feedback_energie',
-    role: 1,
+    role: 3,
     survey: 1
   }.freeze
   o = OptionParser.new
@@ -161,7 +161,7 @@ task gen_qr_codes: :environment do
 
         # Generate gr code per Role
         gen_qr_pdf(role_id: role.id,
-                   uuid: SecureRandom.urlsafe_base64(7),
+                   uuid: SecureRandom.urlsafe_base64(6),
                    id: i,
                    base_path: role_path)
 
