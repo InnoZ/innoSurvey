@@ -15,18 +15,14 @@ class Answer < ApplicationRecord
 
   def selected_choices_numbers?
     extract_choices_from_array_notation.split(',').each do |s|
-      if !number? s
-        return false
-      end
+      return false if !number? s
     end
     true
   end
 
   def extract_choices_from_array_notation
     matching_array = selected_choices.match(/\[(.*)\]/)
-    if matching_array.nil?
-      return ''
-    end
+    return '' if matching_array.nil?
     matching_array[1]
   end
 
