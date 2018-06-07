@@ -12,6 +12,7 @@ role_4 = survey.roles.create(id: 4, name: 'Mobilitätsdienstanbieter')
 role_5 = survey.roles.create(id: 5, name: 'Energie & Verkehrsmanagement')
 
 # CREATE STATIONS
+autonomer_iov = survey.stations.create(name: 'Autonomer IÖV')
 platforms = survey.stations.create(name: 'Platforms')
 ai = survey.stations.create(name: 'Artifical Intelligence')
 multimodal_priv = survey.stations.create(name: 'Multimodal Privacy')
@@ -19,6 +20,7 @@ ddp = survey.stations.create(name: 'Data Driven Planning')
 hsa = survey.stations.create(name: 'HSA-Exponat')
 
 # TOPICS
+autonomer_iov_topic_1 = autonomer_iov.topics.create(name: platforms.name, description: 'Fragen zum autonomen IÖV')
 platforms_topic_1 = platforms.topics.create(name: platforms.name, description: 'Fragen zu Platforms')
 ai_topic_1 = ai.topics.create(name: ai.name, description: 'Fragen zum AI Supported Flow Management')
 multimodal_priv_topic_1 = multimodal_priv.topics.create(name: multimodal_priv.name, description: 'Fragen zu Multimodal Privacy')
@@ -30,6 +32,128 @@ hsa_topic_4 = hsa.topics.create(name: hsa.name, description: 'Szenarien für Mob
 hsa_topic_5 = hsa.topics.create(name: hsa.name, description: 'Szenarien für Flow Management in den Bereichen Eenrgie und Verkehr')
 
 # STATEMENTSETS + STATEMENTS + CHOICES
+# AUTONOMER IÖV
+Role.all.each do |role|
+  set = autonomer_iov_topic_1.statement_sets.create(role: role)
+
+  if role == role_1
+    s = set.statements.create(style: 'single_choice', text: 'Welcher Faktor ist für Sie entscheidend beim Einsatz fahrerloser Fahrzeuge im ÖPNV (Öffentlichen Personennahverkehr)?')
+    s.choices.create(text: 'Sicherheit: Ich möchte mich stets sicher fühlen.')
+    s.choices.create(text: 'Fahrkomfort: Der Komfort sollte höher sein als bei Bus, Bahn oder Tram.')
+    s.choices.create(text: 'Flexibilität bei der Planung: Ich möchte mit dem autonomen Fahrzeug und dem ÖPNV von jedem Ort an jeden Ort kommen können.')
+    s.choices.create(text: 'Kosten: Das autonome Fahrzeug als Teil des ÖPNV sollte nur gegen einen kleinen Aufpreis oder komplett im ÖPNV-Ticket enthalten sein.')
+    s.choices.create(text: 'Verfügbarkeit: Das autonome Fahrzeug als Teil des ÖPNV sollte immer sofort verfügbar sein, wenn ich es brauche.')
+    s.choices.create(text: 'Privatheit: Ich möchte meinen privaten Raum in einem autonomen Fahrzeug ähnlich wie bei einem privaten Pkw oder Taxi.')
+
+    s = set.statements.create(style: 'single_choice', text: 'Welche Befürchtungen haben Sie in Bezug auf den Einsatz fahrerloser Fahrzeuge im ÖPNV?')
+    s.choices.create(text: 'Manipulation des Fahrzeugs von außen')
+    s.choices.create(text: 'Liegenbleiben vor Erreichen des Ziels')
+    s.choices.create(text: 'Kein Eingriff bei technischen Fehlfunktionen während der Fahrt möglich')
+    s.choices.create(text: 'Keine Kontrollinstanz bei problematischen Mitfahrern')
+    s.choices.create(text: 'Gar keine Befürchtungen')
+  end
+
+  if [role_1, role_3].include? role
+    s = set.statements.create(style: 'single_choice', text: 'Welche Fahrzeugeigenschaften würden Sie an aktuell eingesetzten vollautomatisierten Kleinbussen wie Emily ändern, damit sie besser für den Einsatz als Zubringer zum öffentlichen Verkehr genutzt werden können?')
+    s.choices.create(text: 'Sitzkomfort')
+    s.choices.create(text: 'Fahrgeschwindigkeit')
+    s.choices.create(text: 'Größe')
+    s.choices.create(text: 'Brems- oder Beschleunigungsverhalten')
+    s.choices.create(text: 'Anzahl der Sitz-und Stehplätze')
+    s.choices.create(text: 'Stauraum für Gepäck')
+  end
+
+  if [role_2, role_5].include? role
+    s = set.statements.create(style: 'single_choice', text: 'Was erhoffen Sie sich durch den Einsatz von autonomen Fahrzeugen im ÖPNV?')
+    s.choices.create(text: 'Senkung der gesamten Fahrgeschwindigkeit im Straßenverkehr')
+    s.choices.create(text: 'Insgesamt höhere Verkehrssicherheit im Straßenraum')
+    s.choices.create(text: 'Leichterer Umbau von Straßenräumen zu „Shared Spaces“')
+    s.choices.create(text: 'Bereitstellung von komfortablen Mobilitätsalternativen zum privaten Pkw')
+    s.choices.create(text: 'Einsparen von Kosten für den ÖPNV')
+    s.choices.create(text: 'Weniger Flächenverbrauch durch den privaten Pkw-Verkehr')
+    s.choices.create(text: 'Einsparen von Emissionen')
+    s.choices.create(text: 'Besserer Zugang zum öffentlichen Verkehr für bestimmte soziale Gruppen (z.B. Ältere)')
+  end
+
+  if role == role_2
+    s = set.statements.create(style: 'single_choice', text: 'Welche rechtlichen Herausforderungen erwarten Sie beim Einsatz von autonomen Fahrzeugen im ÖPNV?')
+    s.choices.create(text: 'Anpassung der verkehrsrechtlichen Rahmenbedingungen (z.B. Vorfahrtregelungen für autonome Fahrzeuge)')
+    s.choices.create(text: 'Anpassung der straßenrechtlichen Rahmenbedingungen (z.B. Sonderspuren für autonome Fahrzeuge)')
+    s.choices.create(text: 'Anpassung der beförderungsrechtlichen Rahmenbedingungen (z.B. Konzessionen für Betreiber)')
+    s.choices.create(text: 'Ungeklärte Haftungsfragen im Mischverkehr mit autonomen und manuell gesteuerten Fahrzeugen oder in Bezug auf die Funktionsfähigkeit digitaler Infrastrukturen')
+
+    s = set.statements.create(style: 'single_choice', text: 'Welche planerischen Herausforderungen erwarten Sie beim Einsatz von autonomen Fahrzeugen im ÖPNV?')
+    s.choices.create(text: 'Anpassung der Straßenräume zur zusätzlichen Sicherung des Betriebs eines autonomen IÖV (z.B. durch infrastrukturell abgetrennte Fahrspuren)')
+    s.choices.create(text: 'Anpassung von Haltestellen zur zusätzlichen Sicherung des Betriebs eines autonomen IÖV (z.B. an Bahnhöfen)')
+    s.choices.create(text: 'Einbau von Sensoren und Kameras zur straßenseitigen Sicherung des Betriebs eines autonomen IÖV')
+    s.choices.create(text: 'Entwurf und Installation von neuen Signalen und Verkehrszeichen für einen autonomen IÖV')
+    s.choices.create(text: 'Bereitstellung von induktiven Ladeinfrastrukturen für autonome Fahrzeuge')
+  end
+
+  if role == role_3
+    s = set.statements.create(style: 'single_choice', text: 'Welche organisatorischen Herausforderungen erwarten Sie beim On-Demand-Betrieb eines autonomen Fahrzeugs?')
+    s.choices.create(text: 'Politische Restriktionen, z.B. aufwändige Genehmigungsverfahren für Fahrzeuge oder Streckenabschnitte')
+    s.choices.create(text: 'Mangelnde Verfügbarkeit von (induktiven) Ladeoptionen für Elektrofahrzeuge')
+    s.choices.create(text: 'Verzögerungen bei der Anpassung der verkehrs-, beförderungs- und straßenrechtlichen Rahmenbedingungen (z.B. Sonderspuren)')
+    s.choices.create(text: 'Ungeklärte Haftungsfragen im Mischverkehr mit autonomen und manuell gesteuerten Fahrzeugen oder in Bezug auf die Funktionsfähigkeit digitaler Infrastrukturen')
+    s.choices.create(text: 'Geringe Auslastung größerer Fahrzeuge (z.B. 10-Sitzer) im Realbetrieb')
+    s.choices.create(text: 'Konkurrenz mit herkömmlichen Verkehrsmitteln des ÖPNV')
+    s.choices.create(text: 'Sicherheitstechnische Aspekte (z.B. Vandalismus)')
+    s.choices.create(text: 'Erhöhter Personalbedarf durch Überwachung des Fahrzeugs durch Sicherheitspersonal')
+
+    s = set.statements.create(style: 'single_choice', text: 'Welche technischen Herausforderungen erwarten Sie beim On-Demand-Betrieb eines autonomen Fahrzeugs?')
+    s.choices.create(text: 'Austausch von Daten mit einer multimodalen Verkehrssteuerung, z.B. zu aktuellen lokalen Bedarfen an Fahrzeugen')
+    s.choices.create(text: 'Hohe Komplexität von Verkehrsinformationssystemen für alle Verkehrsteilnehmer')
+    s.choices.create(text: 'Mangelndes Angebot an Diensten (z.B. für ein integriertes Flotten- und Lademanagement)')
+    s.choices.create(text: 'Einbinden virtueller Haltestellen, die nur bei Bedarf angesteuert werden')
+    s.choices.create(text: 'Gestaltung flexibler Buchungssysteme')
+    s.choices.create(text: 'Kommunikation mit nicht-autonomen Fahrzeugen oder Infrastrukturen')
+  end
+
+  if role == role_5
+    s = set.statements.create(style: 'single_choice', text: 'Welche Herausforderungen erwarten Sie bei der Integration eines autonomen On-Demand-Verkehrs in aktuelle Verkehrsmanagementsysteme?')
+    s.choices.create(text: 'Probleme beim Austausch von Daten mit Flottenbetreibern, z.B. zu freien Fahrzeugkapazitäten')
+    s.choices.create(text: 'Probleme beim Austausch von Daten mit anderen Stakeholdern')
+    s.choices.create(text: 'Erhöhte Komplexität der Verkehrsprognosen')
+    s.choices.create(text: 'Erhöhte Komplexität der Verkehrsinformationssysteme')
+    s.choices.create(text: 'Erhöhte Komplexität der Verkehrssteuerung')
+    s.choices.create(text: 'Höhere Anfälligkeit für Manipulation des Gesamtsystems')
+
+    s = set.statements.create(style: 'single_choice', text: 'Welche energietechnischen Herausforderungen erwarten Sie beim Einsatz von autonomen elektrischen Fahrzeugen im ÖPNV?')
+    s.choices.create(text: 'Ausbau der Ladeinfrastruktur (z.B. Ladestationen, Energiespeicher)')
+    s.choices.create(text: 'Umstellung auf neue Ladetechnik (z.B. induktives Laden)')
+    s.choices.create(text: 'Ausbau der regenerativen Energieerzeugung als Quelle für „grünen“ Ladestrom ')
+    s.choices.create(text: 'Fahrzeugseitige Herausforderungen (z.B. die Entwicklung neuer Antriebssysteme)')
+    s.choices.create(text: 'Energiemanagement für elektrische Flotten')
+    s.choices.create(text: 'Verantwortung für die Funktionsfähigkeit neuer Infrastrukturen (z.B. digitale Signale für autonome Fahrzeuge)')
+  end
+
+  if role == role_4
+    s = set.statements.create(style: 'single_choice', text: 'Wo erwarten Sie erfolgreiche digitale Geschäftsmodelle rund um den Betrieb autonomer Fahrzeuge im ÖPNV?')
+    s.choices.create(text: 'Angebot von Diensten für die flexible Routenplanung')
+    s.choices.create(text: 'Angebot eines integrierten Flotten- und Mobilitätsenergiemanagements')
+    s.choices.create(text: 'Angebot von on-demand-Buchungssystemen')
+    s.choices.create(text: 'Angebot von Diensten für einen sicheren Betrieb der Fahrzeuge (z.B. Fern-Monitoring)')
+    s.choices.create(text: 'IT-Beratung von Stakeholdern aus dem Mobilitätssektor')
+    s.choices.create(text: 'IT-Beratung von kommunalen Stakeholdern')
+    s.choices.create(text: 'Aufbau sicherer Datenübertragungsmöglichkeiten')
+    s.choices.create(text: 'Entwicklung von Anwendungen für das „Internet of Things“ (z.B. intelligente Haltestellen)')
+    s.choices.create(text: 'Organisation von „Spezial-Fahrten“ (Premium-Buchung, Büro-Shuttle etc.)')
+    s.choices.create(text: 'Werbungsbasierte Konzepte (z.B. Anzeigen von Werbung im Fahrzeug, Werbefahrten)')
+
+    s = set.statements.create(style: 'single_choice', text: 'Welche Herausforderungen erwarten Sie bei der Entwicklung digitaler Mobilitätsdienste für einen autonomen individuellen öffentlichen Verkehr (IÖV)?')
+    s.choices.create(text: 'Kein Zugriff auf relevante Fahrzeugdaten (z.B. Batteriestand)')
+    s.choices.create(text: 'Verarbeitung von Echtzeit-Daten aus dem Fahrzeug')
+    s.choices.create(text: 'Haftungsfragen bei Diensten für einen sicheren Betrieb (z.B. Fern-Monitoring)')
+    s.choices.create(text: 'Datenübertragung wirklich sicher zu gestalten')
+    s.choices.create(text: 'Datenschutzfragen')
+    s.choices.create(text: 'Manipulation des Fahrzeugs (Hacking)')
+    s.choices.create(text: 'Mangelnde Akzeptanz der Nutzer')
+    s.choices.create(text: 'Vandalismus')
+    s.choices.create(text: 'Politische Restriktionen')
+  end
+end
+
 # PLATFORMS
 Role.all.each do |role|
   set = platforms_topic_1.statement_sets.create(role: role)
