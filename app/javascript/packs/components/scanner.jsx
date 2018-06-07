@@ -116,13 +116,25 @@ export default class ExhibitionScreen extends React.Component {
       var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
       var code = jsQR(imageData.data, imageData.width, imageData.height);
       if (code) {
-        const uuid = getUrlParam(code.data, 'uuid') || JSON.parse(code.data).uuid;
-        const roleId = getUrlParam(code.data, 'role_id') || JSON.parse(code.data).role_id;
-        const token = getUrlParam(code.data, 'token') || '00ED2BE889D70E557C929178B7F72D2A7CD007BB32B84EF0'; // hard-coded token only for old surveys without generated token
-        that.identWith(uuid, roleId, token);
-      };
+        // try to new read url params
+        let uuid = getUrlParam(code.data, 'uuid');
+        let roleId = getUrlParam(code.data, 'role_id');
+        let token = getUrlParam(code.data, 'token');
+        let json;
+        // try to read old json string
+        if (json = this.stringFromJson(code.data)) {
+          uuid = json.uuid;
+          roleId = json.role_id;
+          token = '3BFB307CCD475D5A52ECC454474459F96403B31027B98E998091E3C4751DED70';
+        }
+        if (uuid && roleId && token) { that.identWith(uuid, roleId, token); }
+      }
     }
     window.animationFrame = requestAnimationFrame(that.tick);
+  }
+
+  stringFromJson(string) {
+    try { return JSON.parse(string); } catch (e) { return false; }
   }
 
   fakeQrScan(event) {
