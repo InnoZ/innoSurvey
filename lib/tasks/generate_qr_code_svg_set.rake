@@ -39,10 +39,10 @@ task gen_qr_codes: :environment do
         margin: 0;
       }
       .qr-code > img {
-        height: 30mm;
-        width: 30mm;
-        margin-top: 50mm;
-        margin-left: 45mm;
+        height: 38mm;
+        width: 38mm;
+        margin-top: 60mm;
+        margin-left: 40mm;
       }
       .qr-code > .id {
         margin-top: 3mm;
