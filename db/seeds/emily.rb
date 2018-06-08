@@ -1,4 +1,5 @@
-survey = Survey.create(description: 'A survey for EMILY, the automated shuttle', name: 'Shuttle emily', user: User.first)
+Survey.find(4).destroy if Survey.find(4)
+survey = Survey.create(id: 4, description: 'A survey for EMILY, the automated shuttle', name: 'Shuttle emily', user: User.first)
 
 # CREATE ROLES
 role = survey.roles.create(id: 3337, name: 'EMILY-User')
@@ -7,7 +8,7 @@ role = survey.roles.create(id: 3337, name: 'EMILY-User')
 station_1 = survey.stations.create(name: 'Shuttle EMILY')
 
 # TOPICS
-topic_1 = station_1.topics.create(name: 'Shuttle EMILY', description: 'Nach der Fahrt mit Shuttle EMILY')
+topic_1 = station_1.topics.create(id: 25, name: 'Shuttle EMILY', description: 'Nach der Fahrt mit Shuttle EMILY')
 
 # STATEMENTSETS + STATEMENTS + CHOICES
 # AI
@@ -112,7 +113,7 @@ statement_13.choices.create(text: 'Trifft eher zu')
 statement_13.choices.create(text: 'Trifft überwiegend zu')
 statement_13.choices.create(text: 'Trifft voll und ganz zu')
 
-statement_14 = set.statements.create(style: 'multiple_choice', text: 'Bewerten Sie die Aussage "Ich bevorzuge EMILY mit einem Fahrer im Vergleich zu einem autonomen Shuttle ohne Fahrer."')
+statement_14 = set.statements.create(style: 'multiple_choice', text: 'Emily wird von der BVG in Kooperation mit der DB betrieben. Welches Angebotsmodell würden Sie nutzen?')
 statement_14.choices.create(text: 'Die Fahrt ist mit einer Monatskarte immer kostenlos.')
 statement_14.choices.create(text: 'Für eine Anschlussgarantie mit der Bahn oder dem Bus würde ich auch einen Aufpreis zahlen.')
 statement_14.choices.create(text: 'Für eine exklusive Gruppenbuchung (z.B. nur mit der Familie) würde ich einen Aufpreis zahlen.')
