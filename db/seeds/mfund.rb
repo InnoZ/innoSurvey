@@ -3,14 +3,14 @@
 
 # CREATE SURVEY
 Survey.find(3).destroy if Survey.exists?(id: 3)
-survey = Survey.create(description: 'The mFUND survey', name: 'mFUND', user: User.first)
+survey = Survey.create(id: 3, description: 'The mFUND survey', name: 'mFUND', user: User.first)
 
 # CREATE ROLES
-# role_1 = survey.roles.create(id: 1, name: 'Nutzer')
-# role_2 = survey.roles.create(id: 2, name: 'Politik & Planung')
-# role_3 = survey.roles.create(id: 3, name: 'Fahrzeughersteller & Flottenbetreiber')
-# role_4 = survey.roles.create(id: 4, name: 'Mobilitätsdienstanbieter')
-# role_5 = survey.roles.create(id: 5, name: 'Energie & Verkehrsmanagement')
+role_1 = survey.roles.create(id: 1, name: 'Nutzer')
+role_2 = survey.roles.create(id: 2, name: 'Politik & Planung')
+role_3 = survey.roles.create(id: 3, name: 'Fahrzeughersteller & Flottenbetreiber')
+role_4 = survey.roles.create(id: 4, name: 'Mobilitätsdienstanbieter')
+role_5 = survey.roles.create(id: 5, name: 'Energie & Verkehrsmanagement')
 
 # CREATE STATIONS
 autonomer_iov = survey.stations.create(name: 'Autonomer IÖV')
@@ -21,7 +21,7 @@ ddp = survey.stations.create(name: 'Data Driven Planning')
 hsa = survey.stations.create(name: 'Case Studies')
 
 # TOPICS
-autonomer_iov_topic_1 = autonomer_iov.topics.create(name: platforms.name, description: 'Fragen zum autonomen IÖV')
+autonomer_iov_topic_1 = autonomer_iov.topics.create(name: autonomer_iov.name, description: 'Fragen zum autonomen IÖV')
 platforms_topic_1 = platforms.topics.create(name: platforms.name, description: 'Fragen zu Platforms')
 ai_topic_1 = ai.topics.create(name: ai.name, description: 'Fragen zum AI Supported Flow Management')
 multimodal_priv_topic_1 = multimodal_priv.topics.create(name: multimodal_priv.name, description: 'Fragen zu Multimodal Privacy')
