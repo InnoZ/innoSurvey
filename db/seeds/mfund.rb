@@ -6,11 +6,11 @@ Survey.find(3).destroy if Survey.exists?(id: 3)
 survey = Survey.create(description: 'The mFUND survey', name: 'mFUND', user: User.first)
 
 # CREATE ROLES
-# role_1 = survey.roles.create(id: 1, name: 'Nutzer')
-# role_2 = survey.roles.create(id: 2, name: 'Politik & Planung')
-# role_3 = survey.roles.create(id: 3, name: 'Fahrzeughersteller & Flottenbetreiber')
-# role_4 = survey.roles.create(id: 4, name: 'Mobilitätsdienstanbieter')
-# role_5 = survey.roles.create(id: 5, name: 'Energie & Verkehrsmanagement')
+role_1 = survey.roles.create(id: 1, name: 'Nutzer')
+role_2 = survey.roles.create(id: 2, name: 'Politik & Planung')
+role_3 = survey.roles.create(id: 3, name: 'Fahrzeughersteller & Flottenbetreiber')
+role_4 = survey.roles.create(id: 4, name: 'Mobilitätsdienstanbieter')
+role_5 = survey.roles.create(id: 5, name: 'Energie & Verkehrsmanagement')
 
 # CREATE STATIONS
 autonomer_iov = survey.stations.create(name: 'Autonomer IÖV')
