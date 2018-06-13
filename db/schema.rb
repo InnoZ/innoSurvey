@@ -67,8 +67,8 @@ ActiveRecord::Schema.define(version: 20180302125657) do
     t.text "description", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
     t.string "name", null: false
+    t.integer "user_id"
     t.string "name_url_safe", null: false
     t.index ["user_id"], name: "index_surveys_on_user_id"
   end

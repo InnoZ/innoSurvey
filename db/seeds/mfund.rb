@@ -1,15 +1,16 @@
-# CREATE USERS
-@user = User.create(email: 'user@test.com', password: 'secret', password_confirmation: 'secret')
+# # CREATE USERS
+# @user = User.create(email: 'user@test.com', password: 'secret', password_confirmation: 'secret')
 
 # CREATE SURVEY
-survey = Survey.create(description: 'This is a first test survey', name: 'MFund', user: @user)
+Survey.find(3).destroy if Survey.exists?(id: 3)
+survey = Survey.create(description: 'The mFUND survey', name: 'mFUND', user: User.first)
 
 # CREATE ROLES
-role_1 = survey.roles.create(id: 1, name: 'Nutzer')
-role_2 = survey.roles.create(id: 2, name: 'Politik & Planung')
-role_3 = survey.roles.create(id: 3, name: 'Fahrzeughersteller & Flottenbetreiber')
-role_4 = survey.roles.create(id: 4, name: 'Mobilitätsdienstanbieter')
-role_5 = survey.roles.create(id: 5, name: 'Energie & Verkehrsmanagement')
+# role_1 = survey.roles.create(id: 1, name: 'Nutzer')
+# role_2 = survey.roles.create(id: 2, name: 'Politik & Planung')
+# role_3 = survey.roles.create(id: 3, name: 'Fahrzeughersteller & Flottenbetreiber')
+# role_4 = survey.roles.create(id: 4, name: 'Mobilitätsdienstanbieter')
+# role_5 = survey.roles.create(id: 5, name: 'Energie & Verkehrsmanagement')
 
 # CREATE STATIONS
 autonomer_iov = survey.stations.create(name: 'Autonomer IÖV')
@@ -17,7 +18,7 @@ platforms = survey.stations.create(name: 'Platforms')
 ai = survey.stations.create(name: 'Artifical Intelligence')
 multimodal_priv = survey.stations.create(name: 'Multimodal Privacy')
 ddp = survey.stations.create(name: 'Data Driven Planning')
-hsa = survey.stations.create(name: 'HSA-Exponat')
+hsa = survey.stations.create(name: 'Case Studies')
 
 # TOPICS
 autonomer_iov_topic_1 = autonomer_iov.topics.create(name: platforms.name, description: 'Fragen zum autonomen IÖV')
@@ -25,11 +26,11 @@ platforms_topic_1 = platforms.topics.create(name: platforms.name, description: '
 ai_topic_1 = ai.topics.create(name: ai.name, description: 'Fragen zum AI Supported Flow Management')
 multimodal_priv_topic_1 = multimodal_priv.topics.create(name: multimodal_priv.name, description: 'Fragen zu Multimodal Privacy')
 ddp_topic_1 = ddp.topics.create(name: ddp.name, description: 'Fragen zum Data Driven Planning')
-hsa_topic_1 = hsa.topics.create(name: hsa.name, description: 'Szenarien für Nutzerinnen und Nutzer')
-hsa_topic_2 = hsa.topics.create(name: hsa.name, description: 'Szenarien für Politik und Planung')
-hsa_topic_3 = hsa.topics.create(name: hsa.name, description: 'Szenarien für Fahrzeughersteller und Flottenbetreiberinnen')
-hsa_topic_4 = hsa.topics.create(name: hsa.name, description: 'Szenarien für Mobilitätsdienstanbieterinnen und -anbieter')
-hsa_topic_5 = hsa.topics.create(name: hsa.name, description: 'Szenarien für Flow Management in den Bereichen Eenrgie und Verkehr')
+hsa_topic_1 = hsa.topics.create(id: 20, name: 'User', description: 'Szenarien für Nutzerinnen und Nutzer')
+hsa_topic_2 = hsa.topics.create(id: 23, name: 'Politics & Planning', description: 'Szenarien für Politik und Planung')
+hsa_topic_3 = hsa.topics.create(id: 22, name: 'Vehicle Manufactors & Fleet Managers', description: 'Szenarien für Fahrzeughersteller und Flottenbetreiberinnen')
+hsa_topic_4 = hsa.topics.create(id: 21, name: 'Mobility Service Providers', description: 'Szenarien für Mobilitätsdienstanbieterinnen und -anbieter')
+hsa_topic_5 = hsa.topics.create(id: 24, name: 'Energy & Transport Flow Managers', description: 'Szenarien für Flow Management in den Bereichen Eenrgie und Verkehr')
 
 # STATEMENTSETS + STATEMENTS + CHOICES
 # AUTONOMER IÖV
