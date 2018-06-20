@@ -15,7 +15,7 @@ RSpec.describe Answer, type: :model do
       choices = create_list :choice, 3, statement: statement
       answer = create :answer, statement: statement, selected_choices: "#{choices.pluck(:id)}", uuid: '123xy'
 
-      expect(answer.selected_choices_inst).to eq choices
+      expect(answer.choices).to eq choices
     end
   end
 
