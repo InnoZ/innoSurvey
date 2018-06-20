@@ -3,7 +3,11 @@ class Answer < ApplicationRecord
 
   validate :selected_choices_references
 
-  def selected_choices_inst
+  def self.with_choice(id)
+    all.select { |answer| answer.choices.where(id: id).exists? }
+  end
+
+  def choices
     Choice.where(id: selected_choices_ids)
   end
 
@@ -53,7 +57,7 @@ class Answer < ApplicationRecord
     end
 
     # Check that all choices refer to same statement
-    if selected_choices_inst.pluck(:statement_id).uniq.count > 1
+    if choices.pluck(:statement_id).uniq.count > 1
       errors.add(:selected_choices, 'enthält Referenzen auf unterschiedliche Statements!')
       return nil
     end
