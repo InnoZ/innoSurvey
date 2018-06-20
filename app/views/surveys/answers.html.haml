@@ -1,21 +1,21 @@
 .container
   .row
-    - @survey.topics.each do |topic|
-      .col-xs-12{style: 'margin-top: 30px;'}
-        %h2= 'Topic: ' + topic.name
-      .col-xs-12
-        - topic.statement_sets.each do |set|
-          %hr.col-xs-12
-            %h3= 'Role: ' + set.role.name
-            - set.statements.each do |statement|
-              .row{style: 'margin-bottom: 12px;'}
-                .col-xs-4
-                  %b= statement.text
-                .col-xs-8
-                  .row
-                    - statement.choices.each do |choice|
-                      .col-xs-2
-                        = "#{choice.text} (#{choice.answers.count})"
+    -# - @survey.topics.each do |topic|
+    -#   .col-xs-12{style: 'margin-top: 30px;'}
+    -#     %h2= 'Topic: ' + topic.name
+    -#   .col-xs-12
+    -#     - topic.statement_sets.each do |set|
+    -#       %hr.col-xs-12
+    -#         %h3= 'Role: ' + set.role.name
+    -#         - set.statements.each do |statement|
+    -#           .row{style: 'margin-bottom: 12px;'}
+    -#             .col-xs-4
+    -#               %b= statement.text
+    -#             .col-xs-8
+    -#               .row
+    -#                 - statement.choices.each do |choice|
+    -#                   .col-xs-2
+    -#                     = "#{choice.text} (#{choice.answers.count})"
 
   .row{style: 'margin-top: 100px;'}
     .col-xs-12
