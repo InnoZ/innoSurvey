@@ -96,23 +96,24 @@ export default class ExhibitionScreen extends React.Component {
       that.drawLine(
         {x: video.videoWidth * 1/4, y: video.videoHeight * 1/4},
         {x: video.videoWidth * 3/4, y: video.videoHeight * 1/4},
-        "#FF3B58"
+        "red"
       );
       that.drawLine(
         {x: video.videoWidth * 1/4, y: video.videoHeight * 3/4},
         {x: video.videoWidth * 1/4, y: video.videoHeight * 1/4},
-        "#FF3B58"
+        "red"
       );
       that.drawLine(
         {x: video.videoWidth * 1/4, y: video.videoHeight * 3/4},
         {x: video.videoWidth * 3/4, y: video.videoHeight * 3/4},
-        "#FF3B58"
+        "red"
       );
       that.drawLine(
         {x: video.videoWidth * 3/4, y: video.videoHeight * 1/4},
         {x: video.videoWidth * 3/4, y: video.videoHeight * 3/4},
-        "#FF3B58"
+        "red"
       );
+
       var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
       var code = jsQR(imageData.data, imageData.width, imageData.height);
       if (code) {
