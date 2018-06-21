@@ -134,12 +134,11 @@ video {
 }
 
 canvas {
-  -webkit-filter: grayscale(1);
-  filter: grayscale(1);
   display: block;
   margin: 0 auto;
+  margin-top: 5vmin;
   overflow: hidden;
-  height: 60vh;
+  height: 40vmin;
 }
 
 .header {
