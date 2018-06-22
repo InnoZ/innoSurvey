@@ -4,7 +4,11 @@ class Answer < ApplicationRecord
   validate :selected_choices_references
 
   def self.with_choice(id)
-    all.select { |answer| answer.choices.where(id: id).exists? }
+    choice = Choice.find(id)
+    answers = choice.statement.answers
+    answers.select do |answer|
+      answer.choices.where(id: id).exists?
+    end
   end
 
   def choices
