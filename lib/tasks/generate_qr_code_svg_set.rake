@@ -7,9 +7,9 @@ require 'encrypt_decrypt'
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
   ARGUMENTS = {
-    iterations: 30,
+    iterations: 2,
     layout: 'innoz_feedback_feedback_energie',
-    role: 5,
+    role: 3,
     survey: 3
   }.freeze
 
