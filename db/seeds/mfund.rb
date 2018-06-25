@@ -34,7 +34,7 @@ hsa_topic_5 = hsa.topics.create(id: 24, name: 'Energy & Transport Flow Managers'
 
 # STATEMENTSETS + STATEMENTS + CHOICES
 # AUTONOMER IÖV
-Role.all.each do |role|
+survey.roles.all.each do |role|
   set = autonomer_iov_topic_1.statement_sets.create(role: role)
 
   if role == role_1
