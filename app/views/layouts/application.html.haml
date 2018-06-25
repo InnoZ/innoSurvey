@@ -7,7 +7,6 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    = render 'layouts/shared/flash_messages', flash: flash
 
     .main-header
       = image_tag 'bmvi.svg', style: 'right: 20px;'
@@ -17,5 +16,10 @@
         = 'Survey - ' + @survey.name
       - elsif @topic
         = 'Survey - ' + @topic.name
+
+    .container
+      .row
+        .col-xs-12
+          = render 'layouts/shared/flash_messages', flash: flash
 
     = yield
