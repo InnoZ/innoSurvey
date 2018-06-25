@@ -19,7 +19,7 @@ topic_user.statement_sets.destroy_all
 
 # STATEMENTSETS + STATEMENTS + CHOICES
 # Topic Politik und Planung
-Role.all.each do |role|
+survey.roles.all.each do |role|
   set1 = topic_planning.statement_sets.create(role: role)
 
   s1 = set1.statements.create(style: 'multiple_choice', text: 'Stellen Sie sich vor, Sie sind in Ihrer Heimatstadt dafür zuständig, die Emissionen durch Verkehr zu senken. Welche Maßnahme würden Sie am stärksten unterstützen?')
