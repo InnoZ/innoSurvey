@@ -1,15 +1,18 @@
 #survey-index.all-centered
   - @surveys.each do |survey|
     %h1
-      = 'Survey: '
-      = link_to survey.name, survey_ident_path(survey.id)
-      = ' | '
-      = link_to 'answers', survey_answers_path(survey.id)
+      = 'Survey: ' + survey.name
+      = link_to '▣', survey_ident_path(survey.id)
     = 'Roles: ' + survey.roles.map{ |r| r.name + "(#{r.id})" }.join(', ')
     - survey.stations.each do |station|
-      %h2= 'Station: ' + station.name
+      %h2
+        - if current_user
+          = 'Station: '
+          = link_to station.name, station_content_path(station)
+        - else
+          = 'Station: ' + station.name
       = 'Topics: '
       - station.topics.each do |topic|
-        = link_to topic.name, topic_ident_path(topic.id)
-        = ' | '
+        = topic.name
+        = link_to '▣', topic_ident_path(topic.id), style: 'margin-right: 15px;'
     %hr
