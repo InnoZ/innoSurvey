@@ -2,6 +2,7 @@ class Survey < ApplicationRecord
   has_many(:stations, dependent: :destroy)
   has_many(:roles, dependent: :destroy)
   has_many(:topics, through: :stations)
+  has_many(:statement_sets, through: :topics)
   has_many(:answers, through: :topics)
   belongs_to(:user)
 
