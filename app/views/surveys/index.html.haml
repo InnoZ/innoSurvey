@@ -2,7 +2,7 @@
   - @surveys.each do |survey|
     %h1
       = 'Survey: ' + survey.name
-      = link_to '▣', survey_ident_path(survey.id)
+      = link_to '▣', survey_ident_path(survey.id), data: { confirm: 'Actually this is only for users completing their survey on their private device. After QR-scanning the user is asked to select a station. Do you really want to enter this screen instead of a station-related screen?' }
     = 'Roles: ' + survey.roles.map{ |r| r.name + "(#{r.id})" }.join(', ')
     - survey.stations.each do |station|
       %h2
