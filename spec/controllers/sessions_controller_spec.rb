@@ -13,7 +13,7 @@ RSpec.describe SessionsController, type: :controller do
     subject { post :create, params: { sessions: { email: user.email, password: 'secret' }}}
 
     it 'Can login with correct creds' do
-      expect(subject).to redirect_to(root_path)
+      expect(subject).to redirect_to(surveys_path)
       expect(session[:user_id]).to eq(user.id)
     end
   end
