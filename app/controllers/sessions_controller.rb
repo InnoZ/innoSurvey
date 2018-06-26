@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
     if @user && @user.authenticate(params[:sessions][:password])
       session[:user_id] = @user.id
-      redirect_to root_path
+      redirect_to surveys_path
     else
       flash[:danger] = t('session.login_error')
       redirect_to '/login'
