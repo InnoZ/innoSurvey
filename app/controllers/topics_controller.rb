@@ -7,6 +7,7 @@ class TopicsController < ApplicationController
       format.json { render json: @topic_json.to_json, status: 200 }
     end
   end
+
   # Ajax endpoint which returns which topics a given user(with specific role)
   # has allready fully answered
   def answered_topics_by_user

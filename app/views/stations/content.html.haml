@@ -1,0 +1,25 @@
+.container-full{style: 'padding: 30px;'}
+  .row
+    .col-xs-12
+      = link_to 'Back', surveys_path, class: 'btn btn-info'
+      %h1= "Station: #{@station.name}"
+    - @station.topics.each do |topic|
+      .col-xs-12{style: 'margin-top: 30px;'}
+        %h2= 'Topic: ' + topic.name
+      .col-xs-12
+        - topic.statement_sets.each do |set|
+          %hr.col-xs-12
+            %h3= 'Role: ' + set.role.name
+            - set.statements.each do |statement|
+              .row{style: 'margin-bottom: 12px;'}
+                .col-xs-4
+                  %b= link_to statement.text, edit_statement_path(statement.id)
+                .col-xs-8
+                  .row
+                    - statement.choices.each do |choice|
+                      .col-xs-2
+                        = choice.text
+                        %b= "(#{choice.answers.count})"
+          .row
+            .col-xs-12
+              = link_to 'New statement', new_statement_set_statement_path(statement_set_id: set), class: 'btn btn-success'

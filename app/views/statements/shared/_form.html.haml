@@ -1,0 +1,18 @@
+= form_for([@statement_set, @statement]) do |f|
+  .row.margin-below
+    .col-xs-10
+      %b= f.text_field :text, placeholder: 'Text', class: 'form-control'
+    .col-xs-2
+      = f.select(:style, Statement::STYLES, {}, class: 'image-dropown')
+  .row.margin-below
+    = f.fields_for :choices do |builder|
+      .col-xs-10
+        = builder.text_field :text, placeholder: 'Text', class: 'form-control'
+      .col-xs-2
+        Delete?
+        = builder.check_box :_destroy
+  .row
+    .col-xs-12
+      = f.hidden_field :statement_set_id
+      = f.submit('Save', class: 'btn btn-success')
+      = link_to 'Back', station_content_path(@statement.topic.station), class: 'btn btn-info'
