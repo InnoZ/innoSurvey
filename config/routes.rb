@@ -25,6 +25,10 @@ Rails.application.routes.draw do
   get '/topics/:id', to: 'topics#ident', as: :topic_ident
   get '/topics/finished/:uuid', to: 'topics#answered_topics_by_user'
 
+  resources :stations, shallow: true do
+    resources :topics
+  end
+
   # CHOICES
   resources :statement_sets, shallow: true do
     resources :statements do

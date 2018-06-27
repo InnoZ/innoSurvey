@@ -1,3 +1,4 @@
 .container
+  %h1 Edit statement
   = render 'statements/shared/form'
-  = link_to 'Delete statement', statement_path(@statement), method: 'delete', data: { confirm: 'Do you really want to delete this?' }, style: 'color: red; float: right;'
+  = link_to 'Delete statement', statement_path(@statement), method: 'delete', data: { confirm: 'Do you really want to delete this?' },class: 'btn btn-danger pull-right'
