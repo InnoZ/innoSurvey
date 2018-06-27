@@ -32,6 +32,13 @@ a {
   margin-bottom: 20px;
 }
 
+.panel {
+  background-color: #F5F5F5;
+  .panel-heading {
+    background-color: #F1F1F1;
+  }
+}
+
 .main-header {
   font-family: "Times New Roman", Times, serif;
   height: 8vh;
@@ -90,12 +97,6 @@ a {
 
 .station {
   margin: 50px;
-}
-
-.btn-lg {
-  background-color: #666666;
-  color: white;
-  font-size: 16px;
 }
 
 .button-row {

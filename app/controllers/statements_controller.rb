@@ -19,7 +19,7 @@ class StatementsController < ApplicationController
       redirect_to station_content_path(@statement_set.topic.station)
     else
       flash[:error] = 'An error occured!'
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: surveys_path)
     end
   end
 
@@ -30,7 +30,7 @@ class StatementsController < ApplicationController
       redirect_to station_content_path(@statement.topic.station)
     else
       flash[:error] = 'An error occured!'
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: surveys_path)
     end
   end
 
@@ -41,7 +41,7 @@ class StatementsController < ApplicationController
       redirect_to station_content_path(@statement.topic.station)
     else
       flash[:error] = 'An error occured!'
-      redirect_back(fallback_location: root_path)
+      redirect_back(fallback_location: surveys_path)
     end
   end
 
