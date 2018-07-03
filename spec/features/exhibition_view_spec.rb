@@ -43,7 +43,7 @@ feature 'Exhibition view', :js do
     visit "topics/#{@topic.id}?url=#{root_path}"
     expect(page).to have_content('Scanne deinen QR-Code')
     sleep 11 # returns to given url after 10 seconds of inactivity
-    expect(page).to have_content('Station: Sample station')
+    expect(page).to have_content('Sample station')
   end
 
   def get_error_message_because_same_code

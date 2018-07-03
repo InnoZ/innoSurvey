@@ -4,14 +4,16 @@
       %b= f.text_field :text, placeholder: 'Text', class: 'form-control'
     .col-xs-2
       = f.select(:style, Statement::STYLES, {}, class: 'image-dropown')
+
   .row.margin-below
     = f.fields_for :choices do |builder|
-      .col-xs-10
+      .col-xs-10{style: 'margin-bottom: 5px;'}
         = builder.text_field :text, placeholder: 'Text', class: 'form-control'
-      .col-xs-2
+      .col-xs-2{style: 'margin-bottom: 5px;'}
         Delete?
         = builder.check_box :_destroy
-  .row
+
+  .row.margin-below
     .col-xs-12
       = f.hidden_field :statement_set_id
       = f.submit('Save', class: 'btn btn-success')

@@ -1,18 +1,5 @@
-#survey-index.all-centered
-  - @surveys.each do |survey|
-    %h1
-      = 'Survey: ' + survey.name
-      = link_to '▣', survey_ident_path(survey.id), data: { confirm: 'Actually this is only for users completing their survey on their private device. After QR-scanning the user is asked to select a station. Do you really want to enter this screen instead of a station-related screen?' }
-    = 'Roles: ' + survey.roles.map{ |r| r.name + "(#{r.id})" }.join(', ')
-    - survey.stations.each do |station|
-      %h2
-        - if current_user
-          = 'Station: '
-          = link_to station.name, station_content_path(station)
-        - else
-          = 'Station: ' + station.name
-      = 'Topics: '
-      - station.topics.each do |topic|
-        = topic.name
-        = link_to '▣', topic_ident_path(topic.id), style: 'margin-right: 15px;'
-    %hr
+#survey-index
+  .container
+    - @surveys.each do |survey|
+      = render 'survey_forms', survey: survey
+      %hr{style: 'margin-top: 50px; margin-bottom: 50px;'}

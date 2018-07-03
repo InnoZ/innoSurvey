@@ -10,7 +10,7 @@ feature 'Statement', :js do
 
   scenario 'edit view is not visible for guests' do
     visit surveys_path
-    expect(page).to_not have_css('a', text: 'Station to edit')
+    expect(page).to_not have_css('btn', text: 'Show content')
     visit station_content_path(@station)
     expect(current_path).to eq root_path
   end
@@ -27,7 +27,7 @@ feature 'Statement', :js do
   private
 
   def try_to_create_empty_statement
-    find('a', text: 'Station to edit').trigger('click')
+    click_on('Show content')
     find('.btn', text: 'New statement').trigger('click')
     click_on('Save')
     expect(page).to have_content('error')
