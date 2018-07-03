@@ -13,7 +13,7 @@
           - statement_set = StatementSet.find_by(role_id: role.id, topic_id: topic.id)
           - if statement_set
             - statement_set.statements.each do |statement|
-              .row
+              .row.margin-below
                 .col-xs-4
                   %b= link_to statement.text, edit_statement_path(statement.id)
                 .col-xs-8
