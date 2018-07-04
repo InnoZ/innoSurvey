@@ -1,5 +1,10 @@
 #survey-index
   .container
     - @surveys.each do |survey|
-      = render 'survey_forms', survey: survey
-      %hr{style: 'margin-top: 50px; margin-bottom: 50px;'}
+      .panel.panel-info
+        .panel-heading
+          %h1
+            = 'Survey: ' + survey.name
+            = link_to '▣', survey_ident_path(survey.id), data: { confirm: 'Actually this is only for users completing their survey on their private device. After QR-scanning the user is asked to select a station. Do you really want to enter this screen instead of a station-related screen?' }
+        .panel-body
+          = render 'survey_forms', survey: survey
