@@ -13,9 +13,13 @@
       = image_tag 'mFund.jpg', style: 'right: 150px;'
       = image_tag 'forum.jpg', style: 'left: 20px;'
       - if @survey
-        = 'Survey - ' + @survey.name
+        = @survey.name
+      - elsif @station
+        = @station.name
       - elsif @topic
-        = 'Survey - ' + @topic.name
+        = @topic.name
+      - elsif @statement
+        = @statement.topic.name
 
     .container
       .row

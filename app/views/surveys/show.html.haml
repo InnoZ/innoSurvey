@@ -1,0 +1,56 @@
+.container
+  .row.margin-below
+    .col-xs-12
+      = link_to 'Back', surveys_path, class: 'btn btn-info btn-lg'
+
+  .row
+    .col-xs-12
+      - @survey.stations.each do |station|
+        .panel.panel-default
+          - if current_user
+            .panel-heading
+              = link_to 'Show content', station_content_path(station), class: 'btn btn-default'
+              = link_to 'Delete', station_path(station), method: 'delete', data: { confirm: 'Do you really want to delete this?' }, class: 'btn btn-danger'
+          .panel-body.all-centered
+            .station-name-form.margin-below
+              - if current_user
+                = 'Station: '
+                = form_for(station) do |f|
+                  .form-inline
+                    %b= f.text_field :name, class: 'form-control input-lg'
+                    = f.submit 'Save', class: 'btn btn-default btn-lg'
+              - else
+                %h2= station.name
+
+            = 'Topics: '
+            .margin-below
+              - station.topics.each do |topic|
+                - if current_user
+                  = form_for(topic) do |f|
+                    .form-inline
+                      = f.text_field :name, class: 'form-control'
+                      = f.submit 'Save', class: 'btn btn-default'
+                      = link_to '▣', topic_ident_path(topic.id), class: 'btn btn-default'
+                      = link_to 'Delete', topic_path(topic), method: 'delete', data: { confirm: 'Do you really want to delete this?' }, class: 'btn btn-danger'
+                - else
+                  %h3
+                    = topic.name
+                    = link_to '▣', topic_ident_path(topic.id), class: 'btn btn-default'
+
+            - if current_user
+              .btn.btn-success{onclick: "$('#topic-form-for-station-#{station.id}').show(); $(this).hide();", style: 'cursor: pointer;'} New topic
+              = form_for([station, station.topics.build]) do |f|
+                .form-inline{id: "topic-form-for-station-#{station.id}",style: 'margin-top: 20px; display: none;'}
+                  = f.text_field :name, placeholder: 'New topic', class: 'form-control'
+                  = f.text_area :description, placeholder: 'Description', class: 'form-control', style: 'width: 300px;'
+                  = f.submit 'Create', class: 'btn btn-default'
+
+  - if current_user
+    .row.margin-below
+      .col-xs-12
+        .btn.btn-success.btn-lg{onclick: "$('#station-form-for-survey-#{@survey.id}').show(); $(this).hide();", style: 'cursor: pointer;'} New station
+        = form_for(@survey.stations.build) do |f|
+          .form-inline{id: "station-form-for-survey-#{@survey.id}", style: 'margin-top: 20px; display: none;'}
+            %b= f.text_field :name, placeholder: 'New station', class: 'form-control input-lg'
+            = f.hidden_field :survey_id
+            = f.submit 'Create', class: 'btn btn-default btn-lg'
