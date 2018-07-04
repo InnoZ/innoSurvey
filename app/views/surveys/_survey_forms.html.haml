@@ -1,10 +1,6 @@
 .row
   .col-xs-12.margin-below
-    .margin-below
-      %h1
-        = 'Survey: ' + survey.name
-        = link_to '▣', survey_ident_path(survey.id), data: { confirm: 'Actually this is only for users completing their survey on their private device. After QR-scanning the user is asked to select a station. Do you really want to enter this screen instead of a station-related screen?' }
-      = 'Roles: ' + survey.roles.map{ |r| r.name + "(#{r.id})" }.join(', ')
+    = 'Roles: ' + survey.roles.map{ |r| r.name + "(#{r.id})" }.join(', ')
 
 .row
   .col-xs-12
