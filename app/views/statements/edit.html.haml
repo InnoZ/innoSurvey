@@ -1,7 +1,7 @@
 .container
   .panel.panel-default
     .panel-heading
-      %h2 Edit statement
+      %h2= "Edit statement for role #{@statement.statement_set.role.name}"
     .panel-body
       = render 'statements/shared/form'
   = link_to 'Delete statement', statement_path(@statement), method: 'delete', data: { confirm: 'Do you really want to delete this?' },class: 'btn btn-danger pull-right'

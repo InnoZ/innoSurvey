@@ -14,8 +14,7 @@ Rails.application.routes.draw do
   get 'sign_out', to: 'sessions#destroy', as: :sign_out
 
   # SURVEY
-  get '/surveys', to: 'surveys#index', as: :surveys
-  get '/surveys/:id', to: 'surveys#ident', as: :survey_ident
+  get '/surveys/:id/ident', to: 'surveys#ident', as: :survey_ident
 
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'
@@ -25,11 +24,10 @@ Rails.application.routes.draw do
   get '/topics/:id', to: 'topics#ident', as: :topic_ident
   get '/topics/finished/:uuid', to: 'topics#answered_topics_by_user'
 
+  resources :surveys
   resources :stations, shallow: true do
     resources :topics
   end
-
-  # CHOICES
   resources :statement_sets, shallow: true do
     resources :statements do
       resources :choices
