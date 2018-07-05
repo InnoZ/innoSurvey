@@ -2,6 +2,8 @@ Rails.application.configure do
     # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = true
 
+  ActiveSupport::Dependencies.autoload_paths << File::join( Rails.root, 'lib' )
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -28,6 +30,8 @@ Rails.application.configure do
 
     config.cache_store = :null_store
   end
+
+  config.action_cable.url = 'ws://localhost:3000/cable'
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false

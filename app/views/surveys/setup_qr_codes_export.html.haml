@@ -1,0 +1,26 @@
+= form_tag({controller: 'surveys', action: 'export', method: 'post'}, {multipart: true}) do
+  .container-full{style: 'padding: 30px;'}
+    %h1 QR Codes Export
+    %p
+      %i Here you can generate survey QR codes per survey role. Depending on the amount of QR codes you are requesting this can take a looooong time here... Please DO NOT refresh your browser during that time, otherwise all progress made will be destroyed!
+
+      - @survey.roles.each do |role|
+        %h3= role.name
+        .row
+          .col-xs-12.col-md-4
+            = label_tag 'Iterations'
+            = number_field_tag "survey[roles[#{role.id}][iterations]]", 0, class: 'form-control'
+
+        .row
+          .col-xs-12.col-md-4
+            = label_tag 'Front image'
+            = file_field_tag "survey[roles[#{role.id}][layout_front]]", class: 'form-control'
+
+        .row
+          .col-xs-12.col-md-4
+            = label_tag 'Back image'
+            = file_field_tag "survey[roles[#{role.id}][layout_back]]", class: 'form-control'
+      .row
+        .col-xs-12
+          = submit_tag 'Export', class: 'btn btn-success'
+          = link_to 'Back', surveys_path, class: 'btn btn-info'

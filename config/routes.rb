@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   get 'sign_out', to: 'sessions#destroy', as: :sign_out
 
   # SURVEY
-  get '/surveys/:id/ident', to: 'surveys#ident', as: :survey_ident
+  scope 'surveys' do
+    get '', to: 'surveys#index', as: :surveys
+    get '/:id/setup_qr_codes_export', to: 'surveys#setup_qr_codes_export', as: :setup_qr_codes_export
+    post '/:id/export_qr_codes', to: 'surveys#export', as: :export_qr_codes
+    get '/:id/ident', to: 'surveys#ident', as: :survey_ident
+  end
 
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'
