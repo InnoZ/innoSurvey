@@ -40,6 +40,8 @@ export default class ExhibitionScreen extends React.Component {
         that.initCamera();
       }
     }, 10000)
+
+    this.identWith(1, 1, '3BFB307CCD475D5A52ECC454474459F96403B31027B98E998091E3C4751DED70')
   }
 
   identWith(uuid, roleId, token) {
@@ -163,4 +165,6 @@ export default class ExhibitionScreen extends React.Component {
       </div>
     );
   }
+
+
 }
