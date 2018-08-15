@@ -41,7 +41,7 @@ export default class ExhibitionScreen extends React.Component {
       }
     }, 10000)
 
-    this.identWith(1, 1, '3BFB307CCD475D5A52ECC454474459F96403B31027B98E998091E3C4751DED70')
+    // this.identWith(657656567, 1, '3BFB307CCD475D5A52ECC454474459F96403B31027B98E998091E3C4751DED70')
   }
 
   identWith(uuid, roleId, token) {
@@ -65,8 +65,8 @@ export default class ExhibitionScreen extends React.Component {
         audio: false,
         video: {
           facingMode: "user",
-          width: { max: 350 },
-          height: { max: 300 }
+          width: { max: 650 },
+          height: { max: 600 }
         }
       }).then(function(stream) {
         video.srcObject = stream;

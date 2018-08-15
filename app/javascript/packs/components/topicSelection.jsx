@@ -55,16 +55,18 @@ export default class topicSelection extends React.Component {
 
   topicButtons(station) {
     return station.topics.map((topic) => {
-      let classNames, clickHandler;
+      let classNames, clickHandler, topicText;
       if (this.state.answeredTopics.includes(topic.id)) {
         classNames = 'btn btn-default topic-btn topic-selection disabled';
         clickHandler = null;
+        topicText = topic.name + ' ' + '✓';
       } else {
         classNames = 'btn btn-default topic-btn topic-selection';
         clickHandler = () => this.setState({ activeStation: station.id, activeTopic: topic.id });
+        topicText = topic.name;
       }
-      return <div class="text-center"><h3 key={topic.id} className={classNames} onClick={clickHandler}>
-        {topic.name}
+      return <div key={topic.id} className="text-center"><h3 className={classNames} onClick={clickHandler}>
+        {topicText}
         </h3>
       </div>
     })
