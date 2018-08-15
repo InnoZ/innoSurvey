@@ -99,7 +99,7 @@ export default class topicSelection extends React.Component {
 
     return (
       <div>
-        <h2>Wählen Sie eine der folgenden Stationen aus:</h2>
+        <h1>Wählen Sie eine der folgenden Stationen aus:</h1>
         {main}
       </div>
     );
