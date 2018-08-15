@@ -57,15 +57,16 @@ export default class topicSelection extends React.Component {
     return station.topics.map((topic) => {
       let classNames, clickHandler;
       if (this.state.answeredTopics.includes(topic.id)) {
-        classNames = 'choice topic-selection disabled';
+        classNames = 'btn btn-default topic-btn topic-selection disabled';
         clickHandler = null;
       } else {
-        classNames = 'choice topic-selection';
+        classNames = 'btn btn-default topic-btn topic-selection';
         clickHandler = () => this.setState({ activeStation: station.id, activeTopic: topic.id });
       }
-      return <h3 key={topic.id} className={classNames} onClick={clickHandler}>
+      return <div class="text-center"><h3 key={topic.id} className={classNames} onClick={clickHandler}>
         {topic.name}
-      </h3>
+        </h3>
+      </div>
     })
   }
 
@@ -88,14 +89,17 @@ export default class topicSelection extends React.Component {
     } else {
       main = window.stations.map((station) => {
         return <div className='station' key={station.id}>
-          <h2>{station.name}</h2>
+          <h3> Station: {station.name}</h3>
           {this.topicButtons(station)}
         </div>
       })
     }
 
     return (
-      <div>{main}</div>
+      <div>
+        <h2>Wählen Sie eine der folgenden Stationen aus:</h2>
+        {main}
+      </div>
     );
   }
 }

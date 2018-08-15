@@ -118,6 +118,20 @@ a {
   }
 }
 
+.topic-btn {
+  cursor: pointer;
+  padding: 18px;
+  font-size: 16px;
+  width: 60%;
+  margin: 10px;
+  &.active {
+    color: white;
+    border-top: 2px solid #666666;
+    border-bottom: 2px solid #666666;
+    background-color: #ACA9A9;
+  }
+}
+
 #flash-message {
   color: green;
   margin-top: 20px;
