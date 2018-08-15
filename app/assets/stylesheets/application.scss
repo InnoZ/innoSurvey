@@ -62,12 +62,13 @@ a {
 }
 
 .question {
-  background-color: #666666;
-  color: white;
+  // background-color: #666666;
+  // color: white;
+  color: #666666;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
-  border-radius: 20px;
+  // border-radius: 20px;
   padding: 20px;
   margin-top: 20px;
   margin-bottom: 30px;
@@ -75,6 +76,7 @@ a {
 
 .choice {
   cursor: pointer;
+  color: grey;
   padding: 18px;
   font-size: 16px;
   border-top: 2px solid #B3B3B3;
@@ -170,8 +172,9 @@ canvas {
 .subtitle {
   padding: 3px;
   font-weight: lighter;
-  font-size: 12px;
-  color: white;
+  font-size: 14px;
+  // color: white;
+  color: #666666;
 }
 
 .qr-code-test-replacement-input {

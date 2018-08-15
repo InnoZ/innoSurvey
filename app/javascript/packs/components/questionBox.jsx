@@ -9,7 +9,7 @@ export default function QuestionBox({selections, modifyChoice, id, style, text, 
     <div className={selections.includes(choice.id) ? 'choice active' : 'choice'}
          key={choice.id}
          onClick={() => handleClick(choice.id)}>
-      {choice.text}
+        {choice.text}
     </div>
   );
 
