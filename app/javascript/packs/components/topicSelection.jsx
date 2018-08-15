@@ -73,7 +73,7 @@ export default class topicSelection extends React.Component {
   }
 
   render() {
-    let main;
+    let main, intro;
     if (this.state.activeTopic) {
       const statementSet = this.statementSet();
       main = statementSet
@@ -89,6 +89,7 @@ export default class topicSelection extends React.Component {
             <div className='subtitle'>Klicke hier um zurück zu gelangen.</div>
           </div>
     } else {
+      intro = <h1>Wählen Sie eine der folgenden Stationen aus:</h1>;
       main = window.stations.map((station) => {
         return <div className='station' key={station.id}>
           <h3> Station: {station.name}</h3>
@@ -99,7 +100,7 @@ export default class topicSelection extends React.Component {
 
     return (
       <div>
-        <h1>Wählen Sie eine der folgenden Stationen aus:</h1>
+        {intro}
         {main}
       </div>
     );

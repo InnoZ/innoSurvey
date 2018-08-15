@@ -10,7 +10,7 @@ export default class StatementSet extends React.Component {
         selected_choices: [],
       }
     }),
-    secondsLeft: 99
+    secondsLeft: 300
   }
 
   constructor(props){
