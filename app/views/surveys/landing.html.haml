@@ -1,0 +1,7 @@
+.container
+  .panel.panel-default
+    .panel-body
+      %h2 Vielen Dank,
+      %p dass Sie an der Umfrage teilnehmen möchten. Ihre Ergebnisse helfen uns im Rahmen des durch den Mobilitätsfond "mFund" geförderten Projektes, Plattform Mobilität 4.0 ... zu erforschen.
+      %p Aktivieren Sie Ihre Webcam und scannen Sie Ihren QR-Code hier:
+      = link_to 'Webcam aktivieren', survey_ident_path(id: @survey.id), class: 'btn btn-default btn-lg'

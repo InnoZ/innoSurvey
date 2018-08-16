@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   # SURVEY
   get '/surveys/:id/ident', to: 'surveys#ident', as: :survey_ident
+  get '/surveys/:id/landing', to: 'surveys#landing', as: :landing
 
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'

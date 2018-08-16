@@ -6,7 +6,8 @@
           %h1
             = 'Survey: ' + survey.name
         .panel-body
-          = link_to '▣', survey_ident_path(survey.id), class: 'btn btn-default btn-lg', data: { confirm: 'Actually this is only for users completing their survey on their private device. After QR-scanning the user is asked to select a station. Do you really want to enter this screen instead of a station-related screen?' }
+          = link_to '▣', landing_path(survey.id), class: 'btn btn-default btn-lg'
+          -# , data: { confirm: 'Actually this is only for users completing their survey on their private device. After QR-scanning the user is asked to select a station. Do you really want to enter this screen instead of a station-related screen?' }
           = link_to 'Show content', survey_path(survey), class: 'btn btn-default btn-lg'
         .panel-footer
           Roles:

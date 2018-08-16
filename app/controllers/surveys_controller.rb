@@ -7,6 +7,10 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
   end
 
+  def landing
+    @survey = Survey.find(params[:id])
+  end
+
   def ident
     @survey = Survey.find(params[:id])
     @stations = @survey.stations.all.map do |s|
