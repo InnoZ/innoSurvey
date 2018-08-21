@@ -6,7 +6,7 @@ export default function QuestionBox({selections, modifyChoice, id, style, text, 
   }
 
   const choicesList = choices.map((choice) =>
-    <div className={selections.includes(choice.id) ? 'choice active' : 'choice'}
+    <div className={selections.includes(choice.id) ? 'btn btn-default answer-btn active' : 'btn btn-default answer-btn'}
          key={choice.id}
          onClick={() => handleClick(choice.id)}>
         {choice.text}

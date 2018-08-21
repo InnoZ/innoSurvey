@@ -59,7 +59,7 @@ export default class topicSelection extends React.Component {
       if (this.state.answeredTopics.includes(topic.id)) {
         classNames = 'btn btn-default topic-btn topic-selection disabled';
         clickHandler = null;
-        topicText = topic.name + ' ' + '✓';
+        topicText = topic.name + ' ✓';
       } else {
         classNames = 'btn btn-default topic-btn topic-selection';
         clickHandler = () => this.setState({ activeStation: station.id, activeTopic: topic.id });
