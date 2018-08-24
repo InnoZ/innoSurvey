@@ -1,0 +1,4 @@
+- flash.each do |type, msg|
+  .alert.alert-block{class: "alert-#{bootstrap_class_for(type)}"}
+    %a.close{'data-dismiss' => 'alert', href: '#'}
+    = msg

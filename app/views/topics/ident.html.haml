@@ -1,0 +1,5 @@
+:javascript
+  window.topicData = #{raw @topic_json.to_json}
+  window.topicId = #{@topic.id}
+
+= javascript_pack_tag 'exhibitionScreen'

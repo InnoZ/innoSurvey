@@ -31,3 +31,5 @@
 
 en:
   hello: "Hello world"
+  session:
+    login_error: "Bad Credentials"

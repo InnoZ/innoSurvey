@@ -2,9 +2,10 @@ version: '2'
 services:
   innosurvey:
     build: .
-    command: bundle exec rails s
+    command: supervisord -c /etc/supervisor/conf.d/supervisord.conf  #bundle exec rails s
     volumes: 
       - .:/innosurvey
+      - ./config/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
     env_file: .env
     ports: 
       - '0.0.0.0:3000:3000'

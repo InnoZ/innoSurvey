@@ -1,0 +1,176 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require bootstrap3/dist/css/bootstrap.min.css
+ *= require_tree .
+ *= require_self
+ */
+
+body {
+  background-color: #E6E6E6;
+}
+
+* {
+  font-family: arial;
+  color: #666666;
+}
+
+a {
+  color: purple;
+}
+
+.margin-below {
+  margin-bottom: 20px;
+}
+
+.panel-default {
+  background-color: #F5F5F5;
+  .panel-heading {
+    background-color: #F1F1F1;
+  }
+}
+
+.main-header {
+  font-family: "Times New Roman", Times, serif;
+  height: 8vh;
+  background-color: white;
+  width: 100%;
+  text-align: center;
+  line-height: 8vh;
+  vertical-align: middle;
+  font-size: 32px;
+  color: #666666;
+  margin-bottom: 20px;
+  img {
+    height: 6vh;
+    top: 1vh;
+    position: absolute;
+  }
+}
+
+.all-centered {
+  text-align: center;
+}
+
+.question {
+  background-color: #666666;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.choice {
+  cursor: pointer;
+  padding: 18px;
+  font-size: 16px;
+  border-top: 2px solid #B3B3B3;
+  border-bottom: 2px solid #B3B3B3;
+  margin: 10px;
+  &.active {
+    color: white;
+    border-top: 2px solid #666666;
+    border-bottom: 2px solid #666666;
+    background-color: #ACA9A9;
+  }
+}
+
+.topic-selection {
+  &.disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.station {
+  margin: 50px;
+}
+
+.button-row {
+  height: 15px;
+  line-height: 150px;
+  vertical-align: middle;
+  .page-indicator {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 30px;
+    color: #C8C8C8;
+  }
+  .previous-button {
+    font-size: 50px;
+    cursor: pointer;
+  }
+  .next-button {
+    font-size: 50px;
+    cursor: pointer;
+  }
+}
+
+#flash-message {
+  color: green;
+  margin-top: 20px;
+}
+
+#json-preview {
+  color: grey;
+  margin-left: 30px;
+  white-space: pre;
+}
+
+.nav-link {
+  float: left;
+}
+
+video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  margin-top: 5vmin;
+  overflow: hidden;
+  height: 40vmin;
+}
+
+.header {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 5vh;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  padding: 3px;
+  font-weight: lighter;
+  font-size: 12px;
+  color: white;
+}
+
+.qr-code-test-replacement-input {
+  color: black;
+  visibility: hidden;
+}
+
+.countdown {
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+}
+

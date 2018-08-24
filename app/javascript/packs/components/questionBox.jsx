@@ -1,38 +1,29 @@
 import React from 'react';
 
-export default function QuestionBox({selections, select, unselect, id, text, answered, active, choices, resetTimer}) {
-
-  const handleClick = function(questionId, choiceId) {
-    if (!selections.includes(choiceId)) {
-      select({statementId: questionId, choiceId: choiceId, check: true})
-    } else {
-      unselect({statementId: questionId, choiceId: choiceId, check: false})
-    };
-    // start timer reset after each click
-    resetTimer();
+export default function QuestionBox({selections, modifyChoice, id, style, text, active, choices}) {
+  const handleClick = function(choiceId) {
+    modifyChoice({statementId: id, choiceId: choiceId, singleChoice: (style == 'single_choice')});
   }
 
   const choicesList = choices.map((choice) =>
-    <div className={selections.includes(choice.id) ? 'button choice active' : 'button choice'}
+    <div className={selections.includes(choice.id) ? 'choice active' : 'choice'}
          key={choice.id}
-         onClick={() => handleClick(id, choice.id)}>
+         onClick={() => handleClick(choice.id)}>
       {choice.text}
     </div>
   );
 
-  if (active) {
-    return(
-      <div className='question active'>
-        {text}
-        {choicesList}
-      </div>
-    )
-  } else {
-    return (
+  const styleNote = style == 'multiple_choice'
+    ? <div className='subtitle'> Mehrfachauswahl möglich </div>
+    : <div className='subtitle'> Nur eine Antwort möglich </div>
+
+  return(
+    <div className='active'>
       <div className='question'>
         {text}
-        {answered ? ' ✓' : null}
+        {styleNote}
       </div>
-    )
-  }
+      {choicesList}
+    </div>
+  )
 }

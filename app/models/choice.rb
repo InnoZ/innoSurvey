@@ -4,7 +4,11 @@ class Choice < ApplicationRecord
   delegate :survey, to: :statement, allow_nil: false
   delegate :topic, to: :statement, allow_nil: false
 
-  validates :text, presence: true, length: { mininum: 1, maximum: 100 }
+  validates :text, presence: true, length: { minimum: 1, maximum: 1000 }
+
+  def answers
+    Answer.with_choice(id)
+  end
 
   def to_json
     {

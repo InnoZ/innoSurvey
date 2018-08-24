@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117161643) do
+ActiveRecord::Schema.define(version: 20180302125657) do
 
   create_table "answers", force: :cascade do |t|
     t.text "selected_choices", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "statement_id"
+    t.string "uuid", null: false
     t.index ["statement_id"], name: "index_answers_on_statement_id"
   end
 

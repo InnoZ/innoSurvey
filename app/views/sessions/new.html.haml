@@ -1,0 +1,12 @@
+.container.inner-sm
+  .row
+    .col-xs-offset-3.col-xs-6.all-centered
+      = form_tag("sign_in", method: "post") do
+        %h2 Admin Login:
+        .form-group
+          = email_field_tag("sessions[email]", nil, placeholder: 'Email', class:'form-control')
+          %small#emailHelp.form-text.text-muted Ask website admin to include your credentials
+        .form-group
+          = password_field_tag("sessions[password]", nil, placeholder: 'Password', class:'form-control')
+        .form-group
+          = button_tag('Log in', type: 'submit', class: 'btn btn-success')

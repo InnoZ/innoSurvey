@@ -1,0 +1,37 @@
+.container-full{style: 'padding: 30px;'}
+  .row
+    .col-xs-12
+      = link_to 'Back', survey_path(@station.survey), class: 'btn btn-info btn-lg'
+
+    - @station.topics.each do |topic|
+      .col-xs-12{style: 'margin-top: 30px;'}
+        .panel.panel-info
+          .panel-heading
+            %h2= 'Topic: ' + topic.name
+          .panel-body
+            - @station.survey.roles.each do |role|
+              .panel.panel-default
+                .panel-heading
+                  %h3= role.name
+                .panel-body
+                  - statement_set = StatementSet.find_by(role_id: role.id, topic_id: topic.id)
+                  - if statement_set
+                    - statement_set.statements.each do |statement|
+                      .row.margin-below
+                        .col-xs-1
+                          %b= link_to 'Edit', edit_statement_path(statement.id), class: 'btn btn-default'
+                        .col-xs-3
+                          %b= statement.text
+                        .col-xs-8
+                          .row
+                            - statement.choices.each do |choice|
+                              .col-xs-4{style: 'margin-bottom: 5px;'}
+                                = choice.text
+                                %b= "(#{choice.answers.count})"
+
+                  .row
+                    .col-xs-12
+                      - if statement_set
+                        = link_to 'New statement', new_statement_set_statement_path(statement_set_id: statement_set.id), class: 'btn btn-success'
+                      - else
+                        = link_to 'New statement', new_statement_set_path(topic_id: topic.id, role_id: role.id), class: 'btn btn-success'

@@ -1,19 +1,46 @@
 class StationsController < ApplicationController
-  before_action :get_survey, :get_station
+  before_action :authenticate
 
-  def show
-    respond_to do |format|
-      format.json { render json: @station.to_json, status: 200 }
+  def content
+    @station = Station.find(params[:id])
+  end
+
+  def create
+    @survey = Survey.find(station_params[:survey_id])
+    if @survey.stations.new(station_params).save
+      flash[:success] = 'Saved!'
+      redirect_to surveys_path
+    else
+      flash[:error] = 'An error occured!'
+      redirect_back(fallback_location: surveys_path)
+    end
+  end
+
+  def update
+    @station = Station.find(params[:id])
+    if @station.update_attributes(station_params)
+      flash[:success] = 'Saved!'
+      redirect_to surveys_path
+    else
+      flash[:error] = 'An error occured!'
+      redirect_back(fallback_location: surveys_path)
+    end
+  end
+
+  def destroy
+    @station = Station.find(params[:id])
+    if @station.destroy
+      flash[:warning] = 'Deleted!'
+      redirect_to surveys_path
+    else
+      flash[:error] = 'An error occured!'
+      redirect_back(fallback_location: surveys_path)
     end
   end
 
   private
 
-  def get_survey
-    @survey = Survey.find_by(name_url_safe: params[:survey_name])
-  end
-
-  def get_station
-    @station = @survey.stations.find_by(id: params[:id])
+  def station_params
+    params.require(:station).permit(:name, :survey_id)
   end
 end
