@@ -8,17 +8,7 @@ RSpec.describe SessionsController, type: :controller do
       expect(response.status).to eq(200)
     end
   end
-  context 'POST #create' do
-    it 'Can login' do
-      user = create :user
 
-      post :create, params: {
-        sessions: { email: user.email, password: 'secret' }
-      }
-
-      expect(response.status).to eq(200)
-    end
-  end
   context 'POST #create' do
     let(:user) { create :user }
     subject { post :create, params: { sessions: { email: user.email, password: 'secret' }}}
