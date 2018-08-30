@@ -27,6 +27,17 @@ feature 'Mobile view', :js do
     see_error_message
   end
 
+  scenario 'includes working react app' do
+    scan_qr_code_with_external_scanner
+    select_first_topic
+    answer_questions
+    safe_questions_correctly
+  end
+
+  def scan_qr_code_with_external_scanner
+    visit(survey_path(@survey) + "?uuid=123xy&role_id=1&token=#{'123xy'.encrypt}")
+  end
+
   def visit_again_and_scan_invalid_role_qr
     visit survey_ident_path(@survey.id)
     scan(uuid: '456yx', role_id: '6654676', token: '456yx'.encrypt)
