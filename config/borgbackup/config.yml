@@ -1,0 +1,47 @@
+location:
+    # List of source directories to backup. Globs are expanded.
+    source_directories:
+        - /source
+
+    # Paths to local or remote repositories.
+    repositories:
+        - /repository
+storage:
+    # name of the archive. borg placeholders can be used. see the output of
+    # "borg help placeholders" for details. default is
+    # "{hostname}-{now:%y-%m-%dt%h:%m:%s.%f}". if you specify this option, you must
+    # also specify a prefix in the retention section to avoid accidental pruning of
+    # archives with a different archive name format. and you should also specify a
+    # prefix in the consistency section as well.
+    archive_name_format: 'innoSurvey-{now}'
+
+retention:
+    # Retention policy for how many backups to keep in each category.
+    #keep_within: 3H
+    #keep_minutely: 60
+    #keep_hourly: 24
+    keep_daily: 7
+    keep_weekly: 4
+    keep_monthly: 6
+
+    prefix: 'innoSurvey-'
+
+consistency:
+    # List of consistency checks to run: "repository", "archives", or both.
+    checks:
+        - repository
+        - archives
+
+    prefix: 'innoSurvey-'
+hooks:
+    # List of one or more shell commands or scripts to execute before creating a backup.
+    before_backup:
+        - echo "`date` - Starting a backup job."
+
+    # List of one or more shell commands or scripts to execute after creating a backup.
+    after_backup:
+        - echo "`date` - Backup created."
+
+    # List of one or more shell commands or scripts to execute in case an exception has occurred.
+    on_error:
+        - echo "`date` - Error while creating a backup."
