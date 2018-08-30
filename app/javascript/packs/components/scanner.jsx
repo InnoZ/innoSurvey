@@ -63,8 +63,8 @@ export default class ExhibitionScreen extends React.Component {
         audio: false,
         video: {
           facingMode: "user",
-          width: { max: 350 },
-          height: { max: 300 }
+          width: { max: 700 },
+          height: { max: 600 }
         }
       }).then(function(stream) {
         video.srcObject = stream;
