@@ -123,25 +123,23 @@ export default class StatementSet extends React.Component {
 
     const nextButton =
       (this.state.activeStatementBox !== this.statementIds[this.statementIds.length - 1]) ?
-        <div className='next-button' onClick={() => this.browseStatement(+1)}>{'>'}</div> : null
+        <span className='next-button' onClick={() => this.browseStatement(+1)}>{'>'}</span> : null
 
     const previousButton =
       (this.state.activeStatementBox !== this.statementIds[0]) ?
-        <div className='previous-button' onClick={() => this.browseStatement(-1)}>{'<'}</div> : null
+        <span className='previous-button' onClick={() => this.browseStatement(-1)}>{'<'}</span> : null
 
     const submitButton = (this.state.activeStatementBox == this.statementIds[this.statementIds.length - 1]) ?
       <button className='btn btn-lg' onClick={() => this.sendSelections()}>Absenden</button> :
-      <div className='page-indicator'>{this.pageIndicator()}</div>
+      <span className='page-indicator'>{this.pageIndicator()}</span>
 
     const countdown = <div className='countdown'>{this.state.secondsLeft} sec</div>
 
     return(
       <div className='topic'>
         {question}
-        <div className='button-row row'>
-          <div className='col-xs-offset-2 col-xs-2'>{previousButton}</div>
-          <div className='col-xs-4'>{submitButton}</div>
-          <div className='col-xs-2'>{nextButton}</div>
+        <div className='button-row row text-center'>
+          {previousButton}{submitButton}{nextButton}
         </div>
         {countdown}
       </div>
