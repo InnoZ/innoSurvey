@@ -11,11 +11,14 @@ task gen_qr_codes: :environment do
     layout: 'innoz_feedback_feedback_energie',
     role: 3,
     survey: 3
-  }.freeze
+  }
 
   o = OptionParser.new
   o.banner = 'Usage: rake gen_qr_codes -- [options]'
   o.on('-i ARG', '--iterations ARG', Integer) { |iterations| ARGUMENTS[:iterations] = iterations.to_i }
+  o.on('-r ARG', '--role ARG', Integer) { |role| ARGUMENTS[:role] = role.to_i }
+  o.on('-s ARG', '--survey ARG', Integer) { |survey| ARGUMENTS[:survey] = survey.to_i }
+  o.on('-l ARG', '--layout ARG', String) { |layout| ARGUMENTS[:layout] = role }
   args = o.order!(ARGV) {}
   o.parse!(args)
 
