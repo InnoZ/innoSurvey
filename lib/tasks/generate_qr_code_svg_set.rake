@@ -7,21 +7,39 @@ require 'encrypt_decrypt'
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
   ARGUMENTS = {
+    languages: ['de','en'],
     iterations: 2,
-    layout: 'innoz_feedback_feedback_energie',
-    role: 1,
-    survey: 3
-  }.freeze
+    roles: [['innoSurvey_nutzer','1'], 
+#             ['innoSurvey_politik','2'], 
+#             ['innoSurvey_hersteller','3'], 
+#             ['innoSurvey_mobidienst', '4'], 
+             ['innoSurvey_energie','5']],
+    survey_id: 3,
+    pdf_dest: '/tmp/qrcodes',
+    #survey_url: 'localhost:3000'
+    survey_url: 'https://survey.innoz.space'
+  }
 
   o = OptionParser.new
   o.banner = 'Usage: rake gen_qr_codes -- [options]'
   o.on('-i ARG', '--iterations ARG', Integer) { |iterations| ARGUMENTS[:iterations] = iterations.to_i }
+  o.on('-r ARG', '--roles ARG', 'Survey roles like role_name;role_id,role_name;role_id') do | roles| 
+    new_role = []
+    roles.split(",").each do |role|
+      new_role.push([role.split(";")[0], role.split(";")[1]])
+    end
+    ARGUMENTS[:roles] = new_role
+  end
+  o.on('-l ARG', '--languages ARG', 'Avaible role languages en,de,fr,..') { |lang| ARGUMENTS[:languages] =  lang.split(",")}
+  o.on('-d ARG', '--destination ARG', 'Destination folder for generated qr_codes') { |dest| ARGUMENTS[:pdf_dest] =  ARGUMENTS[:pdf_dest] = dest}
+  o.on('-u ARG', '--url ARG', 'URL of the survey, default is localhost:3000') { |url| ARGUMENTS[:survey_url] =  url}
+  o.on('-s ARG', '--survey_num ARG', 'Num of the survey, default is 3') { |survey_id| ARGUMENTS[:survey_id] = survey_id}
   args = o.order!(ARGV) {}
   o.parse!(args)
 
   # GENERATE QR CODE
-  def gen_qrcode(**args)
-    qr_content = "https://survey.innoz.space/surveys/#{ARGUMENTS[:survey]}?uuid=#{args[:uuid]}&role_id=#{args[:role_id]}&token=#{args[:uuid].encrypt}"
+  def gen_qrcode(**opts)
+    qr_content = "https://survey.innoz.space/surveys/#{opts[:survey_id]}?uuid=#{opts[:uuid]}&role_id=#{opts[:role_id]}&token=#{opts[:uuid].encrypt}"
     qr = RQRCode::QRCode.new(qr_content, level: :h, mode: :byte_8bit)
     qr.as_svg(offset: 0, color: '000', shape_rendering: 'crispEdges', module_size: 5)
   end
@@ -59,18 +77,19 @@ task gen_qr_codes: :environment do
         </div>
         <div class="qr-code">
           <img src="#{opts[:path_to_qr_svg]}"></img>
-          <!-- <div class='id'>Deine ID: #{opts[:uuid]}</div> -->
+          <div class='id'>ID: #{opts[:uuid]}</div>
         </div>
       </div>
     EOF
   end
 
   def gen_html_back(**opts)
-    layout_path = "#{Rails.root}/public/#{ARGUMENTS[:layout]}_back.svg"
+    role_path = "#{Rails.root}/public/#{opts[:template_file_name]}_back.svg"
+    puts "CHECK #{role_path}"
     <<-EOF
       <html>
         <head>
-        #{styling(layout_path)}
+        #{styling(role_path)}
         </head>
         <body>
         #{qr_code(opts)}
@@ -79,12 +98,13 @@ task gen_qr_codes: :environment do
     EOF
   end
 
-  def gen_html_front(**_opts)
-    layout_path = "#{Rails.root}/public/#{ARGUMENTS[:layout]}_front.svg"
+  def gen_html_front(**opts)
+    role_path = "#{Rails.root}/public/#{opts[:template_file_name]}_front.svg"
+    puts "CHECK #{role_path}"
     <<-EOF
       <html>
         <head>
-        #{styling(layout_path)}
+        #{styling(role_path)}
         </head>
         <body>
         </body>
@@ -93,70 +113,92 @@ task gen_qr_codes: :environment do
   end
 
   # HTML templating
-  def gen_qr_pdf(role_id:, uuid:, id:, path:)
-    file_path = path + id.to_s
+  def gen_qr_pdf(role_name:, role_id:, lang:, survey_id:, uuid:, iteration:, path:)
+    file_name = "#{iteration}_#{lang}_#{role_name}"
+    qrcode_file_name = 'qrcode_' + file_name + '.svg'
+    file_path = path + file_name 
+
     opts = {
       role_id: role_id,
       uuid: uuid,
-      id: id,
-      path_to_qr_svg: file_path + '.svg'
+      survey_id: survey_id,
+      path_to_qr_svg: path + qrcode_file_name,
+      template_file_name: "#{lang}_#{role_name}"
     }
-
+    puts 'Start PDF generation for ' + file_name
     # Generate and write intermediate QR code
+    puts '-> Generate qrcode svg'
+
     svg = gen_qrcode(**opts)
-    File.open(file_path + '.svg', 'w') do |f|
+    File.open(path + qrcode_file_name, 'w') do |f|
       f.write(svg)
       f.close
     end
 
-    %w[front back].each do |site|
-      # Generate HTML template
-      html = FileUtils.send("gen_html_#{site}", **opts)
-      File.open(file_path + "_#{site}.html", 'w') do |f|
+    %w[front back].each do |side|
+      # Generate HTML role
+      puts "-> Generate html for " + side
+      html = FileUtils.send("gen_html_#{side}", opts)
+      File.open(file_path + "_#{side}.html", 'w') do |f|
         f.write(html)
         f.close
       end
 
       # Generate PDF
-      pdf = WickedPdf.new.pdf_from_html_file(file_path + "_#{site}.html", {
+      puts "-> Generate pdf with front and back from html"
+      pdf = WickedPdf.new.pdf_from_html_file(file_path + "_#{side}.html", {
         margin: { top: 0, bottom: 0, left: 0, right: 0 },
         page_height: 118,
-        page_width: 118
+        page_width: 118,
       })
-      File.open(file_path + "_#{site}.pdf", 'w:ASCII-8BIT') do |f|
+      File.open(file_path + "_#{side}.pdf", 'w:ASCII-8BIT') do |f|
         f << pdf
       end
     end
   end
 
   # CREATE FOLDER BASED ON UNIX TIMESTAMP
-  path = FileUtils::mkdir_p(Rails.root.to_s + "/tmp/cache/qr_codes/#{ARGUMENTS[:layout]}_survey_#{ARGUMENTS[:survey]}_role_#{ARGUMENTS[:role]}_#{Time.now.strftime('%d.%m.%Y-%H:%M:%S')}/").first
 
   # GENERATE N QR_CODES PER ROLE
-  i = 0
   n = ARGUMENTS[:iterations]
+  roles = ARGUMENTS[:roles]
+  languages = ARGUMENTS[:languages]
+  survey_id = ARGUMENTS[:survey_id]
+  base_path = FileUtils::mkdir_p(Rails.root.to_s + ARGUMENTS[:pdf_dest] + "/#{Time.now.strftime('%d.%m.%Y-%H:%M:%S')}/").first
 
   begin
     progressbar = ProgressBar.create(format: "%a %b\u{15E7}%i %p%% %t",
                                      progress_mark: ' ',
                                      remainder_mark: "\u{FF65}",
-                                     total: n)
+                                     total: n*roles.size*languages.size)
 
-    merged_pdf = CombinePDF.new
-    n.times do
-      i += 1
-      # Increment progressbar
-      progressbar.increment
+    languages.each do |lang|
+      roles.each do |role|
+        path =  FileUtils::mkdir_p( base_path + "#{lang}_#{role[0]}/" ).first
+        puts "---------------------------------------------"
+        merged_pdf = CombinePDF.new
+        i = 0
+        n.times do
+          puts "Starting generation: " + lang + '/' + role[0] + '/' + i.to_s
+          i += 1
+          # Increment progressbar
+          progressbar.increment
 
-      # Generate gr code per Role
-      gen_qr_pdf(role_id: ARGUMENTS[:role],
-                 uuid: SecureRandom.urlsafe_base64(6),
-                 id: i,
-                 path: path)
+          # Generate gr code per Role
+          gen_qr_pdf(role_name: role[0],
+                     role_id: role[1],
+                     lang: lang,
+                     survey_id: survey_id,
+                     uuid: SecureRandom.urlsafe_base64(6),
+                     iteration: i,
+                     path: path)
 
-      merged_pdf << CombinePDF.load(path + i.to_s + '_front.pdf')
-      merged_pdf << CombinePDF.load(path + i.to_s + '_back.pdf')
+          merged_pdf << CombinePDF.load(path + "#{i}_#{lang}_#{role[0]}" + '_front.pdf')
+          merged_pdf << CombinePDF.load(path + "#{i}_#{lang}_#{role[0]}" + '_back.pdf')
+        end
+        puts '-> Merge Pdf pages to one pdf'
+        merged_pdf.save  base_path + "/#{n}_#{lang}_#{role[0]}.pdf"
+      end
     end
-    merged_pdf.save path + "/#{ARGUMENTS[:layout]}.pdf"
   end
 end
