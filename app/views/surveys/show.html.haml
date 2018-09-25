@@ -2,6 +2,7 @@
   .row.margin-below
     .col-xs-12
       = link_to 'Back', surveys_path, class: 'btn btn-info btn-lg'
+      = link_to '.csv', survey_path(survey: @survey, format: 'csv'), class: 'btn btn-info btn-lg'
 
   .row
     .col-xs-12
