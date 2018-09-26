@@ -27,4 +27,12 @@ class Survey < ApplicationRecord
       map(&:downcase).
       join('_')
   end
+
+  def csv
+    CSV.generate do |csv|
+      csv << %w{ station_name topic_name role_name statement_style statement_text choice_text answer answer_date answer_time }
+
+      csv << [ self.id, self.username, self.email]
+    end
+  end
 end
