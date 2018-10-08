@@ -7,7 +7,15 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     respond_to do |format|
       format.html
-      format.csv { send_data '1,2,3,4,4', filename: "userinfo-#{Date.today}.csv" }
+      format.csv do 
+        begin
+          send_data @survey.csv, filename: "csv_innoSurvey_#{@survey.name}-#{Date.today}.csv" 
+        rescue StandardError => e
+          render json: {
+            error: e.to_s  
+          }, status: :not_found
+        end
+      end
     end
   end
 

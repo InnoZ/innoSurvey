@@ -1,3 +1,4 @@
+require 'csv'
 class Survey < ApplicationRecord
   has_many(:stations, dependent: :destroy)
   has_many(:roles, dependent: :destroy)
@@ -30,9 +31,45 @@ class Survey < ApplicationRecord
 
   def csv
     CSV.generate do |csv|
-      csv << %w{ station_name topic_name role_name statement_style statement_text choice_text answer answer_date answer_time }
-
-      csv << [ self.id, self.username, self.email]
+      csv << %w{ station_name topic_name role_name statement_style statement_text choice_text answer answer_date }
+      binding.pry
+      if !survey_has_answers
+				raise "No Answers in this Survey"
+			end
+      Station.where(survey_id: self.id).each do | station |
+        Topic.where(station_id: station.id).each do | topic |
+          StatementSet.where(topic_id: topic.id).each do | statement_set |
+            role = Role.where(id: statement_set.role_id)
+            Statement.where(statement_set_id: statement_set.id).each do | statement |
+              choices = Choice.where(statement_id: statement.id)
+							Answer.where(statement_id: statement.id).each do | answer |
+								selected_choices = answer.selected_choices.scan(/\d+/).map(&:to_i)
+								choices.each do | choice |
+									if selected_choices.include? choice.id
+										csv << [ station.name, topic.name, role.name, statement.style, statement.text, choice.text, true, answer.created_at]
+									else
+										csv << [ station.name, topic.name, role.name, statement.style, statement.text, choice.text, false, answer.created_at]
+									end
+								end
+							end
+            end
+          end
+        end
+      end
     end
   end
+
+
+  def survey_has_anwers
+    Station.where(survey_id: self.id).each do | station |
+			Topic.where(station_id: station.id).each do | topic |
+			  StatementSet.where(topic_id: topic.id).each do | statement_set |
+			    Statement.where(statement_set_id: statement_set.id).each do | statement |
+            Answer.where(statement_id: statement.id).each { return true }
+          end
+		    end
+		  end
+		end
+    false
+	end
 end
