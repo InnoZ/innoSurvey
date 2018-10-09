@@ -6,6 +6,7 @@ services:
     tty: true
     command: bundle exec rails s
     entrypoint: /innosurvey/rails-entrypoint.sh
+#    command: supervisord -c /etc/supervisor/conf.d/supervisord.conf  #bundle exec rails s
     volumes: 
       - .:/innosurvey
     env_file: .env
