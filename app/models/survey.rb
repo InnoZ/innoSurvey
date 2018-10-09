@@ -4,7 +4,9 @@ class Survey < ApplicationRecord
   has_many(:roles, dependent: :destroy)
   has_many(:topics, through: :stations)
   has_many(:statement_sets, through: :topics)
-  has_many(:answers, through: :topics)
+  has_many(:statements, through: :statement_sets)
+  has_many(:choices, through: :statement_sets)
+  has_many(:answers, through: :statements)
   belongs_to(:user)
 
   validates :description, presence: true, length: {  minimum: 10 }
