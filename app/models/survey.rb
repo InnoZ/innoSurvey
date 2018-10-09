@@ -41,7 +41,7 @@ class Survey < ApplicationRecord
       Station.where(survey_id: self.id).each do | station |
         Topic.where(station_id: station.id).each do | topic |
           StatementSet.where(topic_id: topic.id).each do | statement_set |
-            role = Role.where(id: statement_set.role_id)
+            role = Role.where(id: statement_set.role_id).first
             Statement.where(statement_set_id: statement_set.id).each do | statement |
               choices = Choice.where(statement_id: statement.id)
 							Answer.where(statement_id: statement.id).each do | answer |
