@@ -33,11 +33,7 @@ class Survey < ApplicationRecord
 
   def csv
     CSV.generate do |csv|
-      csv << %w{ station_name topic_name role_name statement_style statement_text choice_text answer answer_date }
-      binding.pry
-      if !survey_has_answers
-				raise "No Answers in this Survey"
-			end
+      csv << %w{ station_name topic_name role_name statement_style statement_text choice_text answer answer_date uuid }
       Station.where(survey_id: self.id).each do | station |
         Topic.where(station_id: station.id).each do | topic |
           StatementSet.where(topic_id: topic.id).each do | statement_set |
@@ -47,11 +43,7 @@ class Survey < ApplicationRecord
 							Answer.where(statement_id: statement.id).each do | answer |
 								selected_choices = answer.selected_choices.scan(/\d+/).map(&:to_i)
 								choices.each do | choice |
-									if selected_choices.include? choice.id
-										csv << [ station.name, topic.name, role.name, statement.style, statement.text, choice.text, true, answer.created_at]
-									else
-										csv << [ station.name, topic.name, role.name, statement.style, statement.text, choice.text, false, answer.created_at]
-									end
+                  csv << [ station.name, topic.name, role.name, statement.style, statement.text, choice.text, selected_choices.include?(choice.id), answer.created_at, answer.uuid]
 								end
 							end
             end
@@ -72,6 +64,6 @@ class Survey < ApplicationRecord
 		    end
 		  end
 		end
-    false
+    return false
 	end
 end
