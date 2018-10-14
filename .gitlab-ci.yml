@@ -43,7 +43,7 @@ build-docker-image:
   services:
     - docker:dind
   variables:
-  CONTAINER_IMAGE: registry.gitlab.com/$CI_PROJECT_PATH
+    CONTAINER_IMAGE: registry.gitlab.com/$CI_PROJECT_PATH
 
   stage: build
   before_script:
