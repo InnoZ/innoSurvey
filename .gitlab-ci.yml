@@ -13,7 +13,7 @@ stages:
 before_script:
   # Install basic deps
   - curl -sL https://deb.nodesource.com/setup_8.x | bash -
-  - apt-get update -qq && apt-get install -y -qq curl gnupg2 apt-transport-https build-essential cmake nodejs python-software-properties software-properties-common
+  - apt-get update -qq && apt-get install -y -qq curl gnupg2 apt-transport-https build-essential cmake nodejs software-properties-common
   # Install yarn
   - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
   - echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
