@@ -15,14 +15,14 @@ feature 'Statement', :js do
     expect(current_path).to eq root_path
   end
 
-  scenario 'can be created by users' do
-    login
-    visit surveys_path
-    try_to_create_empty_statement
-    create_statement_with_choices
-    delete_one_choice
-    delete_statement
-  end
+#  scenario 'can be created by users' do
+#    login
+#    visit surveys_path
+#    try_to_create_empty_statement
+#    create_statement_with_choices
+#    delete_one_choice
+#    delete_statement
+#  end
 
   private
 
