@@ -10,21 +10,6 @@ stages:
   - test
   - build
 
-before_script:
-  # Install basic deps
-  - curl -sL https://deb.nodesource.com/setup_8.x | bash -
-  - apt-get update -qq && apt-get install -y -qq curl gnupg2 apt-transport-https build-essential cmake nodejs software-properties-common
-  # Install yarn
-  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-  - echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
-  - apt-get update -qq && apt-get install -y -qq libsqlite3-dev phantomjs yarn nodejs
-  - ruby -v
-  - which ruby
-  - gem install bundler --no-ri --no-rdoc
-  - RAILS_ENV=test bundle install --jobs $(nproc) "${FLAGS[@]}"
-  - yarn install
-  - yarn global add phantomjs-prebuilt
-  - RAILS_ENV=test bundle exec rails db:create db:schema:load  
 
 #lint:
 #  stage: lint
@@ -34,6 +19,21 @@ before_script:
 #    - pipenv run check
 
 test-with-rspec:
+  before_script:
+    # Install basic deps
+    - curl -sL https://deb.nodesource.com/setup_8.x | bash -
+    - apt-get update -qq && apt-get install -y -qq curl gnupg2 apt-transport-https build-essential cmake nodejs software-properties-common
+      # Install yarn
+    - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+    - echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+    - apt-get update -qq && apt-get install -y -qq libsqlite3-dev phantomjs yarn nodejs
+    - ruby -v
+    - which ruby
+    - gem install bundler --no-ri --no-rdoc
+    - RAILS_ENV=test bundle install --jobs $(nproc) "${FLAGS[@]}"
+    - yarn install
+    - yarn global add phantomjs-prebuilt
+    - RAILS_ENV=test bundle exec rails db:create db:schema:load  
   stage: test
   script:
     - RAILS_ENV=test bundle exec rspec
