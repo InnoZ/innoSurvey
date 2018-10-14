@@ -15,6 +15,7 @@ RUN apt-get update -qq && apt-get install -y \
     yarn \
     nodejs
 
+
 RUN mkdir /innosurvey
 WORKDIR /innosurvey
 
@@ -24,3 +25,4 @@ ADD ./ /innosurvey/
 RUN bundle install
 #ADD package.json /innosurvey/package.json
 RUN yarn 
+RUN yarn global add phantomjs-prebuilt

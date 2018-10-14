@@ -21,6 +21,7 @@ gem 'combine_pdf'
 
 # haml template DSL
 gem 'haml'
+gem 'rubocop', require: false
 
 group :development, :test do
 	#e gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
