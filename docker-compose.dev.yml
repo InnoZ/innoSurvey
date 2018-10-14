@@ -1,0 +1,24 @@
+version: '2'
+services:
+  innosurvey:
+    build: .
+    stdin_open: true
+    tty: true
+    #command: supervisord -c /etc/supervisor/conf.d/supervisord.conf  #bundle exec rails s
+    command: bundle exec rails s
+    volumes: 
+      - .:/innosurvey
+      - ./config/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+    env_file: .env
+    ports: 
+      - '0.0.0.0:3000:3000'
+
+  innosurvey_file_backup:
+    image: b3vis/borgmatic
+    env_file: .env
+    volumes:
+      - ./config/borgbackup:/config
+      - ./db:/source/:ro
+      - ./log:/log/
+      - /backup/innoSurvey/borg_repo:/repository
+      - /backup/innoSurvey/borg_cache:/cache
