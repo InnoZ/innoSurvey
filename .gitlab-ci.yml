@@ -1,0 +1,46 @@
+image: ruby:latest
+
+variables:
+  POSTGRES_USER: innoSurvey
+  POSTGRES_PASSWORD: this_is_for_test_only
+  POSTGRES_DB: innoSurvey
+
+stages:
+#  - lint
+  - test
+  - build
+
+before_script:
+  # Install basic deps
+  - curl -sL https://deb.nodesource.com/setup_8.x | bash -
+  - apt-get update -qq && apt-get install -y -qq curl gnupg2 apt-transport-https build-essential cmake nodejs python-software-properties software-properties-common
+  # Install yarn
+  - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+  - echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
+  - apt-get update -qq && apt-get install -y -qq libsqlite3-dev phantomjs yarn nodejs
+  - ruby -v
+  - which ruby
+  - gem install bundler --no-ri --no-rdoc
+  - RAILS_ENV=test bundle install --jobs $(nproc) "${FLAGS[@]}"
+  - yarn install
+  - RAILS_ENV=test bundle exec rails db:create db:schema:load  
+
+#lint:
+#  stage: lint
+#  image: kennethreitz/pipenv
+#  script:
+#    - pipenv install -d
+#    - pipenv run check
+
+test-with-rspec:
+  stage: test
+  script:
+    - RAILS_ENV=test bundle exec rspec
+    
+build-docker-image:
+  stage: build
+  image: docker:stable
+  script:
+    - build
+  only:
+    - branches
