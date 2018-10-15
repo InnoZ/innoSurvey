@@ -22,7 +22,7 @@ build:
   stage: build
   script:
     - docker pull $CONTAINER_IMAGE:latest || true
-    - docker build --cache-from $CONTAINER_IMAGE:latest .
+    - docker build --cache-from $CONTAINER_IMAGE:latest -t $TEST_IMAGE .
     - echo $CONTAINER_IMAGE
     - echo $TEST_IMAGE
     - echo $RELEASE_IMAGE
