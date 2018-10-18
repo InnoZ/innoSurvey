@@ -1,7 +1,7 @@
 version: '2'
 services:
   innosurvey:
-    build: .
+    image: registry.gitlab.com/innoz/innosurvey/gitlab_ci:latest
     command: supervisord -c /etc/supervisor/conf.d/supervisord.conf  #bundle exec rails s
     volumes: 
       - .:/innosurvey

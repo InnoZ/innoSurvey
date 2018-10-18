@@ -13,6 +13,7 @@ RUN apt-get update -qq && apt-get install -y \
     libsqlite3-dev \
     supervisor \
     yarn \
+    libfontconfig \
     nodejs
 
 
