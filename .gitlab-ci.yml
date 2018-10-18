@@ -8,21 +8,22 @@ stages:
 - release
 
 variables:
-  CONTAINER_IMAGE: registry.gitlab.com/innoz/innosurvey
-  TEST_IMAGE: $CONTAINER_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA
-  RELEASE_IMAGE: $CONTAINER_IMAGE/$CI_COMMIT_REF_NAME:latest
+  TEST_IMAGE:           $CI_REGISTRY_IMAGE:test
+  RELEASE_IMAGE_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA
+  RELEASE_IMAGE:        $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
 
 
 before_script:
     - docker info
     - docker version
+    - printenv
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
 build:
   stage: build
   script:
-    - docker pull $CONTAINER_IMAGE:latest || true
-    - docker build --cache-from $CONTAINER_IMAGE:latest -t $TEST_IMAGE .
+    - docker pull $TEST_IMAGE || true
+    - docker build --cache-from $TEST_IMAGE -t $TEST_IMAGE .
     - echo $CONTAINER_IMAGE
     - echo $TEST_IMAGE
     - echo $RELEASE_IMAGE
