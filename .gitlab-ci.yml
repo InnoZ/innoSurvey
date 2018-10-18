@@ -17,8 +17,6 @@ variables:
 before_script:
     - docker info
     - docker version
-    - echo $TEST_IMAGE
-    - echo $RELEASE_IMAGE
     - printenv
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
