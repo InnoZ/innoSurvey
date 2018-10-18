@@ -10,12 +10,14 @@ stages:
 variables:
   TEST_IMAGE:           $CI_REGISTRY_IMAGE:test
   RELEASE_IMAGE_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA
-  RELEASE_IMAGE:        $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+  RELEASE_IMAGE_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
 
 
 before_script:
     - docker info
     - docker version
+    - echo $TEST_IMAGE
+    - echo $RELEASE_IMAGE
     - printenv
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
 
@@ -24,30 +26,34 @@ build:
   script:
     - docker pull $TEST_IMAGE || true
     - docker build --cache-from $TEST_IMAGE -t $TEST_IMAGE .
-    - echo $CONTAINER_IMAGE
-    - echo $TEST_IMAGE
-    - echo $RELEASE_IMAGE
     - docker push $TEST_IMAGE
 
-test:
+#test-rubocop:
+#  stage: test
+#  script:
+#    - docker pull $TEST_IMAGE
+#    - docker run $TEST_IMAGE  bundle exec rubocop
+
+test-rspec:
   stage: test
   script:
     - docker pull $TEST_IMAGE
     - docker run -e RAILS_ENV=test $TEST_IMAGE  bundle exec rails db:test:prepare
     - docker run -e RAILS_ENV=test $TEST_IMAGE  bundle exec rspec
 
+test-brakeman:
+  stage: test
+  script:
+    - docker pull $TEST_IMAGE
+    - docker run  $TEST_IMAGE  bundle exec brakeman
+
 push-release:
   stage: release
   script:
     - docker pull $TEST_IMAGE
     - docker tag $TEST_IMAGE $RELEASE_IMAGE
-    - docker push $RELEASE_IMAGE
+    - docker push $RELEASE_IMAGE_LATEST
+    - docker push $RELEASE_IMAGE_COMMIT
   when: on_success
   only:
     - branches
-      #delete-release:
-      #  stage: release
-      #  when:
-      #    - on_failure
-      #  script:
-      #    - docker reg delete $TEST_IMAGE
