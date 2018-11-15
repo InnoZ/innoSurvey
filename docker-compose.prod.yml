@@ -1,0 +1,28 @@
+version: '2'
+services:
+  innosurvey:
+    image: registry.gitlab.com/innoz/innosurvey/master:latest
+    command: bundle exec rails s
+    entrypoint: /innosurvey/rails-entrypoint.sh
+    volumes: 
+      - db:/innosurvey/db
+      - backup_config:/innosurvey/config/borgbackup
+      - /srv/innoSurvey/log/:/innosurvey/log
+    env_file: .env
+    ports: 
+      - '0.0.0.0:3000:3000'
+
+  innosurvey_file_backup:
+    image: b3vis/borgmatic
+    env_file: .env
+    volumes:
+      - backup_config:/config
+      - db:/source/:ro
+      - /srv/innoSurvey/log/:/log/
+      - /srv/innoSurvey/backup/borg_repo:/repository
+      - /srv/innoSurvey/backup/borg_cache:/cache
+
+volumes:
+  db:
+  backup_config:
+

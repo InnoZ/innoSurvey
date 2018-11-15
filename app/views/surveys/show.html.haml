@@ -30,12 +30,12 @@
                     .form-inline
                       = f.text_field :name, class: 'form-control'
                       = f.submit 'Save', class: 'btn btn-default'
-                      = link_to '▣', topic_ident_path(topic.id), class: 'btn btn-default'
+                      = link_to 'Identify'.force_encoding('utf-8').html_safe, topic_ident_path(topic.id), class: 'btn btn-default'
                       = link_to 'Delete', topic_path(topic), method: 'delete', data: { confirm: 'Do you really want to delete this?' }, class: 'btn btn-danger'
                 - else
                   %h3
                     = topic.name
-                    = link_to '▣', topic_ident_path(topic.id), class: 'btn btn-default'
+                    = link_to 'Identify'.force_encoding('utf-8').html_safe, topic_ident_path(topic.id), class: 'btn btn-default'
 
             - if current_user
               .btn.btn-success{onclick: "$('#topic-form-for-station-#{station.id}').show(); $(this).hide();", style: 'cursor: pointer;'} New topic

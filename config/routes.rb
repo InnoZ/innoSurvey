@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   # SURVEY
   get '/surveys/:id/ident', to: 'surveys#ident', as: :survey_ident
+  get '/surveys/:id', to: 'surveys#ident', as: :from_external_qr_scanner
+  get '/surveys/:id/content', to: 'surveys#show', as: :survey_content
 
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'

@@ -13,7 +13,9 @@ RUN apt-get update -qq && apt-get install -y \
     libsqlite3-dev \
     supervisor \
     yarn \
+    libfontconfig \
     nodejs
+
 
 RUN mkdir /innosurvey
 WORKDIR /innosurvey
@@ -24,3 +26,4 @@ ADD ./ /innosurvey/
 RUN bundle install
 #ADD package.json /innosurvey/package.json
 RUN yarn 
+RUN yarn global add phantomjs-prebuilt

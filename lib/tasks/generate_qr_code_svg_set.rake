@@ -9,7 +9,7 @@ task gen_qr_codes: :environment do
   ARGUMENTS = {
     iterations: 2,
     layout: 'innoz_feedback_feedback_energie',
-    role: 3,
+    role: 1,
     survey: 3
   }.freeze
 
