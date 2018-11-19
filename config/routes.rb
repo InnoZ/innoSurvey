@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     root 'surveys#index'
   end
 
+  # Receive valid UUID and encrypted version of it
+  get '/generate_uuid', to: 'sessions#gen_uuid'
+
   # ANSWERS
   post '/answers', to: 'answers#answer_question_set'
 

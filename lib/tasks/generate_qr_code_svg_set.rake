@@ -2,7 +2,7 @@ require 'optparse'
 require 'rqrcode'
 require 'fileutils'
 require 'ruby-progressbar'
-require 'encrypt_decrypt'
+# require 'config/initializers/string'
 
 desc 'Generate set of n QR codes'
 task gen_qr_codes: :environment do
