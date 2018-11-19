@@ -28,4 +28,13 @@ class SurveysController < ApplicationController
       }
     end
   end
+
+  def roles
+    @survey = Survey.find(params[:id])
+
+    return_json = {}
+    @survey.roles.each { |role| return_json["#{role.id}"] = role.name }
+
+    render json: return_json, status: 200
+  end
 end
