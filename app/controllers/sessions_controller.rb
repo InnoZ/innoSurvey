@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :set_cors, only: [:gen_uuid]
+
   def new
   end
 
