@@ -60,10 +60,15 @@ export default class StatementSet extends React.Component {
       },
       body: JSON.stringify(data),
       credentials: 'same-origin',
-    }).catch(error => console.error('An error occured: ', error))
-      .then((responseObj) =>
+    }).then(function(response){
+      if(!response.ok){
+        throw Error(response.statusText);
+      }
+      return response;
+    }).then((responseObj) =>
         responseObj.status == 201 ? this.successMessage() : console.error('An error occured on server!') )
-        setTimeout(function() { that.props.reset() }, 500);
+      .catch(error => console.error('An error occured: ', error));
+    setTimeout(function() { that.props.reset() }, 500);
   }
 
   modifyChoices({statementId, choiceId, singleChoice}) {

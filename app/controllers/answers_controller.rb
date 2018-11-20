@@ -19,7 +19,12 @@ class AnswersController < ApplicationController
   private
 
   def token_valid
-    token.decrypt == uuid || (belongs_to_old_survey && token.decrypt == 'token4oldSurveys')
+    begin
+      token.decrypt == uuid || (belongs_to_old_survey && token.decrypt == 'token4oldSurveys')
+    rescue OpenSSL::Cipher::CipherError => e
+      logger.error "[AnswersController#token_valid] #{e.class.to_s}:#{e.message} raised while decrypting token!"
+      return false
+    end
   end
 
   def belongs_to_old_survey
