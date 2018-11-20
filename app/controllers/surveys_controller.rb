@@ -1,4 +1,6 @@
 class SurveysController < ApplicationController
+  before_action :allow_iframe_request, only: [:show, :ident]
+
   def index
     @surveys = Survey.all
   end
@@ -36,5 +38,11 @@ class SurveysController < ApplicationController
     @survey.roles.each { |role| return_json["#{role.id}"] = role.name }
 
     render json: return_json, status: 200
+  end
+
+  private
+
+  def allow_iframe_request
+    response.headers.delete('X-Frame-Options')
   end
 end

@@ -132,7 +132,6 @@ GEM
     parallel (1.12.1)
     parser (2.5.1.2)
       ast (~> 2.4.0)
-    phantomjs (2.1.1.0)
     poltergeist (1.17.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -147,6 +146,7 @@ GEM
     public_suffix (3.0.1)
     puma (3.11.0)
     rack (2.0.3)
+    rack-cors (1.0.2)
     rack-proxy (0.6.3)
       rack
     rack-test (0.8.2)
@@ -295,10 +295,10 @@ DEPENDENCIES
   haml
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
-  phantomjs
   poltergeist
   pry-byebug
   puma (~> 3.7)
+  rack-cors
   rails (~> 5.1.4)
   rails-controller-testing
   rqrcode
