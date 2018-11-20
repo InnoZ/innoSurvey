@@ -28,16 +28,16 @@ feature 'Exhibition view', :js do
     scan_code_with_invalid_role_id_and_jump_back_to_initial_screen
   end
 
-#  scenario 'does not work without correct token within qr code' do
-#    visit topic_ident_path(@topic.id)
-#
-#    scan_wrong_token
-#    select_and_highlight_one_choice
-#    do_not_show_send_button_unless_all_statements_answered
-#    select_other_question_and_see_related_answers
-#    select_and_highlight_one_choice
-#    send_question_set_and_do_not_save
-#  end
+  scenario 'does not work without correct token within qr code' do
+    visit topic_ident_path(@topic.id)
+
+    scan_wrong_token
+    select_and_highlight_one_choice
+    do_not_show_send_button_unless_all_statements_answered
+    select_other_question_and_see_related_answers
+    select_and_highlight_one_choice
+    send_question_set_and_do_not_save
+  end
 
   scenario 'shows Scanner immediately and redirects to url if url is transmitted' do
     visit "topics/#{@topic.id}?url=#{root_path}"
