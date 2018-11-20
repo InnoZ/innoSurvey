@@ -18,7 +18,6 @@ gem 'webpacker'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'combine_pdf'
-gem 'rack-cors'
 
 # haml template DSL
 gem 'haml'
