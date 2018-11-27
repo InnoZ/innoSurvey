@@ -76,3 +76,5 @@ config/initializers/secret_token.rb
 *.sqlite3
 *.sqlite3-journal
 yarn-error.log
+
+/db/production.sqlite3
