@@ -50,7 +50,7 @@ export default class StatementSet extends React.Component {
 
   sendSelections() {
     const that = this;
-    const data = { answers: this.state.selections, uuid: this.props.uuid, token: this.props.token };
+    const data = { answers: this.state.selections, uuid: this.props.uuid.trim(), token: this.props.token.trim() };
     // const csrfToken = document.querySelector("[name='csrf-token']").content;
     fetch('/answers', {
       method: 'POST',
