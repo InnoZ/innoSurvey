@@ -9,4 +9,4 @@ services:
       - .:/innosurvey
     env_file: .env
     ports: 
-      - '0.0.0.0:3000:3000'
+      - '0.0.0.0:3333:3000'

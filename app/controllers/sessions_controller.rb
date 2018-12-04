@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :set_cors, only: [:gen_uuid]
+
   def new
   end
 
@@ -17,5 +19,15 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     redirect_to root_path
+  end
+
+  def gen_uuid
+    uuid = SecureRandom.urlsafe_base64(6)
+    token = uuid.to_s.encrypt
+
+    render json: {
+      uuid: uuid,
+      token: token
+    }, status: 200
   end
 end

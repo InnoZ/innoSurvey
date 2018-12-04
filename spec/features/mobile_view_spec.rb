@@ -1,5 +1,3 @@
-require 'encrypt_decrypt'
-
 feature 'Mobile view', :js do
   before do
     @survey = create(:survey)

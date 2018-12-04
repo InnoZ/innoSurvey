@@ -1,4 +1,7 @@
 class SurveysController < ApplicationController
+  before_action :set_cors, only: [:roles]
+  before_action :allow_iframe_request, only: [:show, :ident]
+
   def index
     @surveys = Survey.all
   end
@@ -27,5 +30,14 @@ class SurveysController < ApplicationController
         topics: s.topics.map(&:to_json)
       }
     end
+  end
+
+  def roles
+    @survey = Survey.find(params[:id])
+
+    return_json = {}
+    @survey.roles.each { |role| return_json["#{role.id}"] = role.name }
+
+    render json: return_json, status: 200
   end
 end

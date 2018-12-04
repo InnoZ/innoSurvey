@@ -1,5 +1,3 @@
-require 'encrypt_decrypt'
-
 feature 'Exhibition view', :js do
   before do
     @survey = create(:survey)

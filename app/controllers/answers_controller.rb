@@ -1,6 +1,4 @@
 class AnswersController < ApplicationController
-  require 'encrypt_decrypt'
-
   skip_before_action :verify_authenticity_token
 
   def answer_question_set

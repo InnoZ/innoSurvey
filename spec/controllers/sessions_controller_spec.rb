@@ -29,4 +29,15 @@ RSpec.describe SessionsController, type: :controller do
       expect(session[:user_id]).to be_nil
     end
   end
+
+  context 'GET #gen_uuid' do
+    it 'can receive valid UUID and token' do
+      get :gen_uuid
+
+      ret_hash = JSON.parse response.body
+      expect(ret_hash["token"]).not_to be nil
+      expect(ret_hash["uuid"]).not_to be nil
+      expect(ret_hash["uuid"].encrypt).to eq ret_hash["token"]
+    end
+  end
 end

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
     root 'surveys#index'
   end
 
+  # Receive valid UUID and encrypted version of it
+  get '/generate_uuid', to: 'sessions#gen_uuid'
+
   # ANSWERS
   post '/answers', to: 'answers#answer_question_set'
 
@@ -17,6 +20,7 @@ Rails.application.routes.draw do
   get '/surveys/:id/ident', to: 'surveys#ident', as: :survey_ident
   get '/surveys/:id', to: 'surveys#ident', as: :from_external_qr_scanner
   get '/surveys/:id/content', to: 'surveys#show', as: :survey_content
+  get '/surveys/:id/roles', to: 'surveys#roles'
 
   # STATIONS
   get 'stations/show/:id', to: 'stations#show'

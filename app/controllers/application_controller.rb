@@ -11,4 +11,15 @@ class ApplicationController < ActionController::Base
     return false if current_user
     redirect_to root_path
   end
+
+  def allow_iframe_request
+    response.headers.delete('X-Frame-Options')
+  end
+
+  def set_cors
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = '*'
+    headers['Access-Control-Max-Age'] = "1728000"
+  end
 end
