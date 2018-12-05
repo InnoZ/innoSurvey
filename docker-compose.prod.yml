@@ -6,6 +6,7 @@ services:
     entrypoint: /innosurvey/rails-entrypoint.sh
     volumes: 
       - db:/innosurvey/db
+      - public_assets_innosurvey:/innosurvey/public
       - backup_config:/innosurvey/config/borgbackup
       - /srv/innoSurvey/log/:/innosurvey/log
     env_file: .env
@@ -25,4 +26,9 @@ services:
 volumes:
   db:
   backup_config:
-
+  public_assets_innosurvey:
+    driver: local
+    driver_opts:
+      device: /srv/innoSurvey/public
+      type: none
+      o: bind
