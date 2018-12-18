@@ -14,6 +14,7 @@ RUN apt-get update -qq && apt-get install -y \
     supervisor \
     yarn \
     libfontconfig \
+    git \
     nodejs
 
 

@@ -46,6 +46,7 @@ test-brakeman:
   script:
     - docker pull $TEST_IMAGE
     - docker run  $TEST_IMAGE  bundle exec brakeman
+    - docker run  $TEST_IMAGE  bundle exec bundle audit update && bundle exec bundle audit check 
 
 container_scanning:
   stage: sec-test

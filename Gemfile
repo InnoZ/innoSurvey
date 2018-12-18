@@ -19,6 +19,8 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'combine_pdf'
 
+gem 'bundler-audit'
+
 # haml template DSL
 gem 'haml'
 gem 'rubocop', require: false
